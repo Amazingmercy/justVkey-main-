@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> JustVkey - Home of Elegance</title>
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/logo/favicon.png" type="image/x-icon">
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles/testcss.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!--Preloader-->
+    <div class="preloader">
+      <img src="assets/images/icon/preloader.gif" alt="" />
+    </div>
+
+    <!-- Header -->
+    <header class="header bg-white border-bottom shadow-sm">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light d-flex">
+          <!-- Logo -->
+          <a class="navbar-brand mb-3" href="index.html">
+            <img
+              src="../assets/images/logo/logo.png"
+              alt="Logo"
+              style="height: 50px"
+            />
+          </a>
+
+          <!-- Navbar Toggler (for mobile) -->
+          <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="btn-close"></span>
+                </button> -->
+
+          <!-- Navbar Links -->
+          <div class="navbar-expand expand ms-auto" id="navbarContent">
+            <ul class="navbar-nav align-items-sm-center">
+                <!-- Search -->
+                <li class="nav-item me-5 d-md-block d-none">
+                    <select name="" id="" class="form-select-lg custom-bg" onchange="window.location.href=this.value;">
+                        <option value="">Category</option>
+                        <option value="/bags.html">Bags</option>
+                        <option value="/acessories.html">Accessories</option>
+                    </select>
+                  </li>
+              <!-- Search -->
+              <li class="nav-item me-md-5">
+                <form class="d-flex">
+                  <div class="input-group">
+                    <input class="form-control form-control form-control-lg" type="search" placeholder="Search" aria-label="Search"
+                    />
+                    <button class="btn btn-outline-dark" type="submit">
+                      <i class="fas fa-search me-4"></i>
+                    </button>
+                  </div>
+                </form>
+              </li>
+
+              <!-- Profile -->
+              <li class="nav-item ms-5">
+                <a
+                  class="nav-link text-dark d-flex flex-column align-items-center position-relative"
+                  href="account.html"
+                >
+                  <i class="fas fa-user-circle fs-3"></i>
+                  <span class="d-none d-md-inline fs-6">Profile</span>
+                </a>
+              </li>
+
+              <!-- Cart -->
+              <li class="nav-item">
+                <a
+                  class="nav-link text-dark d-flex flex-column align-items-center position-relative"
+                  href="cart.html"
+                >
+                  <i class="fas fa-shopping-cart fs-4"></i>
+                  <span
+                    class="position-absolute top-0 start-80 translate-middle badge rounded-pill bg-danger"
+                  >
+                    2
+                  </span>
+                  <span class="d-none d-md-inline fs-6">Cart</span>
+                </a>
+              </li>
+
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <div class="sticky-top d-flex mt-3">
+      <div class="btn-group flex-row justify-content-center">
+        <button class="btn btn-dark btn-lg" type="submit">NGN <span class="fas fa-naira-sign"></span></button>
+        <button class="btn btn-secondary btn-lg" type="submit">USD <span class="fas fa-dollar-sign"></span></button>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section
+      class="hero-section text-center py-5 m-5 d-flex"
+      style="min-height: 900px;"
+    >
+      <div
+        class="container d-flex flex-column-reverse flex-md-row justify-content-center align-items-center text-center"
+      >
+        <!-- Image Section on small screens comes first -->
+        <div
+          class="d-flex justify-content-center mt-4 mt-md-0 order-2 order-md-1 m-5"
+        >
+          <img
+            src="https://via.placeholder.com/1000"
+            alt="Handcrafted Elegance"
+            class="img-fluid"
+          />
+        </div>
+
+        <!-- Text Section -->
+        <div
+          class="d-flex flex-column justify-content-center align-items-center text-center order-1 order-md-2"
+        >
+          <h1 class="display-4">Discover Handcrafted Elegance</h1>
+          <p class="lead">
+            Unique and timeless bead designs for every occasion.
+          </p>
+          <a href="#" class="btn btn-outline-dark mt-3">Shop Now</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Showcase -->
+    <section class="products-section py-5">
+      <div class="container">
+        <h2 class="text-center mb-4">Featured Products</h2>
+        <div class="row g-4">
+          <div class="col-md-3 col-6">
+            <div class="card shadow-sm">
+              <img
+                src="https://via.placeholder.com/300"
+                class="card-img-top"
+                alt="Product"
+              />
+              <div class="card-body text-center">
+                <h5 class="card-title">Elegant Bead Necklace</h5>
+                <p class="text-muted">$49.99</p>
+                <a href="#" class="btn btn-dark">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="card shadow-sm">
+              <img
+                src="https://via.placeholder.com/300"
+                class="card-img-top"
+                alt="Product"
+              />
+              <div class="card-body text-center">
+                <h5 class="card-title">Custom Bracelet</h5>
+                <p class="text-muted">$29.99</p>
+                <a href="#" class="btn btn-dark">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="card shadow-sm">
+              <img
+                src="https://via.placeholder.com/300"
+                class="card-img-top"
+                alt="Product"
+              />
+              <div class="card-body text-center">
+                <h5 class="card-title">Beaded Earrings</h5>
+                <p class="text-muted">$19.99</p>
+                <a href="#" class="btn btn-dark">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="card shadow-sm">
+              <img
+                src="https://via.placeholder.com/300"
+                class="card-img-top"
+                alt="Product"
+              />
+              <div class="card-body text-center">
+                <h5 class="card-title">Beaded Earrings</h5>
+                <p class="text-muted">$19.99</p>
+                <a href="#" class="btn btn-dark">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="py-5 mt-5 row d-flex align-items-center">
+        <div
+          class="row text-center text-dark"
+          style="
+            background-color: rgba(198, 196, 196, 0.505);
+            padding: 2rem;
+            min-height: 500px;
+          "
+        >
+          <div
+            class="col-md-4 d-flex flex-column justify-content-center align-items-center"
+          >
+            <span
+              class="d-flex justify-content-center align-items-center w-56 h-56 bg-main-two-600 text-dark rounded-circle fs-2"
+            >
+              <i class="fas fa-truck"></i>
+            </span>
+            <div class="d-flex flex-column align-items-center text-center">
+              <h5 class="fw-bold">Fast Delivery</h5>
+              <p>Orders get delivered on or before due date.</p>
+            </div>
+          </div>
+          <div
+            class="col-md-4 d-flex flex-column justify-content-center align-items-center"
+          >
+            <span
+              class="d-flex justify-content-center align-items-center w-56 h-56 bg-main-two-600 text-dark rounded-circle fs-2"
+            >
+              <i class="fas fa-certificate"></i>
+            </span>
+            <div class="d-flex flex-column align-items-center">
+              <h5 class="fw-bold">High Quality</h5>
+              <p>Each product is hand made from long-lasting exotic beads.</p>
+            </div>
+          </div>
+          <div
+            class="col-md-4 d-flex flex-column justify-content-center align-items-center"
+          >
+            <span
+              class="d-flex justify-content-center align-items-center w-56 h-56 bg-main-two-600 text-dark rounded-circle fs-2"
+            >
+              <i class="fas fa-user-cog"></i>
+            </span>
+            <div class="d-flex flex-column align-items-center">
+              <h5 class="fw-bold">Bespoke Orders</h5>
+              <p>Products can be personalized on request.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-light text-dark py-4">
+      <div class="container text-center">
+        <div class="mb-4">
+          <a href="index.html">
+            <img
+              src="../assets/images/logo/logo.png"
+              alt="JustVkey Logo"
+              class="mb-3"
+              style="height: 50px"
+            />
+          </a>
+          <p class="mb-3">JustVkey. Elegance you can trust</p>
+        </div>
+
+        <div class="d-flex justify-content-center gap-4 mb-4">
+          <div>
+            <span
+              class="w-32 h-32 d-flex justify-content-center align-items-center rounded-circle border border-gray-100 text-main-two-600"
+            >
+              <i class="fas fa-phone"></i>
+            </span>
+            <a href="tel:+00123456789" class="d-block mt-2 text-dark"
+              >+234 813 799 4827</a
+            >
+          </div>
+
+          <div>
+            <span
+              class="w-32 h-32 d-flex justify-content-center align-items-center rounded-circle border border-gray-100 text-main-two-600"
+            >
+              <i class="fas fa-envelope"></i>
+            </span>
+            <a
+              href="mailto:support24@marketpro.com"
+              class="d-block mt-2 text-dark"
+              >justvkey@gmail.com</a
+            >
+          </div>
+
+          <div>
+            <span
+              class="w-32 h-32 d-flex justify-content-center align-items-center rounded-circle border border-gray-100 text-main-two-600"
+            >
+              <i class="fas fa-map"></i>
+            </span>
+            <span class="d-block mt-2 text-dark">Gwarimpa, Abuja Nigeria</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Wait for the page to load
+      window.addEventListener("load", function () {
+        // Hide the preloader once the page is fully loaded
+        document.querySelector(".preloader").style.display = "none";
+      });
+    </script>
+  </body>
+</html>
