@@ -3,7 +3,7 @@ const Product = require('../models/productModel');
 const getHomePage = async (req, res) => {
     const products = await Product.findAll({
         order: [['createdAt', 'DESC']],
-        limit: 3, 
+        limit: 4, 
       });
     res.render('index', {products})
 }
