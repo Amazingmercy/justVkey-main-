@@ -4,9 +4,11 @@ body {
     font-size: larger;
 }
 
-.hero-section{
-    background-color: rgba(198, 196, 196, 0.505);
-}
+.hero-section {
+    display: flex;
+    flex-direction: column-reverse; /* Ensure text is above image for mobile view */
+  }
+  
 /* Card Customization */
 .card {
     border: none;
@@ -37,7 +39,7 @@ footer {
     position: fixed;
     inset-inline-end: 0;
     inset-block-start: 0;
-    z-index: 9999;
+    z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,13 +54,48 @@ input, select {
     max-width: 200px; /* You can adjust the width */
 }
 .custom-bg:hover{
-    background-color: rgba(198, 196, 196, 0.505);
+    background-color: rgba(54, 54, 54, 0.505);
     color: black;
     cursor: pointer;
 }
 
+.footer{
+    background-color: rgb(10, 5, 5);
+}
 
-@media screen and (min-width:750px){
+.menu-bar{
+   font-size: larger;
+   font-weight: bold;
+}
+
+.cart {
+    position: sticky;
+    top: 30%; /* Sticks at the bottom of the screen */
+    left: 0; /* Aligns to the right side of the screen */
+    padding: 10px;
+    margin: 0;
+    z-index: 1000; /* Ensures it's above other elements */
+    max-width: 80px;
+  }
+  
+  .icon-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .cart-badge {
+    top: 0;
+    left: 100%;
+    transform: translate(-50%, -50%);
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+ 
+
+  
+
+@media screen and (min-width:768px){
     body{
         font-family:Georgia, 'Times New Roman', Times, serif;
         font-size: small;
@@ -67,5 +104,11 @@ input, select {
         min-height: 50px;
         width: fit-content;
     }
+    .hero-section {
+        flex-direction: column; /* Stack text above image on larger screens */
+      }
     
 }
+  
+
+  

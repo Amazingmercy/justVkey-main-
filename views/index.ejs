@@ -1,0 +1,61 @@
+<head>
+  <%- include('partials/head') %>
+</head>
+
+<!-- Cart -->
+<div class="cart">
+  <li class="nav-item">
+    <a class="nav-link text-dark d-flex flex-column align-items-center position-relative" href="/cart">
+      <i class="fas fa-shopping-cart fs-4">
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary" style="transform: translate(50%, -50%);">2</span>
+    </i>
+      <span class="d-inline fs-6">Cart</span>
+    </a>
+  </li>
+ </div>
+
+  <!-- Hero Section -->
+  <section class="hero-section text-center py-3 m-5 d-flex">
+    <div class="container d-flex flex-column-reverse flex-md-row justify-content-center align-items-center text-center">
+      <!-- Image Section on small screens comes first -->
+      <div class="d-flex justify-content-center mt-4 mt-md-0 order-2 order-md-1 m-5">
+        <img src="/assets/images/icons/bg.png.jpg" alt="Handcrafted Elegance" />
+      </div>
+
+      <!-- Text Section -->
+      <div class="d-flex flex-column justify-content-center align-items-center text-center order-1 order-md-2">
+        <h1 class="display-5">Discover Handcrafted Elegance</h1>
+        <p class="lead">
+          Unique and timeless bead designs for every occasion.
+        </p>
+        <a href="#" class="btn btn-outline-dark mt-3">Shop Now</a>
+      </div>
+    </div>
+  </section>
+
+
+  
+
+  <section>
+    <%- include('./partials/latestProducts') %>
+  </section>
+
+
+
+
+  <section>
+    <%- include('./partials/trendingProducts') %>
+  </section>
+  
+
+
+    <div class="py-5 mt-5 row d-flex align-items-center">
+      <div class="row text-center text-white">
+        
+      </div>
+    </div>
+  </section>
+
+  <head>
+    <%- include('partials/footer') %>
+  </head>

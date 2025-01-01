@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/header') %>
+  <title>Add Product - JustVkey</title>
+</head>
+
+<body>
+
+  <div class="container mt-5">
+    <h2 class="text-center">Add New Product</h2>
+
+
+    <form action="/admin/products/add" method="POST" enctype="multipart/form-data" class="p-4 border rounded">
+      <div class="mb-3">
+        <label for="name" class="form-label">Product Name</label>
+        <input type="text" name="name" id="name" class="form-control" placeholder="Enter product name" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="description" id="description" class="form-control" rows="4" placeholder="Enter product description" required></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="price" class="form-label">Price (NGN)</label>
+        <input type="number" name="price" id="price" class="form-control" placeholder="Enter product price" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select name="category" id="category" class="form-select" required>
+          <option value="">Select a category</option>
+          <option value="bags">Bags</option>
+          <option value="accessories">Accessories</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="productImage" class="form-label">Product Image</label>
+        <input type="file" name="productImage" id="image" class="form-control" accept="image/*" required />
+      </div>
+
+      <button type="submit" class="btn btn-dark w-100">Add Product</button>
+    </form>
+  </div>
+
+  <%- include('../partials/footer') %>
+</body>
+
+</html>

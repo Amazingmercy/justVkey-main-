@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/header') %>
+  <title>Admin - Manage Products</title>
+</head>
+
+<body>
+
+  <div class="container py-5">
+    <h1 class="mb-4">Manage Products</h1>
+    <div class="mb-3 text-end">
+      <a href="/admin/products/add" class="btn btn-dark">Add New Product</a>
+    </div>
+
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Price (NGN)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (products.length > 0) { %>
+          <% products.forEach((product, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><img src="<%= product.imageUrl %>" alt="Product Image" class="img-thumbnail" style="width: 50px;"></td>
+              <td><%= product.name %></td>
+              <td><%= product.description %></td>
+              <td><%= product.category %></td>
+              <td><span>&#8358;</span><%= parseFloat(product.price).toFixed(2) %></td>
+              <td>
+                <a href="/admin/products/edit/<%= product.id %>" class="btn btn-sm btn-warning">Edit</a>
+                <form action="/admin/products/outOfStock/<%= product.id %>" method="POST" class="d-inline">
+                  <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+              </td>
+            </tr>
+          <% }); %>
+        <% } else { %>
+          <tr>
+            <td colspan="7" class="text-center">No products found.</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+ 
+</body>
+
+</html>
