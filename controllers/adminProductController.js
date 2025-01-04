@@ -19,10 +19,10 @@ const getAddProduct = (req, res) => {
 // Handle add product submission
 const postAddProduct = async (req, res) => {
   try {
-    const { name, description, category, price } = req.body;
+    const { name, description, category, USDprice , NGNprice} = req.body;
     const image = req.file ? req.file.path : null;
 
-    await Product.create({ name, description, category, price, imageUrl: image });
+    await Product.create({ name, description, category, NGNprice, USDprice, imageUrl: image });
     res.redirect('/admin/products');
   } catch (error) {
     console.error('Error adding product:', error);
@@ -33,8 +33,9 @@ const postAddProduct = async (req, res) => {
 // Render edit product form
 const getEditProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
-    if (!product) return res.status(404).send('Product not found');
+    const product = await Product.findByPk(req.params.id);
+    if (!product) return res.status(404).json({message: 'Product not found'});
+
     res.render('adminPages/editProducts', { product });
   } catch (error) {
     console.error('Error fetching product for edit:', error);
@@ -45,9 +46,11 @@ const getEditProduct = async (req, res) => {
 // Handle edit product submission
 const postEditProduct = async (req, res) => {
   try {
-    const { name, description, category, price, image } = req.body;
-    await Product.findByIdAndUpdate(req.params.id, { name, description, category, price, image });
-    res.redirect('/adminPages/allProducts');
+    const { name, description, category, NGNprice, USDprice, productImage } = req.body;
+    await Product.update({ name, description, category, NGNprice, USDprice, productImage }, {
+      where: { id: req.params.id }
+    });
+      res.redirect('/admin/products');
   } catch (error) {
     console.error('Error updating product:', error);
     res.status(500).send('Error updating product');
@@ -57,15 +60,16 @@ const postEditProduct = async (req, res) => {
 // Handle delete product
 const outOfStockProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findByPk(req.params.id);
 
         if (!product) {
-            return res.status(404).json({ message: 'Product not found.' });
+            return res.render('adminPages/allProducts',{ message: 'Product not found.' });
         }
     await Product.update({
-      outOfStock: true
+      outOfStock: true }, {
+        where: { id: req.params.id }
   });
-    res.redirect('/adminPages/allProducts');
+    res.redirect('/admin/products');
   } catch (error) {
     console.error('Error deleting product:', error);
     res.status(500).send('Error deleting product');

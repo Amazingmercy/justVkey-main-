@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partials/head') %> 
+</head>
+
+<!-- Accessories Category -->
+<section class="products-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Bags Collection</h2>
+        <div class="row g-4">
+            <% if (bagsCollection.length === 0) { %>
+                <div class="col-12 text-center">
+                    <div class="alert alert-secondary" role="alert">
+                        No products available in this collection. 
+                    </div>
+                    <a href="/categories/accessories" class="btn btn-dark mt-3">Browse Accessories Collection</a>
+                </div>
+            <% } else { %>
+                <% bagsCollection.forEach(product => { %>
+                    <div class="col-md-3 col-6">
+                        <div class="card shadow-sm">
+                            <% if (product.outOfStock === true) { %>
+                                <img class="card-img-top" src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                                <span style="background-color: white; color: red; font-weight: bolder; text-align: center;">Out of stock</span>
+                            <% } else { %>
+                                <img class="card-img-top" src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                            <% } %>
+                            <div class="card-body text-center">
+                                <h5 class="card-title"><%= product.name %></h5>
+                                <p class="text-muted">
+                                    <% if (currency == 'NGN') { %>
+                                        &#8358;<%= parseFloat(product.NGNprice).toFixed(2) %>
+                                    <% } else { %>
+                                        $<%= parseFloat(product.USDprice).toFixed(2) %>
+                                    <% } %>
+                                </p>
+                                <a href="/cart/add/<%= product.id %>" class="btn btn-dark">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } %>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %> 
+

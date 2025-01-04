@@ -60,7 +60,6 @@ input, select {
 }
 
 .footer{
-    background-color: rgb(10, 5, 5);
     font-size: 0.8rem;
 }
 .logoName{
@@ -95,9 +94,6 @@ input, select {
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
   }
-  
- 
-
   
 
 @media screen and (min-width:768px){

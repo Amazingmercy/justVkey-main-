@@ -8,6 +8,7 @@
 
 <body>
 
+
   <div class="container py-5">
     <h1 class="mb-4">Manage Products</h1>
     <div class="mb-3 text-end">
@@ -23,6 +24,7 @@
           <th>Description</th>
           <th>Category</th>
           <th>Price (NGN)</th>
+          <th>Price (USD)</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -35,11 +37,12 @@
               <td><%= product.name %></td>
               <td><%= product.description %></td>
               <td><%= product.category %></td>
-              <td><span>&#8358;</span><%= parseFloat(product.price).toFixed(2) %></td>
+              <td>&#8358;<%= parseFloat(product.NGNprice).toFixed(2) %></td>
+              <td>$<%= parseFloat(product.USDprice).toFixed(2) %></td>
               <td>
                 <a href="/admin/products/edit/<%= product.id %>" class="btn btn-sm btn-warning">Edit</a>
                 <form action="/admin/products/outOfStock/<%= product.id %>" method="POST" class="d-inline">
-                  <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                  <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Out of stock</button>
                 </form>
               </td>
             </tr>

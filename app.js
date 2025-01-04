@@ -4,6 +4,9 @@ const app = express()
 const sequelize = require('./DB/config')
 require('./models/index')
 
+//middlewares
+const currency = require('./middlewares/currency')
+
 
 //routes
 const userAuthRoutes = require('./routers/userAuthenticationRoutes')
@@ -16,11 +19,14 @@ app.set('views', './views');
 
 
 
+  
+
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(express.static('public'))
 
 
+app.use(currency)
 app.use('/admin', adminRoutes)
 app.use(userAuthRoutes)
 app.use(userProductRoutes)
@@ -32,7 +38,7 @@ const port = process.env.PORT || 1414
 app.listen(port, async() => {
     try {
         await sequelize.authenticate();
-        await sequelize.sync({ alter: true });
+        //await sequelize.sync({ alter: true });
         console.log('Connection has been established successfully.');
         console.log(`Server is listening on port ${port}`)
     } catch (error) {

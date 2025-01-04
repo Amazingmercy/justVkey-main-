@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <%- include('partials/head') %>
+  <%- include('../partials/header') %>
   <title>Edit Product - JustVkey</title>
 </head>
 
@@ -11,11 +11,6 @@
   <div class="container mt-5">
     <h2 class="text-center">Edit Product</h2>
 
-    <% if (message) { %>
-      <div class="alert alert-success text-center">
-        <%= message %>
-      </div>
-    <% } %>
 
     <form action="/admin/products/edit/<%= product.id %>" method="POST" enctype="multipart/form-data" class="p-4 border rounded">
       <div class="mb-3">
@@ -29,8 +24,13 @@
       </div>
 
       <div class="mb-3">
+        <label for="price" class="form-label">Price (NGN)</label>
+        <input type="number" name="NGNprice" id="NGNprice" class="form-control" value="<%= product.NGNprice %>" required />
+      </div>
+
+      <div class="mb-3">
         <label for="price" class="form-label">Price (USD)</label>
-        <input type="number" name="price" id="price" class="form-control" value="<%= product.price %>" required />
+        <input type="number" name="USDprice" id="USDprice" class="form-control" value="<%= product.USDprice %>" required />
       </div>
 
       <div class="mb-3">
@@ -43,9 +43,9 @@
 
       <div class="mb-3">
         <label for="image" class="form-label">Product Image</label>
-        <input type="file" name="image" id="image" class="form-control" accept="image/*" />
-        <% if (product.image) { %>
-          <img src="<%= product.image %>" alt="<%= product.name %>" class="img-thumbnail mt-3" style="max-height: 150px;" />
+        <input type="file" name="productImage" id="productImage" class="form-control" accept="image/*" />
+        <% if (product.imageUrl) { %>
+          <img src="<%= product.imageUrl %>" alt="<%= product.name %>" class="img-thumbnail mt-3" style="max-height: 150px;" />
         <% } %>
       </div>
 
@@ -53,7 +53,7 @@
     </form>
   </div>
 
-  <%- include('partials/footer') %>
+  <%- include('../partials/footer') %>
 </body>
 
 </html>

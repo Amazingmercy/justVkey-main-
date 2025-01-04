@@ -16,10 +16,14 @@ const Product = sequelize.define('Product', {
     },
     category: {
         type: DataTypes.ENUM,
-        values: ['Bags', 'Accessories'], 
+        values: ['Bags', 'Accessories', 'Functional_Art'], 
         allowNull: false, 
       },
-    price: {
+    NGNprice: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+    },
+    USDprice: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
     },

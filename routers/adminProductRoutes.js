@@ -8,7 +8,7 @@ router.get('/products', getProducts);
 router.get('/products/add', getAddProduct);
 router.post('/products/add', upload.single('productImage'), postAddProduct);
 router.get('/products/edit/:id', getEditProduct);
-router.post('/products/edit/:id', postEditProduct);
+router.post('/products/edit/:id', upload.single('productImage'), postEditProduct);
 router.post('/products/outOfStock/:id', outOfStockProduct);
 
   
