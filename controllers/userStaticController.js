@@ -1,4 +1,5 @@
 const Product = require('../models/productModel'); 
+const {Op} = require('sequelize')
 
 
 const getAboutUsPage = async (req, res) => {
@@ -29,10 +30,10 @@ const getTrendingProducts = async () => {
 }
 
 
-const getAllProducts = async () => {
+const getAllProducts = async (req,res) => {
   try {
     const products = await Product.findAll();
-    return products
+    res.render('shop', {products})
   } catch (error) {
     console.error('Error fetching products:', error);
     return error
@@ -91,12 +92,12 @@ const getFunctionalArtsCategory = async (req, res) => {
 
 const getHomePage = async (req, res) => {
   try {
+    const {search} = req.params
     const {currency} = req.query
-    const allProducts = await getAllProducts()
     const trendingProducts = await getTrendingProducts()
     const latestProducts = await getLatestProducts()
 
-    res.render('index', {allProducts, trendingProducts, latestProducts, currency})
+    res.render('index', {trendingProducts, latestProducts, currency})
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).send('Error fetching products');
@@ -104,11 +105,42 @@ const getHomePage = async (req, res) => {
 };
 
 
+const handleProductSearch = async (req, res) => {
+    try {
+      let products = await Product.findAll()
+      const { search } = req.query; 
+      if (!search || search.length < 1) {
+      return res.render('shop', {products})
+      }
+  
+       products = await Product.findAll({
+        where: {
+          name: {
+            [Op.like]: `%${search}%`, 
+          },
+        },
+      });
+  
+      if (products.length === 0) {
+        return res.render('index', products, {message: 'No product found'})
+      }
+  
+      // Return the search results
+      res.render('shop', {products})
+    } catch (error) {
+      console.error('Error searching for product:', error);
+      res.status(500).json({ message: 'An error occurred while searching for the product' });
+    }
+  
+} 
+
 module.exports = {
     getHomePage,
     getAboutUsPage,
     getContactUsPage,
+    getAllProducts,
     getAccessoriesCategory,
     getBagsCategory,
-    getFunctionalArtsCategory
+    getFunctionalArtsCategory,
+    handleProductSearch
 }
