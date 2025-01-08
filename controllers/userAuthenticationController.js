@@ -12,8 +12,7 @@ const getLoginPage = (req, res) => {
 
 // Render the registration page
 const getRegisterPage = (req, res) => {
-    const message = ""
-    res.render('register', message);
+    res.render('register', {message: ""});
 };
 
 
@@ -43,6 +42,7 @@ const register = async (req, res) => {
         res.render('login', {message: 'User registered successfully'})
     } catch (error) {
         res.status(500).json({ message: 'Error registering user', error });
+}
 };
 
 // Login user
