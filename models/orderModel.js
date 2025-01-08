@@ -27,10 +27,14 @@ const Order = sequelize.define('Order', {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    userId: {
+   userId: { // Foreign key to User
         type: DataTypes.INTEGER,
         allowNull: false,
-    },
+        references: {
+            model: 'Users', // Refers to the 'Users' table
+            key: 'id',
+        },
+    }, 
     createdAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,

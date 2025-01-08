@@ -35,7 +35,7 @@ const viewCart = async (req, res) => {
             },], 
         });
 
-        res.render('cart', {cartItems} );
+        res.render('cart', {cartItems, message: ""} );
     } catch (error) {
         console.error('Error fetching cart:', error);
         res.status(500).json({ message: 'Error fetching cart' });
@@ -101,7 +101,7 @@ const checkout = async (req, res) => {
         });
 
         // Render the checkout page with the total
-        res.render('checkout', { total: total.toFixed(2), currency });
+        res.render('checkout', { total: total.toFixed(2), currency , message: ""});
     } catch (error) {
         console.error('Error fetching checkout details:', error);
         res.status(500).json({ message: 'Error fetching checkout details.' });

@@ -20,6 +20,26 @@ const getTrendingProducts = async () => {
   return products
 }
 
+const getNumberOfProductsInCart = async (userId) => {
+  try {
+      // Get the number of unique products in the user's cart
+      const productCount = await Cart.count({
+          where: { userId: userId },  // Filter by the user's ID
+          include: [{
+              model: Product,         // Include the Product model
+              attributes: ['id'],     // Only need the product ID to count
+          }],
+          distinct: true,  // Ensure we count distinct products
+      });
+
+      return productCount;  // Return the number of products in the cart
+  } catch (error) {
+      console.error('Error fetching product count in cart:', error);
+      return 0;  // Return 0 in case of error
+  }
+};
+
+
 
 //route handler
 
@@ -93,28 +113,6 @@ const getFunctionalArtsCategory = async (req, res) => {
     return error
   }
 }; 
-
-
-const getNumberOfProductsInCart = async (userId) => {
-  try {
-      // Get the number of unique products in the user's cart
-      const productCount = await Cart.count({
-          where: { userId: userId },  // Filter by the user's ID
-          include: [{
-              model: Product,         // Include the Product model
-              attributes: ['id'],     // Only need the product ID to count
-          }],
-          distinct: true,  // Ensure we count distinct products
-      });
-
-      return productCount;  // Return the number of products in the cart
-  } catch (error) {
-      console.error('Error fetching product count in cart:', error);
-      return 0;  // Return 0 in case of error
-  }
-};
-
-
 
 
 const getHomePage = async (req, res) => {

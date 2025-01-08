@@ -11,7 +11,7 @@ const getLoginPage = (req, res) => {
 
 // Render the registration page
 const getRegisterPage = (req, res) => {
-    res.render('register');
+    res.render('register', {message: ""});
 };
 
 
@@ -70,6 +70,7 @@ const login = async (req, res) => {
 };
 
 
+//Not functional
 const deleteAccount = async (req, res) => {
     try {
         const userId = req.user.id;

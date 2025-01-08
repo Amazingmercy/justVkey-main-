@@ -136,10 +136,17 @@ const paymentCallback = async (req, res) => {
             return res.status(404).json({ message: 'Order not found' });
           }
 
-          order.payment_status = 'paid';
-          order.transaction_id = response.data.id;
-          order.paid_at = response.data.paid_at;
-          await order.save();
+          await Order.update(
+            {
+              payment_status: 'paid',
+              transaction_id: response.data.id,
+              paid_at: response.data.paid_at,
+            },
+            {
+              where: { id: order.id },
+            }
+          );
+          
 
           await Cart.destroy({ where: req.user.id  });
           return res.render('cart', {message: "Your Order has been placed successfully, We will reach out to you shortly, or Reachout to us by calling: 08137994827"});

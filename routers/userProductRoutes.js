@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 
-const {getHomePage, getAboutUsPage, getContactUsPage, getAccessoriesCategory, getBagsCategory, getFunctionalArtsCategory, getAllProducts, handleProductSearch, getServicesPage} = require('../controllers/userStaticController');
+const {getHomePage, getAboutUsPage, getContactUsPage, getAccessoriesCategory, getBagsCategory, getFunctionalArtsCategory, getAllProducts, handleProductSearch, getServicesPage} = require('../controllers/userProductController');
 
 
 router.get('/', getHomePage)

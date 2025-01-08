@@ -9,12 +9,6 @@ const Cart = require('./cartModel')
 User.hasMany(Order, { foreignKey: 'userId' });
 Order.belongsTo(User, { foreignKey: 'userId' });
 
-Order.hasOne(Payment, { foreignKey: 'orderId' });
-Payment.belongsTo(Order, { foreignKey: 'orderId' });
-
-User.hasMany(Payment, { foreignKey: 'userId' });
-Payment.belongsTo(User, { foreignKey: 'userId' });
-
 
 // Cart Relationship
 Cart.belongsTo(Product, { foreignKey: 'productId' });

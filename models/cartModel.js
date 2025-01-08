@@ -7,16 +7,17 @@ const Cart = sequelize.define('Cart', {
         autoIncrement: true,
         primaryKey: true,
     },
-    userId: {
+    productId: { 
         type: DataTypes.INTEGER,
         allowNull: false,
-    },
-    productId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+        references: {
+            model: 'Products',
+            key: 'id',
+        },
     },
     quantity: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         defaultValue: 1,
     },
 });
