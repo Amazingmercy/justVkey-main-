@@ -7,10 +7,10 @@
                 <div class="col-md-3 col-6">
                     <div class="card shadow-sm">
                         <% if (product.outOfStock === true) { %>
-                            <img class="card-img-top" src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                            <img class="card-img-top" style="height: 300px;" src="<%= product.imageUrl %>" alt="<%= product.name %>">
                             <span style="background-color: white; color: red; font-weight: bolder; text-align: center;">Out of stock</span>
                         <% } else { %>
-                            <img class="card-img-top" src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                            <img class="card-img-top" style="height: 300px;" src="<%= product.imageUrl %>" alt="<%= product.name %>">
                         <% } %>
                         <div class="card-body text-center">
                             <h5 class="card-title"><%= product.name %></h5>
@@ -19,7 +19,14 @@
                             <% } else { %>
                                 <p class="text-muted">$<%= parseFloat(product.USDprice).toFixed(2) %></p>
                             <% } %>
-                            <a class="btn btn-dark" href="/cart/add/<%= product.id %>">Add to Cart</a>
+
+                            <% if (!product.outOfStock) { %>
+                                <form action="/cart/add" method="POST">
+                                    <input type="hidden" name="productId" value="<%= product.id %>">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn btn-dark">Add to Cart</button>
+                                </form>
+                            <% } %>
                         </div>
                     </div>
                 </div>

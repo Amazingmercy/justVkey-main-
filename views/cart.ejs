@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partials/head') %>
+  <title>Cart</title>
+</head>
+
+<body>
+  <% if (message) { %>
+    <div class="alert alert-success text-center">
+      <%= message %>
+    </div>
+  <% } %>
+
+  <section class="cart-section py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Your Cart</h2>
+
+      <% if (cartItems.length > 0) { %>
+        <% let subtotal = 0; %>
+        <% cartItems.forEach(item => { %>
+          <% subtotal += item.Product.NGNprice * item.quantity; %>
+          <div class="cart-item">
+            <!-- Product Image -->
+            <img src="<%= item.Product.imageUrl %>" alt="<%= item.Product.name %>">
+            <form action="/cart/delete/<%= item.id %>" method="POST" class="d-inline">
+              <button type="submit" class="btn-close" aria-label="Remove"></button>
+          </form>
+
+            <!-- Product Info -->
+            <div class="cart-item-info">
+              <h5><%= item.Product.name %></h5>
+              <% if (currency === 'NGN') { %>
+              <p>Price: &#8358;<%= parseFloat(item.Product.NGNprice).toFixed(2) %></p>
+              <% } else { %>
+              <p>Price: $<%= parseFloat(item.Product.USDprice).toFixed(2) %></p>
+              <% } %>
+              <form action="/cart/update/<%= item.id %>" method="POST" class="quantity-form">
+                <div class="input-group input-group-sm">
+                  <input type="number" value="<%= item.quantity %>" name="quantity" min="1" id="quantity_<%= item.id %>"
+                    class="quantity-input form-control form-control-sm" placeholder="Enter quantity">
+                  <button type="submit" class="btn btn-dark btn-sm">Update</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <hr>
+        <% }); %>
+
+        <!-- Display Subtotal -->
+        <div class="text-end mt-4">
+          <% if (currency === 'NGN') { %>
+            <h4>Total: &#8358;<%= subtotal.toFixed(2) %></h4>
+          <% } else { %>
+            <h4>Total: $<%= subtotal.toFixed(2) %></h4>
+          <% } %>
+          <a href="/checkout" class="btn btn-dark mt-3">Proceed to Checkout</a>
+        </div>
+      <% } else { %>
+        <p class="text-center">Your cart is empty. <a href="/shop">Shop now</a></p>
+      <% } %>
+    </div>
+  </section>
+
+  <%- include('partials/footer') %>
+</body>
+
+</html>

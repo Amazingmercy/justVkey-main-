@@ -18,7 +18,7 @@
                 </div>
             <% } else { %>
                 <% products.forEach(product => { %>
-                    <div class="col-md-3 col-6">
+                    <div class="col-md-2 col-4">
                         <div class="card shadow-sm">
                             <% if (product.outOfStock === true) { %>
                                 <img class="card-img-top" src="<%= product.imageUrl %>" alt="<%= product.name %>">

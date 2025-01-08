@@ -1,6 +1,7 @@
 const {User}  = require('../models/index')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config()
 
 // Render the login page
 const getLoginPage = (req, res) => {
@@ -46,26 +47,23 @@ const register = async (req, res) => {
 // Login user
 const login = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, redirectUrl } = req.body;
 
-        // Find the user by email
         const user = await User.findOne({ where: { email } });
         if (!user) {
             return res.status(400).json({ message: 'User not found.' });
         }
 
-        // Compare password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid password.' });
         }
 
-        // Generate a JWT token
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '9h' });
 
-        //res.status(200).json({ message: 'Login successful', token });
-        // Redirect to the login page with the redirect URL as a query parameter
-        res.redirect(`/login?redirect=${encodeURIComponent(req.body.redirectUrl)}`, token);
+        // Set token as cookie and redirect to the desired page
+        res.cookie('token', token, { httpOnly: true, secure: false, maxAge: 1000 * 60 * 60 * 9 });
+        res.redirect(redirectUrl || '/');
     } catch (error) {
         res.status(500).json({ message: 'Error logging in user', error });
     }

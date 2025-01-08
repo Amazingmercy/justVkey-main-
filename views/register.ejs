@@ -1,6 +1,12 @@
 <head>
   <%- include('partials/head') %>
 </head>
+
+<% if (message) { %>
+  <div class="alert alert-success text-center">
+    <%= message %>
+  </div>
+<% } %>
   <!-- Register Section -->
   <section class="register-section py-5 d-flex justify-content-center align-items-center">
     <div class="container">

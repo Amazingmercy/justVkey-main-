@@ -2,16 +2,7 @@ const Product = require('../models/productModel');
 const {Op} = require('sequelize')
 
 
-const getAboutUsPage = async (req, res) => {
-  res.render('about')
-}
-
-
-const getContactUsPage = async (req, res) => {
-  res.render('contact')
-}
-
-
+//functions
 const getLatestProducts = async () => {
     const products = await Product.findAll({
         order: [['createdAt', 'DESC']],
@@ -29,6 +20,21 @@ const getTrendingProducts = async () => {
   return products
 }
 
+
+//route handler
+
+const getAboutUsPage = async (req, res) => {
+  res.render('about')
+}
+
+
+const getContactUsPage = async (req, res) => {
+  res.render('contact')
+}
+
+const getServicesPage = async (req, res) => {
+  res.render('services')
+}
 
 const getAllProducts = async (req,res) => {
   try {
@@ -89,15 +95,40 @@ const getFunctionalArtsCategory = async (req, res) => {
 }; 
 
 
+const getNumberOfProductsInCart = async (userId) => {
+  try {
+      // Get the number of unique products in the user's cart
+      const productCount = await Cart.count({
+          where: { userId: userId },  // Filter by the user's ID
+          include: [{
+              model: Product,         // Include the Product model
+              attributes: ['id'],     // Only need the product ID to count
+          }],
+          distinct: true,  // Ensure we count distinct products
+      });
+
+      return productCount;  // Return the number of products in the cart
+  } catch (error) {
+      console.error('Error fetching product count in cart:', error);
+      return 0;  // Return 0 in case of error
+  }
+};
+
+
+
 
 const getHomePage = async (req, res) => {
   try {
-    const {search} = req.params
     const {currency} = req.query
+    let productCount = 0
+    if (req.user == 'undefined') {
+      productCount = await getNumberOfProductsInCart(req.user.id)
+      console.log(productCount)
+    }
     const trendingProducts = await getTrendingProducts()
     const latestProducts = await getLatestProducts()
 
-    res.render('index', {trendingProducts, latestProducts, currency})
+    res.render('index', {trendingProducts, latestProducts, currency, productCount})
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).send('Error fetching products');
@@ -134,13 +165,17 @@ const handleProductSearch = async (req, res) => {
   
 } 
 
+
+
+
 module.exports = {
     getHomePage,
     getAboutUsPage,
     getContactUsPage,
+    getServicesPage,
     getAllProducts,
     getAccessoriesCategory,
     getBagsCategory,
     getFunctionalArtsCategory,
-    handleProductSearch
+    handleProductSearch,
 }

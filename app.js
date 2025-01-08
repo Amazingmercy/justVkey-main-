@@ -4,20 +4,21 @@ const app = express()
 const sequelize = require('./DB/config')
 require('./models/index')
 
+
 //middlewares
 const currency = require('./middlewares/currency')
-
+const authMiddleware = require('./middlewares/authMiddleware');
 
 //routes
 const userAuthRoutes = require('./routers/userAuthenticationRoutes')
 const adminRoutes = require('./routers/adminProductRoutes')
 const userProductRoutes = require('./routers/userProductRoutes')
+const cartRoutes = require('./routers/cartRoutes')
+const orderRoutes = require('./routers/orderRoutes')
 
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
-
-
 
   
 
@@ -30,7 +31,10 @@ app.use(currency)
 app.use('/admin', adminRoutes)
 app.use(userAuthRoutes)
 app.use(userProductRoutes)
+app.use(authMiddleware, cartRoutes)
+app.use(authMiddleware, orderRoutes)
  
+
 
 
 

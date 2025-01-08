@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head') %>
+  <title>Checkout</title>
+</head>
+<body>
+  <div class="container py-5">
+    <h2>Checkout</h2>
+    <% if (total > 0) { %>
+      <form action="/order/create" method="POST" id="checkoutForm">
+        <p>Total Amount: 
+          <input type="hidden" id="totalAmount" value="<%= total %>">
+          <input type="number" name="total" id="total" 
+            value="<%= total %>" readonly
+            <% if (currency === 'NGN') { %> 
+              data-currency="NGN" 
+            <% } else { %> 
+              data-currency="USD" 
+            <% } %>
+            class="form-control" readonly>
+        </p>
+        
+        <h5>Delivery Options</h5>
+        <div>
+          <label>
+            <input type="radio" name="deliveryOption" value="pickup" onchange="updateTotal()">
+            Pickup (No additional cost)
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" name="deliveryOption" value="delivery" onchange="updateTotal()">
+            Delivery
+          </label>
+          <div id="deliveryOptions" style="margin-left: 20px;">
+            <label for="location">Location:</label>
+            <select name="location" class="form-select form-select-sm" onchange="updateTotal()">
+              <option value="abuja">Within Abuja (+2000 NGN)</option>
+              <option value="nigeria">Within Nigeria (+5000 NGN)</option>
+              <option value="outside-nigeria">Outside Nigeria (+30000 NGN)</option>
+            </select>
+
+            <!-- Address input, only shown when delivery is selected -->
+            <div id="addressInput" style="margin-top: 10px; display:none;">
+              <label for="address">Delivery Address:</label>
+              <textarea name="address" class="form-control" placeholder="Enter your delivery address" required></textarea>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-dark mt-3">Pay Now</button>
+      </form>
+    <% } else { %>
+      <p>Your cart is empty. <a href="/shop">Shop now</a></p>
+    <% } %>
+  </div>
+
+  
+  <%- include('partials/footer') %>
+
+  <script>
+    let totalAmount = document.getElementById('totalAmount');
+    let total = document.getElementById('total');
+    let addressInput = document.getElementById('addressInput');
+    let addressField = document.querySelector('textarea[name="address"]');
+    
+    function updateTotal() {
+      const totalInput = parseFloat(totalAmount.value);
+      const deliveryOption = document.querySelector('input[name="deliveryOption"]:checked').value;
+      let newTotal = totalInput;
+
+      // Check if the delivery option is selected
+      if (deliveryOption === 'delivery') {
+        const location = document.querySelector('select[name="location"]').value;
+
+        // Apply extra charges based on location
+        if (location === 'nigeria' ) {
+          newTotal += 5000;
+        } else if (location === 'abuja' ) {
+          newTotal += 2000;
+        } else if (location === 'outside-nigeria') {
+          newTotal += 30000;
+        }
+
+        addressInput.style.display = 'block';
+        addressField.required = true;
+      } else {
+       
+        addressInput.style.display = 'none';
+        addressField.required = false;
+
+      }
+
+      total.value = newTotal.toFixed(2);  
+    }
+  </script>
+</body>
+</html>
