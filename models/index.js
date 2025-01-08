@@ -15,4 +15,4 @@ Product.hasMany(Cart, { foreignKey: 'productId' });
 
 
 
-module.exports = { User, Product, Order, Payment, Cart};
+module.exports = { User, Product, Order, Cart};
