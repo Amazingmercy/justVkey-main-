@@ -6,12 +6,14 @@ require('dotenv').config()
 // Render the login page
 const getLoginPage = (req, res) => {
     const redirectUrl = req.query.redirect || '/'; 
-    res.render('login', { redirectUrl, message: ""}, );
+     const message = ""
+    res.render('login', { redirectUrl, message});
 };
 
 // Render the registration page
 const getRegisterPage = (req, res) => {
-    res.render('register', {message: ""});
+    const message = ""
+    res.render('register', message);
 };
 
 
@@ -41,7 +43,6 @@ const register = async (req, res) => {
         res.render('login', {message: 'User registered successfully'})
     } catch (error) {
         res.status(500).json({ message: 'Error registering user', error });
-    }
 };
 
 // Login user

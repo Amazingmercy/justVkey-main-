@@ -4,7 +4,7 @@ const authMiddleware = (req, res, next) => {
     try {
         // Check for token in cookies, headers, or session
         
-        const token = (req.headers.cookie).split('=')[1];
+        const token = (req.headers.cookie);
 
         if (!token) {
             // Redirect to login with the current URL as redirectUrl
