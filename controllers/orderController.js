@@ -148,16 +148,16 @@ const paymentCallback = async (req, res) => {
           // Update the order's payment status
           order.payment_status = 'paid';
           order.transaction_id = response.data.id;
-          order.paid_at = response.data.paid_at;
           await order.save();
 
           // Clear the user's cart
           await Cart.deleteMany({ userId: req.user.id });
-
-          return res.render('cart', {
-            message:
-              'Your Order has been placed successfully, We will reach out to you shortly, or Reach out to us by calling: 08137994827',
+          const cartItems = await Cart.find({ userId: req.user.id }).populate({
+            path: 'productId', // Populate the product details
+            select: 'name imageUrl NGNprice USDprice outOfStock',
           });
+
+          return res.render('cart', {message: 'Your Order has been placed successfully, We will reach out to you shortly, or Reach out to us by calling: 08137994827', cartItems});
         } else {
           return res.status(400).json({ message: 'Payment verification failed' });
         }
