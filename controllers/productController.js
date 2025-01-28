@@ -131,7 +131,7 @@ const handleProductSearch = async (req, res) => {
     const { search } = req.query;
     if (!search || search.length < 1) {
       const products = await Product.find();
-      return res.render('shop', { products });
+      return res.render('shop', { products , message: ''});
     }
 
     const products = await Product.find({
@@ -142,7 +142,7 @@ const handleProductSearch = async (req, res) => {
       return res.render('index', { message: 'No product found', products });
     }
 
-    res.render('shop', { products , message});
+    res.render('shop', { products , message: ''});
   } catch (error) {
     console.error('Error searching for product:', error);
     res.status(500).json({ message: 'An error occurred while searching for the product' });
