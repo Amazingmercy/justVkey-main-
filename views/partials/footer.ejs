@@ -1,6 +1,6 @@
 <!-- Footer -->
 <footer class="footer text-light py-2" style="background-color: rgb(24, 23, 23);">
-  <div class="container">
+  <div class="container p-3">
     <div class="justify-content-center align-items-center">
     <div class="row">
 
@@ -98,8 +98,16 @@
           </span>
           <div class="d-flex flex-column align-items-center text-center">
             <h5 class="fw-bold " style="font-size: small;">Subscribe to Our Newsletter</h5>
+            <% if (message) { %>
+              <% if (message) { %>
+                <div class="alert alert-light alert-sm text-center d-flex justify-content-between align-items-center" style="font-size: 13px; padding: 3px;">
+                  <span><%= message %></span>
+                  <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              <% } %>
+            <% } %>
             <form action="/subscribe" method="POST">
-              <input type="email" class="form-control-lg mb-2" placeholder="Enter your email" required />
+              <input type="email" name="email" class="form-control-lg mb-2" placeholder="Enter your email" required />
               <button type="submit" class="btn btn-dark w-100">Subscribe</button>
             </form>
           </div>

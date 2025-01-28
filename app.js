@@ -1,7 +1,11 @@
 const express = require('express')
 const app = express()
+require('dotenv').config()
 
-const sequelize = require('./DB/config')
+const connectDB = require('./DB/config')
+const MongoUri = process.env.MONGOURI
+const cookieParser = require('cookie-parser');
+
 require('./models/index')
 
 
@@ -9,10 +13,12 @@ require('./models/index')
 const currency = require('./middlewares/currency')
 const authMiddleware = require('./middlewares/authMiddleware');
 
+
 //routes
-const userAuthRoutes = require('./routers/userAuthenticationRoutes')
-const adminRoutes = require('./routers/adminProductRoutes')
-const userProductRoutes = require('./routers/userProductRoutes')
+const userAuthRoutes = require('./routers/userRoutes')
+const adminProductRoutes = require('./routers/adminProductRoutes')
+const adminOrderRoutes = require('./routers/adminOrderRoutes')
+const userProductRoutes = require('./routers/productRoutes')
 const cartRoutes = require('./routers/cartRoutes')
 const orderRoutes = require('./routers/orderRoutes')
 
@@ -25,10 +31,13 @@ app.set('views', './views');
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(express.static('public'))
+app.use(cookieParser());
 
 
+
+app.use('/admin', adminProductRoutes, adminOrderRoutes)
 app.use(currency)
-app.use('/admin', adminRoutes)
+
 app.use(userAuthRoutes)
 app.use(userProductRoutes)
 app.use(authMiddleware, cartRoutes)
@@ -41,8 +50,7 @@ app.use(authMiddleware, orderRoutes)
 const port = process.env.PORT || 1414
 app.listen(port, async() => {
     try {
-        await sequelize.authenticate();
-        //await sequelize.sync({ alter: true });
+        await connectDB(MongoUri)
         console.log('Connection has been established successfully.');
         console.log(`Server is listening on port ${port}`)
     } catch (error) {

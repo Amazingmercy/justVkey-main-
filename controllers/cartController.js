@@ -1,149 +1,124 @@
-const Cart = require('../models/cartModel');
-const Product = require('../models/productModel');
+const {Cart, Product, DeliveryPrice} = require('../models/index');
 
+
+// Add product to cart
 const addToCart = async (req, res) => {
-    try {
-        const { quantity , productId} = req.body;
+  try {
+    const productId = req.params.id;
 
-        // Find product
-        const product = await Product.findByPk(productId);
-        if (!product) {
-            return res.status(404).json({ message: 'Product not found' });
-        }
-
-        // Add to cart for the logged-in user
-        await Cart.create({
-            userId: req.user.id, // Retrieved from decoded JWT
-            productId: product.id,
-            quantity,
-        });
-
-        res.redirect('/cart'); // Redirect to the cart page
-    } catch (error) {
-        console.error('Error adding to cart:', error);
-        res.status(500).json({ message: 'Error adding product to cart' });
+    // Find product
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.render('cart', { message: 'Product not found' });
     }
+
+    // Add product to cart for the logged-in user
+    const cartItem = new Cart({
+      userId: req.user.id, // Retrieved from decoded JWT
+      productId: product._id,
+    });
+
+    await cartItem.save(); // Save cart item to the database
+    res.redirect('/cart'); // Redirect to the cart page
+  } catch (error) {
+    console.error('Error adding to cart:', error);
+    res.render('cart', { message: 'Error adding product to cart' });
+  }
 };
 
+// View cart
 const viewCart = async (req, res) => {
-    try {
-        const cartItems = await Cart.findAll({
-            where: { userId: req.user.id }, 
-            include: [{
-                model: Product, 
-                attributes: ['id', 'name', 'imageUrl', 'NGNprice', 'USDprice', 'outOfStock'],
-            },], 
-        });
+  try {
+    const cartItems = await Cart.find({ userId: req.user.id }).populate({
+      path: 'productId', // Populate the product details
+      select: 'name imageUrl NGNprice USDprice outOfStock',
+    });
 
-        res.render('cart', {cartItems, message: ""} );
-    } catch (error) {
-        console.error('Error fetching cart:', error);
-        res.status(500).json({ message: 'Error fetching cart' });
-    }
+
+    res.render('cart', { cartItems, message: '' });
+  } catch (error) {
+    console.error('Error fetching cart:', error);
+    res.render('index', { message: 'Error fetching cart' });
+  }
 };
 
-
+// Update cart quantity
 const updateCartQuantity = async (req, res) => {
-    try {
-        const cartItemId = req.params.id;  // Get the cart item ID from the URL
-        const newQuantity = req.body.quantity;  // Get the new quantity from the form
+  try {
+    const cartItemId = req.params.id; // Get the cart item ID from the URL
+    const newQuantity = req.body.quantity; // Get the new quantity from the form
 
-        if (!newQuantity || newQuantity <= 0) {
-            return res.status(400).json({ message: "Invalid quantity." });
-        }
-
-        // Find the cart item by ID and update its quantity
-        const cartItem = await Cart.findOne({
-            where: {
-                id: cartItemId,
-                userId: req.user.id,  // Ensure the cart item belongs to the logged-in user
-            },
-        });
-
-        if (!cartItem) {
-            return res.status(404).json({ message: "Cart item not found." });
-        }
-
-        // Update the quantity of the item
-        cartItem.quantity = newQuantity;
-        await cartItem.save();
-
-        // Redirect back to the cart page
-        res.redirect('/cart');
-    } catch (error) {
-        console.error('Error updating cart quantity:', error);
-        res.status(500).json({ message: 'Error updating cart quantity.' });
+    if (!newQuantity || newQuantity <= 0) {
+      return res.status(400).json({ message: 'Invalid quantity.' });
     }
+
+    // Find the cart item by ID and update its quantity
+    const cartItem = await Cart.findOne({ _id: cartItemId, userId: req.user.id });
+    if (!cartItem) {
+      return res.render('cart', { message: 'Cart item not found.' });
+    }
+
+    cartItem.quantity = newQuantity; // Update the quantity
+    await cartItem.save(); // Save the updated cart item
+
+    res.redirect('/cart'); // Redirect back to the cart page
+  } catch (error) {
+    console.error('Error updating cart quantity:', error);
+    res.render('cart', { message: 'Error updating cart quantity.' });
+  }
 };
 
-
-
+// Checkout
 const checkout = async (req, res) => {
-    try {
-        const cartItems = await Cart.findAll({
-            where: { userId: req.user.id },
-            include: [{
-                model: Product,
-                attributes: ['id', 'name', 'NGNprice', 'USDprice'],
-            }],
-        });
+  try {
+    const cartItems = await Cart.find({ userId: req.user.id }).populate({
+      path: 'productId', // Populate product details
+      select: 'name NGNprice USDprice',
+    });
 
-        if (!cartItems || cartItems.length === 0) {
-            return res.render('checkout', { total: 0, message: 'Your cart is empty.' });
-        }
-
-        // Calculate the total price
-        let total = 0;
-        const currency = req.query.currency || 'NGN'; // Default to NGN if not specified
-        cartItems.forEach(item => {
-            const price = currency === 'NGN' ? item.Product.NGNprice : item.Product.USDprice;
-            total += price * item.quantity;
-        });
-
-        // Render the checkout page with the total
-        res.render('checkout', { total: total.toFixed(2), currency , message: ""});
-    } catch (error) {
-        console.error('Error fetching checkout details:', error);
-        res.status(500).json({ message: 'Error fetching checkout details.' });
+    if (!cartItems || cartItems.length === 0) {
+      return res.render('checkout', { total: 0, currency: 'NGN', deliveryPrices: [], message: 'Your cart is empty.' });
     }
+
+    // Calculate the cart total
+    let total = 0;
+    const currency = req.query.currency || 'NGN';
+    cartItems.forEach((item) => {
+      const price = currency === 'NGN' ? item.productId.NGNprice : item.productId.USDprice;
+      total += price * item.quantity;
+    });
+
+    // Fetch delivery prices from the database
+    const deliveryPrices = await DeliveryPrice.find(); 
+    res.render('checkout', {
+      total: total.toFixed(2),
+      currency,
+      deliveryPrices, 
+      message: '',
+    });
+  } catch (error) {
+    console.error('Error fetching checkout details:', error);
+    res.status(500).json({ message: 'Error fetching checkout details.' });
+  }
 };
 
 
-
-
+// Delete cart item
 const deleteCartItem = async (req, res) => {
-    try {
-        const cartItemId = req.params.id; // Get the cart item ID from the URL
+  try {
+    const cartItemId = req.params.id;
 
-        // Find the cart item and ensure it belongs to the logged-in user
-        const cartItem = await Cart.findOne({
-            where: {
-                id: cartItemId,
-                userId: req.user.id, // Ensure the cart item belongs to the current user
-            },
-        });
-
-        if (!cartItem) {
-            return res.status(404).json({ message: 'Cart item not found.' });
-        }
-
-        // Delete the cart item
-        await Cart.destroy({
-            where: {
-                id: cartItemId,
-            },
-        });
-
-        // Redirect back to the cart page
-        res.redirect('/cart');
-    } catch (error) {
-        console.error('Error deleting cart item:', error);
-        res.status(500).json({ message: 'Error deleting cart item.' });
+    // Find and delete the cart item for the logged-in user
+    const cartItem = await Cart.findOneAndDelete({ _id: cartItemId, userId: req.user.id });
+    if (!cartItem) {
+      return res.status(404).json({ message: 'Cart item not found.' });
     }
+
+    res.redirect('/cart'); // Redirect back to the cart page
+  } catch (error) {
+    console.error('Error deleting cart item:', error);
+    res.render('cart', { message: 'Error deleting cart item.' });
+  }
 };
-
-
-
-
 
 module.exports = { addToCart, viewCart, updateCartQuantity, checkout, deleteCartItem };

@@ -1,18 +1,16 @@
-const User = require('./userModel');
-const Product = require('./productModel');
-const Order = require('./orderModel');
-const Cart = require('./cartModel')
+const {User} = require('./userModel');
+const {Order} = require('./orderModel');
+const {Product} = require('./productModel');
+const {Cart} = require('./cartModel');
+const {Subscriber} = require('./subscriberModel');
+const {DeliveryPrice} = require('./deliveryPriceModel')
 
-
-// User Relationships
-User.hasMany(Order, { foreignKey: 'userId' });
-Order.belongsTo(User, { foreignKey: 'userId' });
-
-
-// Cart Relationship
-Cart.belongsTo(Product, { foreignKey: 'productId' });
-Product.hasMany(Cart, { foreignKey: 'productId' });
-
-
-
-module.exports = { User, Product, Order, Cart};
+// Export all models in a single object
+module.exports = {
+  User,
+  Order,
+  Product,
+  Cart,
+  Subscriber,
+  DeliveryPrice
+};

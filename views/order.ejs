@@ -1,0 +1,55 @@
+
+<%- include('partials/head') %>
+
+
+<body>
+  <div class="py-5 m-3">
+    <h1 class="mb-4">Your Orders</h1>
+
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Order ID</th>
+          <th>Order Date</th>
+          <th>Transaction Id</th>
+          <th>Total</th>
+          <th>Payment Status</th>
+          <th>Order Status</th>
+          <th>Delivery Method</th>
+          <th>Delivery Address</th>
+          <th>Phone Number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (orders.length > 0) { %>
+          <% orders.forEach((order, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= order.id %></td>
+              <td><%= order.createdAt %></td>
+              <td><%= order.transaction_id %></td>
+              <td><%= parseFloat(order.total).toFixed(2) %></td>
+              <td><%= order.payment_status %></td>
+              <td><%= order.order_status %></td>
+              <td><%= order.deliveryMethod %></td>
+              <td><%= order.deliveryAddress %></td>
+              <td><%= order.phoneNumber %></td>
+            </tr>
+          <% }); %>
+        <% } else { %>
+          <tr>
+            <td colspan="10" class="text-center">No orders found.</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  
+  <%- include('partials/footer') %>
+  
+
+</body>
+
+</html>

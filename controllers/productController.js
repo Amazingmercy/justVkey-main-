@@ -1,0 +1,166 @@
+const { Product, Cart, Subscriber } = require('../models/index');
+
+// Functions
+const getLatestProducts = async () => {
+  try {
+    const products = await Product.find().sort({ createdAt: -1 }).limit(4);
+    return products;
+  } catch (error) {
+    console.error('Error fetching latest products:', error);
+    return [];
+  }
+};
+
+const getTrendingProducts = async () => {
+  try {
+    let products = await Product.find({ trending: true }).limit(4);
+
+    if (products.length < 1) {
+      return products = await Product.find().sort({ createdAt: -1 }).limit(4)
+    }
+    return products;
+  } catch (error) {
+    console.error('Error fetching trending products:', error);
+    return [];
+  }
+};
+
+const getNumberOfProductsInCart = async (userId) => {
+  try {
+    const productCount = await Cart.countDocuments({ userId });
+    return productCount;
+  } catch (error) {
+    console.error('Error fetching product count in cart:', error);
+    return 0;
+  }
+};
+
+// Route Handlers
+const getAboutUsPage = async (req, res) => {
+  const trendingProducts = await getTrendingProducts();
+  res.render('about', { trendingProducts, message: "" });
+};
+
+const getContactUsPage = async (req, res) => {
+  res.render('contact', {message: "" });
+};
+
+const getServicesPage = async (req, res) => {
+  const trendingProducts = await getTrendingProducts();
+  res.render('services', { trendingProducts, message: "" });
+};
+
+const getAllProducts = async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.render('shop', { products , message: ""});
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).send('Error fetching products');
+  }
+};
+
+const getBagsCategory = async (req, res) => {
+  try {
+    const bagsCollection = await Product.find({ category: 'Bags' });
+    res.render('bag', { bagsCollection, message: "" });
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).send('Error fetching products');
+  }
+};
+
+const getAccessoriesCategory = async (req, res) => {
+  try {
+    const accessoriesCollection = await Product.find({ category: 'Accessories' });
+    res.render('accessories', { accessoriesCollection, message: "" });
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).send('Error fetching products');
+  }
+};
+
+const getFunctionalArtsCategory = async (req, res) => {
+  try {
+    const functionalArtCollection = await Product.find({ category: 'Functional_Arts' });
+    res.render('functionalArt', { functionalArtCollection , message: ""});
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).send('Error fetching products');
+  }
+};
+
+const getHomePage = async (req, res, message = '') => {
+  try {
+    const { currency } = req.query;
+    let cartCount = 0;
+
+    if (req.user) {
+      cartCount = await getNumberOfProductsInCart(req.user.id);
+    }
+
+    const trendingProducts = await getTrendingProducts();
+    const latestProducts = await getLatestProducts();
+
+    res.render('index', { trendingProducts, latestProducts, currency, cartCount, message });
+  } catch (error) {
+    console.error('Error fetching home page data:', error);
+    res.status(500).send('Error fetching home page data');
+  }
+};
+
+
+const subscribeToNews = async (req, res) => {
+  const { email } = req.body;
+  try {
+    // Check if the email already exists
+    const existingSubscriber = await Subscriber.findOne({ email });
+    if (existingSubscriber) {
+      const message = 'Email is already subscribed!';
+      return getHomePage(req, res, message);
+    }
+
+    await Subscriber.create({ email });
+    const message = 'Successfully subscribed to the newsletter!';
+    return getHomePage(req, res, message);
+  } catch (error) {
+    console.error('Error saving subscriber:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const handleProductSearch = async (req, res) => {
+  try {
+    const { search } = req.query;
+    if (!search || search.length < 1) {
+      const products = await Product.find();
+      return res.render('shop', { products });
+    }
+
+    const products = await Product.find({
+      name: { $regex: search, $options: 'i' },
+    });
+
+    if (products.length === 0) {
+      return res.render('index', { message: 'No product found', products });
+    }
+
+    res.render('shop', { products , message});
+  } catch (error) {
+    console.error('Error searching for product:', error);
+    res.status(500).json({ message: 'An error occurred while searching for the product' });
+  }
+};
+
+module.exports = {
+  getHomePage,
+  getAboutUsPage,
+  getContactUsPage,
+  getServicesPage,
+  getAllProducts,
+  getAccessoriesCategory,
+  getBagsCategory,
+  getFunctionalArtsCategory,
+  handleProductSearch,
+  subscribeToNews,
+};

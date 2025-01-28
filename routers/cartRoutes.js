@@ -7,7 +7,7 @@ const {viewCart, addToCart, updateCartQuantity, checkout, deleteCartItem} = requ
 
 
 router.get('/cart', viewCart)
-router.post('/cart/add', addToCart);
+router.get('/cart/add/:id', addToCart);
 router.post('/cart/update/:id', updateCartQuantity);
 router.get('/checkout', checkout)
 router.post('/cart/delete/:id', deleteCartItem)

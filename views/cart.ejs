@@ -8,42 +8,50 @@
 
 <body>
   <% if (message) { %>
-    <div class="alert alert-success text-center">
+    <div class="alert alert-success alert-dismissable text-center">
       <%= message %>
+      <button class="btn-close" data-bs-dismiss="alert"></button>
     </div>
   <% } %>
 
   <section class="cart-section py-5">
+    <a href="/orders" class="btn btn-dark p-3 ms-5">My Orders</a>
     <div class="container">
       <h2 class="text-center mb-4">Your Cart</h2>
 
       <% if (cartItems.length > 0) { %>
         <% let subtotal = 0; %>
         <% cartItems.forEach(item => { %>
-          <% subtotal += item.Product.NGNprice * item.quantity; %>
-          <div class="cart-item">
+          <% if (currency === 'NGN') { %>
+            <% subtotal += item.productId.NGNprice * item.quantity; %>
+          <% } else { %>
+            <% subtotal += item.productId.USDprice * item.quantity; %>
+          <% } %>
+          <div class="cart-item d-flex align-items-center mb-4">
             <!-- Product Image -->
-            <img src="<%= item.Product.imageUrl %>" alt="<%= item.Product.name %>">
-            <form action="/cart/delete/<%= item.id %>" method="POST" class="d-inline">
-              <button type="submit" class="btn-close" aria-label="Remove"></button>
-          </form>
+            <img src="<%= item.productId.imageUrl %>" alt="<%= item.productId.name %>" class="me-4" style="width: 100px; height: auto;">
 
             <!-- Product Info -->
-            <div class="cart-item-info">
-              <h5><%= item.Product.name %></h5>
+            <div class="cart-item-info flex-grow-1">
+              <h5><%= item.productId.name %></h5>
               <% if (currency === 'NGN') { %>
-              <p>Price: &#8358;<%= parseFloat(item.Product.NGNprice).toFixed(2) %></p>
+                <p>Price: &#8358;<%= parseFloat(item.productId.NGNprice).toFixed(2) %></p>
               <% } else { %>
-              <p>Price: $<%= parseFloat(item.Product.USDprice).toFixed(2) %></p>
+                <p>Price: $<%= parseFloat(item.productId.USDprice).toFixed(2) %></p>
               <% } %>
-              <form action="/cart/update/<%= item.id %>" method="POST" class="quantity-form">
+              <form action="/cart/update/<%= item._id %>" method="POST" class="quantity-form">
                 <div class="input-group input-group-sm">
-                  <input type="number" value="<%= item.quantity %>" name="quantity" min="1" id="quantity_<%= item.id %>"
+                  <input type="number" value="<%= item.quantity %>" name="quantity" min="1" id="quantity_<%= item._id %>"
                     class="quantity-input form-control form-control-sm" placeholder="Enter quantity">
                   <button type="submit" class="btn btn-dark btn-sm">Update</button>
                 </div>
               </form>
             </div>
+
+            <!-- Remove Button -->
+            <form action="/cart/delete/<%= item._id %>" method="POST" class="ms-4">
+              <button type="submit" class="btn-close" aria-label="Remove"></button>
+            </form>
           </div>
           <hr>
         <% }); %>
@@ -55,7 +63,7 @@
           <% } else { %>
             <h4>Total: $<%= subtotal.toFixed(2) %></h4>
           <% } %>
-          <a href="/checkout" class="btn btn-dark mt-3">Proceed to Checkout</a>
+          <a href="/checkout?currency=<%= currency %>" class="btn btn-dark mt-3">Proceed to Checkout</a>
         </div>
       <% } else { %>
         <p class="text-center">Your cart is empty. <a href="/shop">Shop now</a></p>

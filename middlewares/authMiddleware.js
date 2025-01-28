@@ -1,23 +1,29 @@
 const jwt = require('jsonwebtoken');
 
+
 const authMiddleware = (req, res, next) => {
     try {
         // Check for token in cookies, headers, or session
-        
-        const token = (req.headers.cookie);
 
-        if (!token) {
+        const token = (req.cookies.token);
+
+        if (!token || token == 'undefined') {
             // Redirect to login with the current URL as redirectUrl
-            return res.redirect(`/login?redirect=${encodeURIComponent(req.originalUrl)}`);
+            return res.redirect(`/login?redirect=${encodeURIComponent(req.originalUrl)}`)
         }
 
         // Verify token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded; // Attach user info to the request object
+        req.user = decoded; 
+        
         next(); // Proceed to the next middleware or route handler
     } catch (error) {
-        console.error('Auth Error:', error);
-        return res.redirect(`/login?redirect=${encodeURIComponent(req.originalUrl)}`);
+        console.log('Auth Error:', error.message);
+        if(error.message == 'jwt expired') {
+            return res.redirect(`/login?redirect=${encodeURIComponent(req.originalUrl)}`)
+        } else {
+            return res.redirect(`/login?redirect=${encodeURIComponent(req.originalUrl)}`, {message: error.message});
+        }
     }
 };
 

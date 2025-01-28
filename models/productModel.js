@@ -1,39 +1,43 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../DB/config');
+const mongoose = require('mongoose');
+const { Schema, model } = mongoose;
 
-const Product = sequelize.define('Product', {
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    description: {
-        type: DataTypes.TEXT,
-    },
-    category: {
-        type: DataTypes.ENUM,
-        values: ['Bags', 'Accessories', 'Functional_Art'], 
-        allowNull: false, 
-      },
-    NGNprice: {
-        type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
-    },
-    USDprice: {
-        type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
-    },
-    imageUrl: {
-        type: DataTypes.STRING,
-    },
-    outOfStock: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-    },
+// Define the Product Schema
+const ProductSchema = new Schema({
+  name: {
+    type: String,
+    required: true, // Name is required
+  },
+  description: {
+    type: String,
+  },
+  category: {
+    type: String,
+    enum: ['bags', 'accessories', 'functional_Art'], // Enum for categories
+    required: true, // Category is required
+  },
+  NGNprice: {
+    type: Number,
+    required: true, // Price in NGN is required
+  },
+  USDprice: {
+    type: Number,
+    required: true, // Price in USD is required
+  },
+  imageUrl: {
+    type: String,
+  },
+  outOfStock: {
+    type: Boolean,
+    default: false, // Default value is false
+  },
+  trending: {
+    type: Boolean,
+    default: false, // Default value is false
+  },
 });
 
-module.exports = Product;
+// Create and export the Product model
+const Product = model('Product', ProductSchema);
+
+
+module.exports = {Product}

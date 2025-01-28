@@ -1,57 +1,66 @@
-const Order = require('../models/orderModel')
-const User = require('../models/userModel')
-require('dotenv').config()
+const {Order, Cart} = require('../models/index')
+const https = require('https');
+require('dotenv').config();
 
 
-const createOrder = async (req, res) => {
-    try {
-        const { total, deliveryOption , deliveryAddress} = req.body;
-        const userId = req.user.id;  
-        
-        // Create order in the Order table
-        const order = await Order.create({
-            total,
-            deliveryOption,
-            deliveryAddress,
-            userId,
-            payment_status: 'unpaid',  
-        });
 
-        // Redirect to Paystack payment gateway
-        res.redirect(`/order/pay/${order.id}`);
-    } catch (error) {
-        //console.error('Error creating order:', error);
-        res.status(500).json({ message: 'Error creating order' });
-    }
+// Get orders for a user
+const getOrders = async (req, res) => {
+  try {
+    const userId = req.user.id; 
+    const orders = await Order.find({ userId }).select(
+      'id total payment_status order_status transaction_id deliveryMethod deliveryAddress phoneNumber createdAt'
+    );
+
+    res.render('order', { orders , message: ""});
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).send('Error fetching orders');
+  }
 };
 
+// Create a new order
+const createOrder = async (req, res) => {
+  try {
+    const { total, deliveryMethod, deliveryAddress, currency, phoneNumber } = req.body;
+    const userId = req.user.id;
 
+    // Create a new order document
+    const order = new Order({
+      total,
+      deliveryMethod,
+      deliveryAddress,
+      userId,
+      payment_status: 'unpaid',
+      currency,
+      phoneNumber
+    });
 
-const https = require('https');
+    await order.save(); // Save the order to the database
 
-// Initialize Payment
+    // Redirect to Paystack payment gateway
+    res.redirect(`/order/pay/${order._id}`);
+  } catch (error) {
+    console.error('Error creating order:', error);
+    res.status(500).json({ message: 'Error creating order' });
+  }
+};
+
+// Initialize payment
 const handlePayment = async (req, res) => {
   try {
     const orderId = req.params.id;
 
     // Find the order and its associated user
-    const order = await Order.findOne({
-      where: { id: orderId },
-      include: [
-        {
-          model: User,
-          attributes: ['id', 'email'],
-        },
-      ],
-    });
+    const order = await Order.findById(orderId).populate('userId', 'email'); // Populate user's email
 
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
 
-    // Prepare request data
+    // Prepare request data for Paystack
     const params = JSON.stringify({
-      email: order.User.email,
+      email: order.userId.email,
       amount: order.total * 100, // Convert amount to kobo
       reference: `order_${orderId}_${Date.now()}`,
     });
@@ -78,7 +87,7 @@ const handlePayment = async (req, res) => {
         const response = JSON.parse(data);
 
         if (response.status) {
-          // Send authorization URL to the client
+          // Redirect to the authorization URL
           res.redirect(`${response.data.authorization_url}?reference=${response.data.reference}`);
         } else {
           return res.status(400).json({ message: response.message });
@@ -99,10 +108,11 @@ const handlePayment = async (req, res) => {
   }
 };
 
-// Verify Payment
+// Verify payment
 const paymentCallback = async (req, res) => {
   try {
-    const { reference } = req.params; // Extract the reference from the request
+    const { reference } = req.params;
+
     if (!reference) {
       return res.status(400).json({ message: 'Transaction reference is required' });
     }
@@ -128,28 +138,26 @@ const paymentCallback = async (req, res) => {
         const response = JSON.parse(data);
 
         if (response.status && response.data.status === 'success') {
-          // Payment was successful
           const orderId = reference.split('_')[1]; // Extract order ID from reference
-          const order = await Order.findByPk(orderId);
+          const order = await Order.findById(orderId);
 
           if (!order) {
             return res.status(404).json({ message: 'Order not found' });
           }
 
-          await Order.update(
-            {
-              payment_status: 'paid',
-              transaction_id: response.data.id,
-              paid_at: response.data.paid_at,
-            },
-            {
-              where: { id: order.id },
-            }
-          );
-          
+          // Update the order's payment status
+          order.payment_status = 'paid';
+          order.transaction_id = response.data.id;
+          order.paid_at = response.data.paid_at;
+          await order.save();
 
-          await Cart.destroy({ where: req.user.id  });
-          return res.render('cart', {message: "Your Order has been placed successfully, We will reach out to you shortly, or Reachout to us by calling: 08137994827"});
+          // Clear the user's cart
+          await Cart.deleteMany({ userId: req.user.id });
+
+          return res.render('cart', {
+            message:
+              'Your Order has been placed successfully, We will reach out to you shortly, or Reach out to us by calling: 08137994827',
+          });
         } else {
           return res.status(400).json({ message: 'Payment verification failed' });
         }
@@ -166,10 +174,9 @@ const paymentCallback = async (req, res) => {
   }
 };
 
-
-
 module.exports = {
-    createOrder,
-    handlePayment,
-    paymentCallback
-}
+  getOrders,
+  createOrder,
+  handlePayment,
+  paymentCallback,
+};

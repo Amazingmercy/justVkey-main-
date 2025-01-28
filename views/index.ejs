@@ -7,7 +7,11 @@
   <li class="nav-item">
     <a class="nav-link text-dark d-flex flex-column align-items-center position-relative" href="/cart">
       <i class="fas fa-shopping-cart fs-4">
-      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary" style="transform: translate(50%, -50%);"><%=productCount%></span>
+        <% if (cartCount == 0) {%>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary" style="transform: translate(50%, -50%);">0</span>
+        <%} else {%>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary" style="transform: translate(50%, -50%);"><%=cartCount%></span>
+          <%}%>
     </i>
       <span class="d-inline fs-6">Cart</span>
     </a>
@@ -39,7 +43,6 @@
   <section>
     <%- include('./partials/latestProducts') %>
   </section>
-
 
 
 

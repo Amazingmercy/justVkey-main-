@@ -1,4 +1,4 @@
-const {User}  = require('../models/index')
+const {User} = require('../models/index')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
@@ -6,8 +6,7 @@ require('dotenv').config()
 // Render the login page
 const getLoginPage = (req, res) => {
     const redirectUrl = req.query.redirect || '/'; 
-     const message = ""
-    res.render('login', { redirectUrl, message});
+    res.render('login', { redirectUrl, message: ""});
 };
 
 // Render the registration page
@@ -19,13 +18,14 @@ const getRegisterPage = (req, res) => {
 
 
 const register = async (req, res) => {
+    const redirectUrl = req.query.redirect || '/'; 
     try {
         const { name, email, password } = req.body;
 
         // Check if user already exists
         const existingUser = await User.findOne({ where: { email } });
         if (existingUser) {
-            return res.status(400).json({ message: 'User already exists.' });
+            return res.render('register', { message: 'User already exists.' });
         }
 
         // Hash the password
@@ -39,9 +39,10 @@ const register = async (req, res) => {
         });
 
         //res.status(201).json({ message: 'User registered successfully', user: newUser });
-        res.render('login', {message: 'User registered successfully'})
+        res.render('login', {message: 'User registered successfully', redirectUrl})
     } catch (error) {
-        res.status(500).json({ message: 'Error registering user', error });
+        console.log('Error registering user', error)
+        res.status(500).render('register', { message: 'Error registering user', redirectUrl});
 }
 };
 
@@ -50,22 +51,33 @@ const login = async (req, res) => {
     try {
         const { email, password, redirectUrl } = req.body;
 
-        const user = await User.findOne({ where: { email } });
+        const [user] = await User.find({ email: email});
         if (!user) {
-            return res.status(400).json({ message: 'User not found.' });
+            return res.render('login', { message: 'User not found.' , redirectUrl});
         }
+
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid password.' });
+            return res.render('login', { message: 'Invalid password.' , redirectUrl});
         }
 
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '9h' });
+        const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '10h' });
 
         // Set token as cookie and redirect to the desired page
-        res.cookie('token', token, { httpOnly: true, secure: false, maxAge: 1000 * 60 * 60 * 9 });
-        res.redirect(redirectUrl || '/');
+        res.cookie('token', token, {
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === 'production', // Use HTTPS in production
+            maxAge: 24 * 60 * 60 * 1000, // 1 day
+        });        
+        if (user.role == 'admin') {
+            return res.redirect('/admin/products');
+        } else {
+            return res.redirect(redirectUrl || '/');
+        }
+        
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: 'Error logging in user', error });
     }
 };
@@ -92,11 +104,24 @@ const deleteAccount = async (req, res) => {
 
 
 
+const logOut = async(req,res) => {
+        res.cookie('token', null, { 
+            httpOnly: true, 
+            secure: false, // Use true if you're on HTTPS
+            maxAge: 0, // This immediately expires the cookie
+        });
+        res.redirect('/');
+};
+
+  
+
+
 
 module.exports = {
     getLoginPage,
     getRegisterPage,
     login,
     register,
-    deleteAccount
+    deleteAccount,
+    logOut
 }
