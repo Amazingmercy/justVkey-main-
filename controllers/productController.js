@@ -62,7 +62,7 @@ const getAllProducts = async (req, res) => {
 
 const getBagsCategory = async (req, res) => {
   try {
-    const bagsCollection = await Product.find({ category: 'Bags' });
+    const bagsCollection = await Product.find({ category: 'bags' });
     res.render('bag', { bagsCollection, message: "" });
   } catch (error) {
     console.error('Error fetching products:', error);
@@ -72,7 +72,7 @@ const getBagsCategory = async (req, res) => {
 
 const getAccessoriesCategory = async (req, res) => {
   try {
-    const accessoriesCollection = await Product.find({ category: 'Accessories' });
+    const accessoriesCollection = await Product.find({ category: 'accessories' });
     res.render('accessories', { accessoriesCollection, message: "" });
   } catch (error) {
     console.error('Error fetching products:', error);
@@ -82,7 +82,7 @@ const getAccessoriesCategory = async (req, res) => {
 
 const getFunctionalArtsCategory = async (req, res) => {
   try {
-    const functionalArtCollection = await Product.find({ category: 'Functional_Arts' });
+    const functionalArtCollection = await Product.find({ category: 'functionalArts' });
     res.render('functionalArt', { functionalArtCollection , message: ""});
   } catch (error) {
     console.error('Error fetching products:', error);
@@ -90,7 +90,7 @@ const getFunctionalArtsCategory = async (req, res) => {
   }
 };
 
-const getHomePage = async (req, res, message = '') => {
+const getHomePage = async (req, res) => {
   try {
     const { currency } = req.query;
     let cartCount = 0;
@@ -102,7 +102,7 @@ const getHomePage = async (req, res, message = '') => {
     const trendingProducts = await getTrendingProducts();
     const latestProducts = await getLatestProducts();
 
-    res.render('index', { trendingProducts, latestProducts, currency, cartCount, message });
+    res.render('index', { trendingProducts, latestProducts, currency, cartCount, message: '' });
   } catch (error) {
     console.error('Error fetching home page data:', error);
     res.status(500).send('Error fetching home page data');

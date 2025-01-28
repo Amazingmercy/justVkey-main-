@@ -21,10 +21,10 @@
                     <div class="col-md-2 col-4">
                         <div class="card shadow-sm">
                             <% if (product.outOfStock === true) { %>
-                                <img class="card-img-top" style="height: 250px;"  src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                                <img class="card-img-top img-fluid"style="height: 250px; width: 250px;"  src="<%= product.imageUrl %>" alt="<%= product.name %>">
                                 <span style="background-color: white; color: red; font-weight: bolder; text-align: center;">Out of stock</span>
                             <% } else { %>
-                                <img class="card-img-top" style="height: 250px;" src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                                <img class="card-img-top img-fluid"style="height: 250px; width: 250px;" src="<%= product.imageUrl %>" alt="<%= product.name %>">
                             <% } %>
                             <div class="card-body text-center">
                                 <h5 class="card-title"><%= product.name %></h5>
