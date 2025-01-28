@@ -51,11 +51,12 @@ const login = async (req, res) => {
     try {
         const { email, password, redirectUrl } = req.body;
 
-        const [user] = await User.find({ email: email});
+        const user = await User.find({ email: email});
         if (!user) {
             return res.render('login', { message: 'User not found.' , redirectUrl});
         }
 
+    
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {

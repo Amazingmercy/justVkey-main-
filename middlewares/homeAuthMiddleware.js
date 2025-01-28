@@ -7,7 +7,6 @@ const homeAuthMiddleware = async (req, res, next) => {
         const token = req.cookies?.token;
 
         if (!token || token === 'undefined') {
-            console.log('No token provided, rendering homepage');
             await getHomePage(req, res);
             return;
         }
