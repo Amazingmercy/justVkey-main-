@@ -15,9 +15,6 @@ const getTrendingProducts = async () => {
   try {
     let products = await Product.find({ trending: true }).limit(4);
 
-    if (products.length < 1) {
-      return products = await Product.find().sort({ createdAt: -1 }).limit(4)
-    }
     return products;
   } catch (error) {
     console.error('Error fetching trending products:', error);

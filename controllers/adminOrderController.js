@@ -6,7 +6,7 @@ const getOrders = async (req, res) => {
     // Populate user name in the order (similar to Sequelize's include)
     const orders = await Order.find()
       .populate('userId', 'name') 
-      .select('id total payment_status order_status deliveryMethod transaction_id deliveryAddress phoneNumber createdAt currency'); // Select the required fields
+      .select('id total payment_status order_status deliveryMethod transaction_id deliveryAddress phoneNumber createdAt currency').sort({ createdAt: -1 });
 
     res.render('adminPages/allOrders', { orders });
   } catch (error) {

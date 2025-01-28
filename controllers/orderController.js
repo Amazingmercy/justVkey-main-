@@ -10,7 +10,7 @@ const getOrders = async (req, res) => {
     const userId = req.user.id; 
     const orders = await Order.find({ userId }).select(
       'id total payment_status order_status transaction_id deliveryMethod deliveryAddress phoneNumber createdAt'
-    );
+    ).sort({ createdAt: -1 });
 
     res.render('order', { orders , message: ""});
   } catch (error) {
