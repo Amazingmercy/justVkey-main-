@@ -111,7 +111,7 @@ const handlePayment = async (req, res) => {
 // Verify payment
 const paymentCallback = async (req, res) => {
   try {
-    const { reference } = req.params;
+    const { reference } = req.query;
 
     if (!reference) {
       return res.status(400).json({ message: 'Transaction reference is required' });
