@@ -2,21 +2,7 @@
   <%- include('partials/head') %>
 </head>
 
-<!-- Cart -->
-<div class="cart">
-  <li class="nav-item">
-    <a class="nav-link text-dark d-flex flex-column align-items-center position-relative" href="/cart">
-      <i class="fas fa-shopping-cart fs-md-10 fs-4">
-        <% if (cartCount == 0) {%>
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary" style="transform: translate(50%, -50%);">0</span>
-        <%} else {%>
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary" style="transform: translate(50%, -50%);"><%=cartCount%></span>
-          <%}%>
-    </i>
-      <span class="d-inline fs-6">Cart</span>
-    </a>
-  </li>
- </div>
+
 
   <!-- Hero Section -->
   <section class="hero-section text-center py-3 m-5 d-flex">
@@ -24,7 +10,7 @@
       <!-- Image Section on small screens comes first -->
       <div class="d-flex justify-content-center mt-4 mt-md-0 order-2 order-md-1 m-5">
         <video autoplay loop muted playsinline class="img-fluid" style="min-width: 300px; max-width: 100%;">
-          <source src="/assets/images/justVkey.mp4" type="video/mp4">
+          <source src="/assets/images/justVkey(new).mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
       </div>

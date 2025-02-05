@@ -18,37 +18,53 @@
                     <a href="/categories/accessories" class="btn btn-dark mt-3">Browse Accessories Collection</a>
                 </div>
             <% } else { %>
-                <% bagsCollection.forEach(product => { %>
-                    <div class="col-md-3 col-6">
-                        <div class="card shadow-sm">
-                            <% if (product.outOfStock === true) { %>
-                                <img class="card-img-top" style="height: 300px;" src="<%= product.imageUrl %>" alt="<%= product.name %>">
-                                <span style="background-color: white; color: red; font-weight: bolder; text-align: center;">Out of stock</span>
-                            <% } else { %>
-                                <img class="card-img-top" style="height: 300px;" src="<%= product.imageUrl %>" alt="<%= product.name %>">
-                            <% } %>
-                            <div class="card-body text-center">
-                                <h5 class="card-title"><%= product.name %></h5>
-                                <p class="text-muted">
-                                    <% if (currency == 'NGN') { %>
-                                        &#8358;<%= parseFloat(product.NGNprice).toFixed(2) %>
+                    <% bagsCollection.forEach(product => { %>
+                        <div class="col-md-3 col-6">
+                            <div class="card shadow-sm">
+                                <div class="product-image-container" style="position: relative; width: 100%; height: 250px; overflow: hidden;">
+                                    <% if (Array.isArray(product.imageUrl)) { %>
+                                        <!-- Use the first image as default -->
+                                        <img class="card-img-top product-image img-fluid" 
+                                            src="<%= product.imageUrl[0] %>" 
+                                            alt="<%= product.name %>"
+                                            data-images='<%= JSON.stringify(product.imageUrl) %>'
+                                            style="height: 250px; width: 100%;">
                                     <% } else { %>
-                                        $<%= parseFloat(product.USDprice).toFixed(2) %>
+                                        <!-- Single image case (Out of stock or single image product) -->
+                                        <img class="card-img-top product-image img-fluid"
+                                            src="<%= product.imageUrl[0] %>" 
+                                            alt="<%= product.name %>"
+                                            data-images='<%= JSON.stringify([product.imageUrl]) %>'
+                                            style="height: 250px; width: 100%;">
                                     <% } %>
-                                </p>
-                                <% if (!product.outOfStock) { %>
-                                    <a class="btn btn-dark" href="/cart/add/<%= product.id %>">Add to Cart</a>
-                                <% }else {%>
-                                    <a class="btn btn-dark" href="/">Add to Cart</a>
-                                <% }%>
+        
+                                    <% if (product.outOfStock === true) { %>
+                                        <span class="out-of-stock-label">Out of stock</span>
+                                    <% } %>
+                                </div>
+        
+                                <div class="card-body text-center">
+                                    <h5 class="card-title"><%= product.name %></h5>
+                                    <% if (currency === 'NGN') { %>
+                                        <p class="text-muted">&#8358;<%= parseFloat(product.NGNprice).toFixed(2) %></p>
+                                    <% } else { %>
+                                        <p class="text-muted">$<%= parseFloat(product.USDprice).toFixed(2) %></p>
+                                    <% } %>
+        
+                                    <% if (!product.outOfStock) { %>
+                                        <a class="btn btn-dark" href="/cart/add/<%= product.id %>">Add to Cart</a>
+                                    <% } else { %>
+                                        <a class="btn btn-dark disabled">Out of Stock</a>
+                                    <% } %>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                <% }); %>
+                    <% }); %>
             <% } %>
         </div>
     </div>
 </section>
 
 <%- include('partials/footer') %> 
+<script src="/scripts/script.js"></script>
 

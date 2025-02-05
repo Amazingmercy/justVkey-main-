@@ -14,8 +14,8 @@
     </div>
   <% } %>
 
-  <section class="cart-section py-5">
-    <a href="/orders" class="btn btn-dark p-3 ms-5">My Orders</a>
+  <section class="cart-section py-5 container">
+    <a href="/orders" class="btn btn-dark p-1 ms-5">My Orders</a>
     <div class="container">
       <h2 class="text-center mb-4">Your Cart</h2>
 
@@ -27,9 +27,9 @@
           <% } else { %>
             <% subtotal += item.productId.USDprice * item.quantity; %>
           <% } %>
-          <div class="cart-item d-flex align-items-center mb-4">
+          <div class="cart-item d-flex align-items-center">
             <!-- Product Image -->
-            <img src="<%= item.productId.imageUrl %>" alt="<%= item.productId.name %>" class="me-4" style="width: 100px; height: auto;">
+            <img src="<%= item.productId.imageUrl %>" alt="<%= item.productId.name %>" class="me-4" style="width: 100px; height: 100px;">
 
             <!-- Product Info -->
             <div class="cart-item-info flex-grow-1">
@@ -71,6 +71,7 @@
     </div>
   </section>
 
+  <%- include('partials/trendingProducts') %>
   <%- include('partials/footer') %>
 </body>
 

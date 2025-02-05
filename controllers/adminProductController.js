@@ -1,5 +1,6 @@
 const {Product, DeliveryPrice} = require('../models/index');
 
+
 // Get all products
 const getProducts = async (req, res) => {
   try {
@@ -20,20 +21,21 @@ const getAddProduct = (req, res) => {
 // Handle add product submission
 const postAddProduct = async (req, res) => {
   try {
-    const { name, description, category, USDprice, NGNprice } = req.body;
-    const image = req.file ? req.file.path : null;
 
+      const { name, description, category, USDprice, NGNprice } = req.body;
+      const image = req.files ? req.files.map(file => file.path) : []
 
-    await Product.create({
-      name,
-      description,
-      category,
-      NGNprice,
-      USDprice,
-      imageUrl: image,
-    });
-
-    res.redirect('/admin/products');
+  
+      await Product.create({
+        name,
+        description,
+        category,
+        NGNprice,
+        USDprice,
+        imageUrl: image,
+      });
+  
+      res.redirect('/admin/products');
   } catch (error) {
     console.error('Error adding product');
     res.status(500).send('Error adding product');
@@ -57,7 +59,7 @@ const getEditProduct = async (req, res) => {
 const postEditProduct = async (req, res) => {
   try {
     const { name, description, category, NGNprice, USDprice } = req.body;
-    const image = req.file ? req.file.path : null;
+    const image = req.files ? req.files.map(file => file.path) : []
 
     const product = await Product.findById(req.params.id); // Find product by ID
     if (!product) return res.status(404).json({ message: 'Product not found' });

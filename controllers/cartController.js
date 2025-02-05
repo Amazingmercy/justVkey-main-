@@ -1,4 +1,5 @@
 const {Cart, Product, DeliveryPrice} = require('../models/index');
+const {getTrendingProducts} = require('../controllers/productController')
 
 
 // Add product to cart
@@ -34,8 +35,10 @@ const viewCart = async (req, res) => {
       select: 'name imageUrl NGNprice USDprice outOfStock',
     });
 
+    const trendingProducts = await getTrendingProducts()
 
-    res.render('cart', { cartItems, message: '' });
+
+    res.render('cart', { cartItems, message: '', trendingProducts });
   } catch (error) {
     console.error('Error fetching cart:', error);
     res.render('index', { message: 'Error fetching cart' });

@@ -24,7 +24,7 @@ const ProductSchema = new Schema({
     required: true, // Price in USD is required
   },
   imageUrl: {
-    type: String,
+    type: Array,
   },
   outOfStock: {
     type: Boolean,

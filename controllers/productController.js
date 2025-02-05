@@ -140,7 +140,7 @@ const handleProductSearch = async (req, res) => {
 
     if (products.length === 0) {
       return res.render('index', { message: 'No product found', products });
-    }
+    }  
 
     res.render('shop', { products , message: ''});
   } catch (error) {
@@ -160,4 +160,5 @@ module.exports = {
   getFunctionalArtsCategory,
   handleProductSearch,
   subscribeToNews,
+  getTrendingProducts
 };
