@@ -4,9 +4,10 @@ const {Product, DeliveryPrice} = require('../models/index');
 // Get all products
 const getProducts = async (req, res) => {
   try {
+    const message = req.query.message
     const products = await Product.find();
     const deliveryPrices = await DeliveryPrice.find()
-    res.render('adminPages/allProducts', { products, deliveryPrices, message: ""});
+    res.render('adminPages/allProducts', { products, deliveryPrices, message});
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).send('Error fetching products');
@@ -35,7 +36,7 @@ const postAddProduct = async (req, res) => {
         imageUrl: image,
       });
   
-      res.redirect('/admin/products');
+      res.redirect('/admin/products?message=Product added successfully');
   } catch (error) {
     console.error('Error adding product');
     res.status(500).send('Error adding product');
@@ -48,6 +49,7 @@ const getEditProduct = async (req, res) => {
     const product = await Product.findById(req.params.id); // Find product by ID
     if (!product) return res.render('adminPages/editProducts', { message: 'Product not found' });
 
+
     res.render('adminPages/editProducts', { product, message: "" });
   } catch (error) {
     console.error('Error fetching product for edit:', error);
@@ -58,7 +60,7 @@ const getEditProduct = async (req, res) => {
 // Handle edit product submission
 const postEditProduct = async (req, res) => {
   try {
-    const { name, description, category, NGNprice, USDprice } = req.body;
+    const { name, description, category, NGNprice, USDprice, outOfStock, trending } = req.body;
     const image = req.files ? req.files.map(file => file.path) : []
 
     const product = await Product.findById(req.params.id); // Find product by ID
@@ -69,10 +71,14 @@ const postEditProduct = async (req, res) => {
     product.category = category;
     product.NGNprice = NGNprice;
     product.USDprice = USDprice;
-    if (image) product.imageUrl = image;
+    product.outOfStock = outOfStock;
+    product.trending = trending;
+    if (image.length > 0) {
+      product.imageUrl = image;
+    }    
 
     await product.save(); // Save the updated product
-    res.redirect('/admin/products');
+    res.redirect('/admin/products?message=Product Updated sucessfully');
   } catch (error) {
     console.error('Error updating product:', error);
     res.status(500).send('Error updating product');
@@ -89,7 +95,7 @@ const outOfStockProduct = async (req, res) => {
 
     product.outOfStock = true; // Update outOfStock field
     await product.save(); // Save the updated product
-    res.redirect('/admin/products');
+    res.redirect('/admin/products?message=Product marked as out of stock');
   } catch (error) {
     console.error('Error marking product as out of stock:', error);
     res.status(500).send('Error marking product as out of stock');
@@ -103,9 +109,9 @@ const addToTrend = async (req, res) => {
       return res.render('adminPages/allProducts', { message: 'Product not found.' });
     }
 
-    product.trending = true; // Update outOfStock field
-    await product.save(); // Save the updated product
-    res.redirect('/admin/products');
+    product.trending = true; 
+    await product.save(); 
+    res.redirect('/admin/products?message=Product marked as trending');
   } catch (error) {
     console.error('Error marking product as trending', error);
     res.status(500).send('Error marking product as trending');

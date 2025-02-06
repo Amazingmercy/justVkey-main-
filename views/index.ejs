@@ -3,9 +3,23 @@
 </head>
 
 
+<div class="cart">
+    <a class="nav-link text-dark d-flex flex-column align-items-center position-relative" href="/cart">
+      <i class="fas fa-shopping-cart fs-6">
+        <% if (cartCount == 0) {%>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary" style="transform: translate(50%, -50%);">0</span>
+        <%} else {%>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary" style="transform: translate(50%, -50%);"><%=cartCount%></span>
+          <%}%>
+    </i>
+      <span class="d-inline fs-6">Cart</span>
+    </a>
+ </div>
+
+
 
   <!-- Hero Section -->
-  <section class="hero-section text-center py-3 m-5 d-flex">
+  <section class="hero-section text-center py-3 mt-2 d-flex shadow-lg">
     <div class="container d-flex flex-column-reverse flex-md-row justify-content-center align-items-center text-center">
       <!-- Image Section on small screens comes first -->
       <div class="d-flex justify-content-center mt-4 mt-md-0 order-2 order-md-1 m-5">
@@ -30,6 +44,59 @@
   <section>
     <%- include('./partials/latestProducts') %>
   </section>
+
+
+  <section class="services-section py-5">
+      <h3 class="display-5 text-dark text-center">What we offer..</h3>
+      <h5 class="text-center mb-5"> We provide exquisite services tailored to meet your needs. Explore what we have to offer!</h5>
+      <div class="row g-5 m-3">
+        <div class="col-md-3">
+          <div class="card h-100 shadow-lg">
+            <div class="card-body text-center p-5">
+              <i class="fas fa-shipping-fast fa-3x text-dark mb-3"></i>
+              <h5 class="card-title fw-bold fs-5">Fast Delivery</h5>
+              <p class="card-text fs-8">
+                Enjoy swift and reliable delivery for all your purchases. We ensure your items arrive on time, every time.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card h-100 shadow-lg">
+            <div class="card-body text-center p-5">
+              <i class="fas fa-hand-holding-heart fa-3x text-dark mb-3"></i>
+              <h5 class="card-title fw-bold fs-5">Customer Support</h5>
+              <p class="card-text fs-8">
+                Our dedicated support team is available 24/7 to address your questions and concerns.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 shadow-lg">
+              <div class="card-body text-center p-5">
+                <i class="fas fa-credit-card fa-3x text-dark mb-3"></i>
+                <h5 class="card-title fw-bold fs-5">Secured Payment</h5>
+                <p class="card-text fs-8 ">
+                Shop with confidence knowing your payments are 100% secure. We prioritize your safety with reliable and trusted payment option.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 shadow-lg">
+              <div class="card-body text-center p-5">
+                <i class="fas fa-tools fa-3x text-dark mb-3"></i>
+                <h5 class="card-title fw-bold fs-5">Quality and Durable Materials</h5>
+                <p class="card-text fs-8">
+                  We use quality materials to create durable and elegant Products that stand the test of time.
+                </p>
+              </div>
+            </div>
+          </div>
+      </div>
+  </section>
+
 
 
 

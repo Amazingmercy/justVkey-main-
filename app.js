@@ -23,6 +23,7 @@ const cartRoutes = require('./routers/cartRoutes')
 const orderRoutes = require('./routers/orderRoutes')
 
 
+//view Engine set up
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
@@ -37,7 +38,6 @@ app.use(cookieParser());
 
 app.use('/admin', adminProductRoutes, adminOrderRoutes)
 app.use(currency)
-
 app.use(userAuthRoutes)
 app.use(userProductRoutes)
 app.use(authMiddleware, cartRoutes)

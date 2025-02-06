@@ -8,7 +8,15 @@
 
 <body>
 
-  <div class="container mt-5">
+  <% if (message) { %>
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+      <%= message %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% } %>
+  
+
+  <div class="container">
     <h2 class="text-center">Edit Product</h2>
 
 
@@ -34,6 +42,22 @@
       </div>
 
       <div class="mb-3">
+        <label for="trending" class="form-label">Set Trending:</label>
+        <select name="trending" id="trending" class="form-select">
+          <option value="true" <%= product.trending === 'true' ? 'selected' : '' %>>True</option>
+          <option value="false" <%= product.trending === 'false' ? 'selected' : '' %>>False</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="outOfStock" class="form-label">Set Out of Stock:</label>
+        <select name="outOfStock" id="outOfStock" class="form-select">
+          <option value="true" <%= product.outOfStock === 'true' ? 'selected' : '' %>>True</option>
+          <option value="false" <%= product.outOfStock === 'false' ? 'selected' : '' %>>False</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
         <label for="category" class="form-label">Category</label>
         <select name="category" id="category" class="form-select" required>
           <option value="bags" <%= product.category === 'bags' ? 'selected' : '' %>>Bags</option>
@@ -44,9 +68,9 @@
 
       <div class="mb-3">
         <label for="image" class="form-label">Product Image</label>
-        <input type="file" name="productImage" id="productImage" class="form-control" accept="image/*" />
+        <input type="file" name="productImage" id="productImage" class="form-control" accept="image/*"  multiple/>
         <% if (product.imageUrl) { %>
-          <img src="<%= product.imageUrl %>" alt="<%= product.name %>" class="img-thumbnail mt-3" style="max-height: 150px;" />
+          <img src="<%= product.imageUrl[0] %>" alt="<%= product.name %>" class="img-thumbnail mt-3" style="max-height: 150px;" />
         <% } %>
       </div>
 

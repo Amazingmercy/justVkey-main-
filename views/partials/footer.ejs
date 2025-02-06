@@ -1,131 +1,68 @@
 <!-- Footer -->
-<footer class="footer text-light py-2" style="background-color: rgb(24, 23, 23);">
-  <div class="container p-3">
-    <div class="justify-content-center align-items-center">
-    <div class="row">
+<footer class="text-light py-2" style="background-color: rgb(54, 54, 54);">
+  <div class="row text-center g-2 mt-3">
 
-      <!-- Quick Links Section -->
-      <div class="col-md-3">
-        <div class="col-md-4 d-flex flex-column justify-content-center align-items-center">
-          <span
-            class="d-flex justify-content-center align-items-center w-56 h-56 bg-main-two-600 text-light rounded-circle fs-2 mb-2">
-            <i class="fas fa-hashtag"></i>
-          </span>
-          <div class="d-flex flex-column align-items-center text-center">
-            <h5 class="fw-bold">Quick Links</h5>
-            <ul class="list-unstyled">
-              <li><a href="/" class="text-light">Home</a></li>
-              <li><a href="/shop" class="text-light">Shop Now</a></li>
-              <li><a href="/about" class="text-light">About Us</a></li>
-              <li><a href="/contact" class="text-light">Contact </a></li>
-              <li><a href="/services" class="text-light">Services</a></li>
-              <li><a href="/privacyPolicy" class="text-light">Privacy</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
+    <!-- Quick Links Section -->
+    <div class="col-md-4 d-flex flex-column justify-content-between">
+      <h5 class="fw-bold">Quick Links</h5>
+      <ul class="list-unstyled mb-0">
+        <li><a href="/" class="text-light">Home</a></li>
+        <li><a href="/shop" class="text-light">Shop Now</a></li>
+        <li><a href="/about" class="text-light">About Us</a></li>
+        <li><a href="/contact" class="text-light">Contact</a></li>
+        <li><a href="/services" class="text-light">Services</a></li>
+        <li><a href="/privacyPolicy" class="text-light">Privacy</a></li>
+      </ul>
+    </div>
 
     <!-- Social Media Section -->
-      <div class="col-md">
-        <div class="col-md-4 d-flex flex-column justify-content-center align-items-center">
-          <span
-            class="d-flex justify-content-center align-items-center w-56 h-56 bg-main-two-600 text-light rounded-circle fs-2 mb-2">
-            <i class="fas fa-link"></i>
-          </span>
-          <div class="d-flex flex-column align-items-center text-center">
-            <h5 class="fw-bold" style="font-size: small;">Follow Us</h5>
-            <ul class="list-unstyled d-flex">
-              <li class="me-3">
-                <a href="https://www.facebook.com" target="_blank" class="text-light"><i class="fab fa-facebook-square fa-2x"></i></a>
-              </li>
-              <li class="me-3">
-                <a href="https://www.instagram.com/beadsby_justvkey?igsh=enJvYjBocGg2amgx" target="_blank" class="text-light"><i class="fab fa-instagram fa-2x"></i></a>
-              </li>
-              <li class="me-3">
-                <a href="https://twitter.com" target="_blank" class="text-light"><i class="fab fa-twitter-square fa-2x"></i></a>
-              </li>
-              <li class="me-3">
-                <a href="https://www.linkedin.com" target="_blank" class="text-light"><i class="fab fa-linkedin fa-2x"></i></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-
-
-
-      <div class="col-md">
-        <div class="col-md-4 d-flex flex-column justify-content-center align-items-center">
-          <span
-            class="d-flex justify-content-center align-items-center w-56 h-56 bg-main-two-600 text-light rounded-circle fs-2 mb-2">
-            <i class="fas fa-truck"></i>
-          </span>
-          <div class="d-flex flex-column align-items-center text-center">
-            <h5 class="fw-bold" style="font-size: small;">Worldwide Shipping</h5>
-            <p>Orders are delivered worldwide and at due dates.</p>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-md">
-        <div class="col-md-4 d-flex flex-column justify-content-center align-items-center">
-          <span
-            class="d-flex justify-content-center align-items-center w-56 h-56 bg-main-two-600 text-light rounded-circle fs-2 mb-2">
-            <i class="fas fa-user-cog"></i>
-          </span>
-          <div class="d-flex flex-column align-items-center text-center">
-            <h5 class="fw-bold" style="font-size: small;">Customized Orders</h5>
-            <p>Products can be made to personalized perference on request.</p>
-          </div>
-        </div>
-
-      </div>
-
-
-
-
-      
-      <!-- Newsletter Section -->
-
-      <div class="col-md-3">
-        <div class="col-md-4 d-flex flex-column justify-content-center align-items-center">
-          <span
-            class="d-flex justify-content-center align-items-center w-56 h-56 bg-main-two-600 text-light rounded-circle fs-2 mb-2">
-            <i class="fas fa-newspaper"></i>
-          </span>
-          <div class="d-flex flex-column align-items-center text-center">
-            <h5 class="fw-bold " style="font-size: small;">Subscribe to Our Newsletter</h5>
-            <% if (message) { %>
-              <% if (message) { %>
-                <div class="alert alert-light alert-sm text-center d-flex justify-content-between align-items-center" style="font-size: 13px; padding: 3px;">
-                  <span><%= message %></span>
-                  <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-              <% } %>
-            <% } %>
-            <form action="/subscribe" method="POST">
-              <input type="email" name="email" class="form-control-lg mb-2" placeholder="Enter your email" required />
-              <button type="submit" class="btn btn-dark w-100">Subscribe</button>
-            </form>
-          </div>
-        </div>
-
-      </div>
-
-
+    <div class="col-md-4 d-flex flex-column justify-content">
+      <h5 class="fw-bold" style="font-size: small;">Follow Us</h5>
+      <ul class="list-unstyled d-flex justify-content-center align-items-center mb-0">
+        <li class="me-3">
+          <a href="#" target="_blank" class="text-light"><i class="fab fa-facebook-square fa-2x"></i></a>
+        </li>
+        <li class="me-3">
+          <a href="https://www.instagram.com/beadsby_justvkey?igsh=enJvYjBocGg2amgx" target="_blank"
+            class="text-light"><i class="fab fa-instagram fa-2x"></i></a>
+        </li>
+        <li class="me-3">
+          <a href="#" target="_blank" class="text-light"><i class="fab fa-twitter-square fa-2x"></i></a>
+        </li>
+        <li class="me-3">
+          <a href="#" target="_blank" class="text-light"><i class="fab fa-linkedin fa-2x"></i></a>
+        </li>
+      </ul>
     </div>
+
+    <!-- Newsletter Section -->
+    <div class="col-md-4 d-flex flex-column justify-content">
+      <h5 class="fw-bold" style="font-size: small;">Subscribe to Our Newsletter</h5>
+      <% if (message) { %>
+        <div class="alert alert-light alert-sm text-center d-flex justify-content-between align-items-center"
+          style="font-size: 13px; padding: 3px;">
+          <span>
+            <%= message %>
+          </span>
+          <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% } %>
+      <form action="/subscribe" method="POST" class="d-flex justify-content-center">
+        <input type="email" name="email" class="form-control-lg me-2" placeholder="Enter your email" required />
+        <button type="submit" class="btn btn-dark">Subscribe</button>
+      </form>
     </div>
+
   </div>
 </footer>
 
-
-<div class="text-center logoName mt-2 fw-bold" style="font-size: small;">
-  <img src="/assets/images/logo/logo.png" alt="" height="35">
-  <p>&copy; 2025 JustVkeyLuxuries</p>
+<!-- Footer Logo -->
+<div class="text-center mt-2 fw-bold d-flex flex-column align-items-center" style="font-size: small;">
+  <div class="mb-3">
+    <img src="/assets/images/logo/logo.png" alt="" height="35">
+  </div>
+  <div class="d-flex align-items-center">
+    <p class="me-3">Copyright &copy; 2025 JustVkeyLuxuries</p>
+    <p class="me-3">Developed by: <a href="https://www.github.com/Amazingmercy" class="text-dark">Mercy Amaefule</a></p>
+  </div>
 </div>
-
-<!-- Font Awesome CDN for Social Media Icons -->
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>

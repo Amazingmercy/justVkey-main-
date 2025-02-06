@@ -3,10 +3,12 @@
 </head>
 
 <% if (message) { %>
-  <div class="alert alert-success text-center">
+  <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
     <%= message %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 <% } %>
+
   <!-- Register Section -->
   <section class="register-section py-5 d-flex justify-content-center align-items-center">
     <div class="container">
