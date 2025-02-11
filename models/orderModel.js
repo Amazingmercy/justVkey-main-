@@ -4,7 +4,7 @@ const { Schema, model } = mongoose;
 // Define the Order Schema
 const OrderSchema = new Schema({
   orderId: {
-    type: Number,
+    type: String,
     required: false,
   },
   total: {
