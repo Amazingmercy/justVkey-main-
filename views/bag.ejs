@@ -18,10 +18,11 @@
                     <a href="/categories/accessories" class="btn btn-dark mt-3">Browse Accessories Collection</a>
                 </div>
             <% } else { %>
+                <div class="row g-4">
                     <% bagsCollection.forEach(product => { %>
                         <div class="col-md-3 col-6">
                             <div class="card shadow-sm">
-                                <div class="product-image-container" style="position: relative; width: 100%; height: 250px; overflow: hidden;">
+                                <div class="product-image-container" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
                                     <% if (Array.isArray(product.imageUrl)) { %>
                                         <!-- Use the first image as default -->
                                         <img class="card-img-top product-image img-fluid" 
@@ -58,6 +59,7 @@
                             </div>
                         </div>
                     <% }); %>
+                </div>
             <% } %>
         </div>
     </div>
@@ -65,4 +67,26 @@
 
 <%- include('partials/footer') %> 
 <script src="/scripts/script.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+  const elements = document.querySelectorAll(".fade-in");
+
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          observer.unobserve(entry.target); // Stop observing once visible
+        }
+      });
+    },
+    { threshold: 0.2 } // Trigger when 20% of the element is visible
+  );
+
+  elements.forEach(element => {
+    observer.observe(element);
+  });
+});
+
+</script>
 
