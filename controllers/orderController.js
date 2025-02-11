@@ -15,7 +15,7 @@ const getOrders = async (req, res) => {
     }
     const userId = req.user.id; 
     const orders = await Order.find({ userId }).select(
-      'id total payment_status order_status transaction_id deliveryMethod deliveryAddress phoneNumber createdAt'
+      'id total payment_status order_status orderId deliveryMethod deliveryAddress phoneNumber createdAt'
     ).sort({ createdAt: -1 });
 
     res.render('order', { orders , message: "", cartCount});
@@ -93,11 +93,7 @@ const handlePayment = async (req, res) => {
       resPaystack.on('end', () => {
         const response = JSON.parse(data);
 
-        if (response.status) {
-          return res.redirect(response.data.authorization_url);
-        } else {
-          return res.status(400).json({ message: response.message });
-        }
+        res.redirect(`${response.data.authorization_url}`);
       });
     });
 
@@ -156,18 +152,19 @@ const paymentCallback = async (req, res) => {
             return res.status(404).json({ message: 'Order not found' });
           }
 
+          
+console.log(orderId)
           // Update the order's payment status
           order.payment_status = 'paid';
           order.transaction_id = response.data.id;
+          order.orderId = orderId
           await order.save();
 
           // Clear the user's cart
           await Cart.deleteMany({ userId: req.user.id });
+        
 
-          return res.render('cart', {
-            message: 'Your Order has been placed successfully, We will reach out to you shortly, or Reach out to us by calling: 08137994827',
-            cartItems: [], // No need to fetch again
-          });
+          res.redirect('/cart?message=Your Order has been placed successfully, We will reach out to you shortly');
         } else {
           return res.status(400).json({ message: 'Payment verification failed' });
         }

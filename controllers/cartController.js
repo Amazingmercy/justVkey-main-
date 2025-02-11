@@ -32,7 +32,7 @@ const viewCart = async (req, res) => {
   try {
     let cartCount = 0;
     let cartItems = [];
-    let message = '';
+    let message =  req.query.message || '';
 
     if (req.user) {
       cartCount = await getNumberOfProductsInCart(req.user.id);

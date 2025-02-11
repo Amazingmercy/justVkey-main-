@@ -1,48 +1,50 @@
 <!-- Product Showcase -->
-<section class="products-section py-5 bg-light shadow-md">
+<section class="products-section py-5 bg-light shadow-md fade-in">
     <div class="container">
         <h2 class="text-center mb-4" style="font-weight: 700;">In the <i>Spotlight</i></h2>
         <div class="row g-4">
-            <% trendingProducts.forEach(product => { %>
+            <% trendingProducts.forEach(product=> { %>
                 <div class="col-md-3 col-6">
                     <div class="card shadow-sm">
-                        <div class="product-image-container" style="position: relative; width: 100%; height: 250px; overflow: hidden;">
+                        <div class="product-image-container"
+                            style="position: relative; width: 100%; height: 250px; overflow: hidden;">
                             <% if (Array.isArray(product.imageUrl)) { %>
                                 <!-- Use the first image as default -->
-                                <img class="card-img-top product-image1 img-fluid" 
-                                    src="<%= product.imageUrl[0] %>" 
-                                    alt="<%= product.name %>"
-                                    data-images='<%= JSON.stringify(product.imageUrl) %>'>
-                            <% } else { %>
-                                <!-- Single image case (Out of stock or single image product) -->
-                                <img class="card-img-top product-image1 img-fluid"
-                                    src="<%= product.imageUrl[0] %>" 
-                                    alt="<%= product.name %>"
-                                    data-images='<%= JSON.stringify([product.imageUrl]) %>'>
-                            <% } %>
+                                <img class="card-img-top product-image1 img-fluid" src="<%= product.imageUrl[0] %>"
+                                    alt="<%= product.name %>" data-images='<%= JSON.stringify(product.imageUrl) %>'>
+                                <% } else { %>
+                                    <!-- Single image case (Out of stock or single image product) -->
+                                    <img class="card-img-top product-image1 img-fluid" src="<%= product.imageUrl[0] %>"
+                                        alt="<%= product.name %>"
+                                        data-images='<%= JSON.stringify([product.imageUrl]) %>'>
+                                    <% } %>
 
-                            <% if (product.outOfStock === true) { %>
-                                <span class="out-of-stock-label">Out of stock</span>
-                            <% } %>
+                                        <% if (product.outOfStock===true) { %>
+                                            <span class="out-of-stock-label">Out of stock</span>
+                                            <% } %>
                         </div>
 
                         <div class="card-body text-center">
-                            <h5 class="card-title"><%= product.name %></h5>
-                            <% if (currency === 'NGN') { %>
-                                <p class="text-muted">&#8358;<%= parseFloat(product.NGNprice).toFixed(2) %></p>
-                            <% } else { %>
-                                <p class="text-muted">$<%= parseFloat(product.USDprice).toFixed(2) %></p>
-                            <% } %>
+                            <h5 class="card-title">
+                                <%= product.name %>
+                            </h5>
+                            <% if (currency==='NGN' ) { %>
+                                <p class="text-muted">&#8358;<%= parseFloat(product.NGNprice).toFixed(2) %>
+                                </p>
+                                <% } else { %>
+                                    <p class="text-muted">$<%= parseFloat(product.USDprice).toFixed(2) %>
+                                    </p>
+                                    <% } %>
 
-                            <% if (!product.outOfStock) { %>
-                                <a class="btn btn-dark" href="/cart/add/<%= product.id %>">Add to Cart</a>
-                            <% } else { %>
-                                <a class="btn btn-dark disabled">Out of Stock</a>
-                            <% } %>
+                                        <% if (!product.outOfStock) { %>
+                                            <a class="btn btn-dark" href="/cart/add/<%= product.id %>">Add to Cart</a>
+                                            <% } else { %>
+                                                <a class="btn btn-dark disabled">Out of Stock</a>
+                                                <% } %>
                         </div>
                     </div>
                 </div>
-            <% }); %>
+                <% }); %>
         </div>
     </div>
 </section>
@@ -50,18 +52,29 @@
 
 
 <script>
-    const products1 = document.querySelectorAll(".product-image1");
 
-products1.forEach(imageElement => {
-    const images = JSON.parse(imageElement.getAttribute("data-images"));
 
-    if (images.length > 1) {
-        let currentIndex = 0;
 
-        setInterval(() => {
-            currentIndex = (currentIndex + 1) % images.length;
-            imageElement.src = images[currentIndex];
-        }, 2000);
-    }
-});
+    document.addEventListener("DOMContentLoaded", function () {
+        const elements = document.querySelectorAll(".fade-in");
+
+        const observer = new IntersectionObserver(
+            (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                        observer.unobserve(entry.target); // Stop observing once visible
+                    }
+                });
+            },
+            { threshold: 0.2 } // Trigger when 20% of the element is visible
+        );
+
+        elements.forEach(element => {
+            observer.observe(element);
+        });
+
+
+    });
+
 </script>

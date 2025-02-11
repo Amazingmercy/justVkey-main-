@@ -3,6 +3,10 @@
 
 <head>
   <%- include('partials/head') %>
+  <style>
+
+    
+  </style>
 </head>
 
 <body>
@@ -10,27 +14,30 @@
   
 
   <!-- Hero Section -->
-  <section class="hero-section text-center text-dark py-5" style="background: url('/assets/images/about-hero.jpg') center/cover;">
-    <div class="container">
-      <h3 class="display-5 text-dark"  style="font-weight: 700;">About Us</h3>
-      
+  <section class="hero-section text-center">
+    <div class="container hero-content">
+      <h3 class="animated-text">OUR STORY</h3>
     </div>
   </section>
 
   <!-- About Us Section -->
   <section class="about-section mb-5">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row align-items-center">
-        <div class="col-md-6">
-          <h1 class="text-dark" style="font-weight: 900;">Welcome to</h1>
-          <h2 class="text-secondary">JustVkey Luxuries</h2>
-          <p class="lead">Discover the story behind JustVkey and our mission to redefine elegance.</p>
+        <div class="col-md-6 shadow-lg bg-white p-5 m-5 fade-in">
+          <h1 class="text-secondary" style="font-weight: 900;">Welcome to</h1>
+          <h2 class="text-dark mb-5" style="font-weight: 700;">JustVkey Luxuries</h2>
 
-          <p style="font-size: large;" class="fw-bold">At JustVkey, we believe in celebrating individuality and craftsmanship. Our handcrafted designs
-            are created with precision, ensuring each piece tells a unique story. Whether you're looking for
-            a timeless accessory or a bold statement piece, our collection has something for everyone.</p>
+
+          <p style="font-size: large;">Journey began with a simple passion and love for fashion, and a desire to create something beautiful, which led to the discovery of the world of beadwork. 
+            Inspired by the tradition of handcrafted beadwork, I set out to design luxury beaded handbags and accessories, that blends elegance and personal expression. </p>
+
+            <p style="font-size: large;">
+              I saw a gap in the market-many luxury handbags and accessories were mass produced lacking the personal touch of craftsmanship and individuality, I wanted to create a line that not only eluded luxury but told a story via intricate bead work and precision. What started as a hobby learned a junior school, beading for family and friends soon blossomed into a brand. I horned my craft, learnt from different artisans around the world and built a collection that combines timeless designs with expert beadwork.
+            </p>
+
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4 ms-2 fade-in">
           <video autoplay loop muted playsinline class="img-fluid" style="min-height: 300px; max-width: 100%;">
             <source src="/assets/images/justVkey(new).mp4" type="video/mp4">
             Your browser does not support the video tag.
@@ -41,9 +48,26 @@
   </section>
 
 
+  <section class="about-section mb-5 fade-in">
+    <div class="shadow-lg bg-white p-5 m-5">
+    <p style="font-size: large;">
+    At the heart of our brand is the commitment to quality craftsmanship we source beads from ethical suppliers, using only materials that reflect luxury and the care that goes into each piece
+    </p>
+  
+    
+    <p style="font-size: large;">
+      Today our pieces are cherished as works of art finely crafted to empower women express their unique style.
+    As we move forward, we are committed to growing a collection, introducing other accessories collaborating with other creative, continually offering to our customers accessories that celebrates artistry, elegance and individuality. 
+
+    </p>
+    
+    <p class="fw-bold">
+      We are more than just a brand we are a celebration of diverse unique styles empowered by the artistry of our designs!</p>
+    </div>
+  </section>
 
   <!-- Services Section -->
-  <section class="mission-section bg-light py-5 mb-3">
+  <section class="mission-section bg-light py-5 mb-3 fade-in">
     <div class="container text-center">
       <div class="card-body text-center p-5">
         <i class="fas fa-chalkboard-teacher fa-3x text-dark mb-3"></i>
@@ -57,7 +81,7 @@
 
 
   <!-- Mission Section -->
-  <section class="mission-section py-5 mb-3">
+  <section class="mission-section py-5 mb-3 fade-in">
     <div class="container text-center">
       <h2 class="text-secondary">Our Mission</h2>
       <p class="fw-bold">To empower individuals to express themselves through elegant and sustainable designs.</p>
@@ -71,19 +95,41 @@
   </section>
 
 
-  <!-- Call-to-Action -->
+  <!-- Call-to-Action
   <section class="cta-section text-center text-dark py-5 bg-light">
     <div class="container">
       <h2 class="fw-bold">Join Our Journey</h2>
       <p class="lead">Stay connected and explore our trending collections</p>
       <a href="/shop" class="btn btn-outline-dark p-3">Shop Now</a>
     </div>
-  </section>
+  </section> -->
 
   <!-- Footer -->
   <%- include('partials/footer') %>
 
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  const elements = document.querySelectorAll(".fade-in");
+
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          observer.unobserve(entry.target); // Stop observing once visible
+        }
+      });
+    },
+    { threshold: 0.2 } // Trigger when 20% of the element is visible
+  );
+
+  elements.forEach(element => {
+    observer.observe(element);
+  });
+});
+
+</script>
 
 </html>

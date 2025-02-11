@@ -11,7 +11,7 @@
   <!-- Header -->
   
   <!-- Hero Section -->
-  <section class="hero-section position-relative text-center" style="min-height: 400px;">
+  <section class="hero-section position-relative text-center fade-in" style="min-height: 400px;">
     <!-- Image Div -->
     <div style="background: url('/assets/images/icons/bg.png.jpg') center/cover; height: 300px;"></div>
   
@@ -24,7 +24,7 @@
   
 
   <!-- Contact Information Section -->
-  <section class="contact-info-section py-5 mt-5">
+  <section class="contact-info-section py-5 mt-5 fade-in">
     <div class="container">
       <div class="row text-center">
         <div class="col-md-3 mb-4">
@@ -66,4 +66,29 @@
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+  const elements = document.querySelectorAll(".fade-in");
+
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          observer.unobserve(entry.target); // Stop observing once visible
+        }
+      });
+    },
+    { threshold: 0.2 } // Trigger when 20% of the element is visible
+  );
+
+  elements.forEach(element => {
+    observer.observe(element);
+  });
+});
+
+  </script>
 </html>
+
+

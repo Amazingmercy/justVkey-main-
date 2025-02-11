@@ -7,7 +7,7 @@ const {createOrder, handlePayment, paymentCallback, getOrders} = require('../con
 router.get('/orders', getOrders)
 router.post('/order/create', createOrder)
 router.get('/order/pay/:id', handlePayment)
-router.get('/payment/callback', paymentCallback)
+router.get('/payment/callback/:trxref/:reference', paymentCallback)
 
 
 

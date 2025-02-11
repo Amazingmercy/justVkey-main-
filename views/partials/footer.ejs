@@ -1,23 +1,28 @@
 <!-- Footer -->
-<footer class="text-light py-2" style="background-color: rgb(54, 54, 54);">
+<footer class="text-light py-2" style="background: linear-gradient(45deg, #252323, #f3f2f0);">
   <div class="row text-center g-2 mt-3">
 
     <!-- Quick Links Section -->
-    <div class="col-md-4 d-flex flex-column justify-content-between">
-      <h5 class="fw-bold">Quick Links</h5>
-      <ul class="list-unstyled mb-0">
-        <li><a href="/" class="text-light">Home</a></li>
-        <li><a href="/shop" class="text-light">Shop Now</a></li>
-        <li><a href="/about" class="text-light">About Us</a></li>
-        <li><a href="/contact" class="text-light">Contact</a></li>
-        <li><a href="/services" class="text-light">Services</a></li>
-        <li><a href="/privacyPolicy" class="text-light">Privacy</a></li>
-      </ul>
+    <div class="col-md-4 d-flex flex-column align-items-center">
+      <h5 class="fw-bold mb-3 text-center">Quick Links</h5>
+      <div class="d-flex flex-row gap-4 text-center">
+        <ul class="list-unstyled mb-0">
+          <li><a href="/contact" class="text-light text-decoration-none d-block py-1">Contact</a></li>
+          <li><a href="/#" class="text-light text-decoration-none d-block py-1">Services</a></li>
+          <li><a href="/#" class="text-light text-decoration-none d-block py-1">Privacy</a></li>
+        </ul>
+        <ul  class="list-unstyled mb-0">
+          <li><a href="/" class="text-light text-decoration-none d-block py-1">Home</a></li>
+          <li><a href="/shop" class="text-light text-decoration-none d-block py-1">Shop Now</a></li>
+          <li><a href="/about" class="text-light text-decoration-none d-block py-1">About Us</a></li>
+        </ul>
+      </div>
     </div>
+    
 
     <!-- Social Media Section -->
     <div class="col-md-4 d-flex flex-column justify-content">
-      <h5 class="fw-bold" style="font-size: small;">Follow Us</h5>
+      <h5 class="fw-bold mb-4" style="font-size: small;">Follow Us</h5>
       <ul class="list-unstyled d-flex justify-content-center align-items-center mb-0">
         <li class="me-3">
           <a href="#" target="_blank" class="text-light"><i class="fab fa-facebook-square fa-2x"></i></a>
@@ -37,7 +42,7 @@
 
     <!-- Newsletter Section -->
     <div class="col-md-4 d-flex flex-column justify-content">
-      <h5 class="fw-bold" style="font-size: small;">Subscribe to Our Newsletter</h5>
+      <h5 class="fw-bold mb-4" style="font-size: small;">Subscribe to Our Newsletter</h5>
       <% if (message) { %>
         <div class="alert alert-light alert-sm text-center d-flex justify-content-between align-items-center"
           style="font-size: 13px; padding: 3px;">
