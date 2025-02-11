@@ -6,21 +6,19 @@
             <% latestProducts.forEach(product => { %>
                 <div class="col-md-3 col-6">
                     <div class="card shadow-sm">
-                        <div class="product-image-container" style="position: relative; width: 100%; height: 250px; overflow: hidden;">
+                        <div class="product-image-container" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
                             <% if (Array.isArray(product.imageUrl)) { %>
                                 <!-- Use the first image as default -->
                                 <img class="card-img-top product-image img-fluid" 
                                     src="<%= product.imageUrl[0] %>" 
                                     alt="<%= product.name %>"
-                                    data-images='<%= JSON.stringify(product.imageUrl) %>'
-                                    style="height: 250px; width: 100%;">
+                                    data-images='<%= JSON.stringify(product.imageUrl) %>'>
                             <% } else { %>
                                 <!-- Single image case (Out of stock or single image product) -->
                                 <img class="card-img-top product-image img-fluid"
                                     src="<%= product.imageUrl[0] %>" 
                                     alt="<%= product.name %>"
-                                    data-images='<%= JSON.stringify([product.imageUrl]) %>'
-                                    style="height: 250px; width: 100%;">
+                                    data-images='<%= JSON.stringify([product.imageUrl]) %>'>
                             <% } %>
 
                             <% if (product.outOfStock === true) { %>

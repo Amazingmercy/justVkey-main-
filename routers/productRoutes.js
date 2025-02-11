@@ -6,7 +6,9 @@ const {getHomePage, getAboutUsPage, getContactUsPage, getAccessoriesCategory, ge
 const homeAuthMiddleware = require('../middlewares/homeAuthMiddleware');
 
 
-router.get('/', homeAuthMiddleware, getHomePage)
+
+
+router.get('/', getHomePage)
 router.get('/about', getAboutUsPage)
 router.get('/contact', getContactUsPage)
 router.get('/services', getServicesPage)

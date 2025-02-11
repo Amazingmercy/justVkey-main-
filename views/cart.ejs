@@ -29,7 +29,7 @@
           <% } %>
           <div class="cart-item d-flex align-items-center">
             <!-- Product Image -->
-            <img src="<%= item.productId.imageUrl %>" alt="<%= item.productId.name %>" class="me-4" style="width: 100px; height: 100px;">
+            <img src="<%= item.productId.imageUrl[0] %>" alt="<%= item.productId.name %>" class="me-4" style="width: 100px; height: 100px;">
 
             <!-- Product Info -->
             <div class="cart-item-info flex-grow-1">
@@ -63,6 +63,7 @@
           <% } else { %>
             <h4>Total: $<%= subtotal.toFixed(2) %></h4>
           <% } %>
+          <a href="/shop" class="btn btn-secondary mt-3">Keep Exploring</a>
           <a href="/checkout?currency=<%= currency %>" class="btn btn-dark mt-3">Proceed to Checkout</a>
         </div>
       <% } else { %>

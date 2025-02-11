@@ -1,18 +1,24 @@
 const {Order, Cart} = require('../models/index')
 const https = require('https');
 require('dotenv').config();
+const {getNumberOfProductsInCart} = require('../controllers/productController')
 
 
 
 // Get orders for a user
 const getOrders = async (req, res) => {
   try {
+    let cartCount = 0;
+
+    if (req.user) {
+      cartCount = await getNumberOfProductsInCart(req.user.id);
+    }
     const userId = req.user.id; 
     const orders = await Order.find({ userId }).select(
       'id total payment_status order_status transaction_id deliveryMethod deliveryAddress phoneNumber createdAt'
     ).sort({ createdAt: -1 });
 
-    res.render('order', { orders , message: ""});
+    res.render('order', { orders , message: "", cartCount});
   } catch (error) {
     console.error('Error fetching orders:', error);
     res.status(500).send('Error fetching orders');
@@ -47,6 +53,7 @@ const createOrder = async (req, res) => {
 };
 
 // Initialize payment
+
 const handlePayment = async (req, res) => {
   try {
     const orderId = req.params.id;
@@ -83,12 +90,11 @@ const handlePayment = async (req, res) => {
         data += chunk;
       });
 
-      resPaystack.on('end', async () => {
+      resPaystack.on('end', () => {
         const response = JSON.parse(data);
 
         if (response.status) {
-          // Redirect to the authorization URL
-          res.redirect(`${response.data.authorization_url}?reference=${response.data.reference}`);
+          return res.redirect(response.data.authorization_url);
         } else {
           return res.status(400).json({ message: response.message });
         }
@@ -96,15 +102,15 @@ const handlePayment = async (req, res) => {
     });
 
     reqPaystack.on('error', (error) => {
-      console.error(error);
-      res.status(500).json({ message: 'Error initializing payment' });
+      console.error('Error initializing payment:', error);
+      return res.status(500).json({ message: 'Error initializing payment' });
     });
 
     reqPaystack.write(params);
     reqPaystack.end();
   } catch (error) {
     console.error('Error initializing payment:', error);
-    res.status(500).json({ message: 'Error initializing payment' });
+    return res.status(500).json({ message: 'Error initializing payment' });
   }
 };
 
@@ -117,6 +123,8 @@ const paymentCallback = async (req, res) => {
       return res.status(400).json({ message: 'Transaction reference is required' });
     }
 
+    console.log('Verifying payment for reference:', reference);
+
     const options = {
       hostname: 'api.paystack.co',
       port: 443,
@@ -127,7 +135,7 @@ const paymentCallback = async (req, res) => {
       },
     };
 
-    https.request(options, async (resPaystack) => {
+    https.get(options, async (resPaystack) => {
       let data = '';
 
       resPaystack.on('data', (chunk) => {
@@ -138,9 +146,12 @@ const paymentCallback = async (req, res) => {
         const response = JSON.parse(data);
 
         if (response.status && response.data.status === 'success') {
-          const orderId = reference.split('_')[1]; // Extract order ID from reference
-          const order = await Order.findById(orderId);
+          const orderId = reference.split('_')[1] || null;
+          if (!orderId) {
+            return res.status(400).json({ message: 'Invalid order reference' });
+          }
 
+          const order = await Order.findById(orderId);
           if (!order) {
             return res.status(404).json({ message: 'Order not found' });
           }
@@ -152,27 +163,25 @@ const paymentCallback = async (req, res) => {
 
           // Clear the user's cart
           await Cart.deleteMany({ userId: req.user.id });
-          const cartItems = await Cart.find({ userId: req.user.id }).populate({
-            path: 'productId', // Populate the product details
-            select: 'name imageUrl NGNprice USDprice outOfStock',
-          });
 
-          return res.render('cart', {message: 'Your Order has been placed successfully, We will reach out to you shortly, or Reach out to us by calling: 08137994827', cartItems});
+          return res.render('cart', {
+            message: 'Your Order has been placed successfully, We will reach out to you shortly, or Reach out to us by calling: 08137994827',
+            cartItems: [], // No need to fetch again
+          });
         } else {
           return res.status(400).json({ message: 'Payment verification failed' });
         }
       });
-    })
-      .on('error', (error) => {
-        console.error('Error verifying payment:', error);
-        res.status(500).json({ message: 'Error verifying payment' });
-      })
-      .end();
+    }).on('error', (error) => {
+      console.error('Error verifying payment:', error);
+      return res.status(500).json({ message: 'Error verifying payment' });
+    });
   } catch (error) {
     console.error('Error verifying payment:', error);
-    res.status(500).json({ message: 'Error verifying payment' });
+    return res.status(500).json({ message: 'Error verifying payment' });
   }
 };
+
 
 module.exports = {
   getOrders,

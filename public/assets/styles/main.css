@@ -74,11 +74,11 @@ input, select {
 }
 
 .cart {
-    position: sticky;
-    top: 20%; /* Sticks at the bottom of the screen */
-    left: 0; /* Aligns to the right side of the screen */
-    margin: 0;
-    z-index: 1000; /* Ensures it's above other elements */
+    position: relative;
+    top: 20%; 
+    left: 0; 
+    margin-top: 20px;
+    z-index: 1000; 
     max-width: 80px;
   }
   
@@ -92,7 +92,7 @@ input, select {
     left: 100%;
     transform: translate(-50%, -50%);
     font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
+    padding: 0.20rem 0.5rem;
   }
   .cart-item {
     display: flex;
@@ -130,10 +130,21 @@ input, select {
     font-size: 14px;
 }
 
+.product-image-container img{
+  height: 250px; 
+  width: 100%;
+}
+
 @media screen and (max-width:450px){
   .cart {
-    position: absolute;
-    max-width: 80px;
+  
+    max-width: 30px;
+    margin-top: 30px;
+  }
+
+  .product-image-container img {
+    height: 150px;
+    width: 100%;
   }
 
 }
@@ -150,12 +161,7 @@ input, select {
     }
     .hero-section {
         flex-direction: column; /* Stack text above image on larger screens */
-    }
-    .cart {
-      max-width: 80px;
-    }
-    
-} */
+  
   
 
   

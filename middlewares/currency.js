@@ -1,11 +1,11 @@
-const currency = ((req, res, next) => {
-    const currency = req.query.currency;
-    // Make currency available in all templates
-    res.locals.currency = currency;
-    
-    next()
-    
-  });
+const currency = (req, res, next) => {
+  if (req.query.currency) {
+      res.cookie('currency', req.query.currency, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
+  }
 
+  res.locals.currency = req.cookies.currency || 'NGN';
 
-  module.exports = currency
+  next();
+};
+
+module.exports = currency;

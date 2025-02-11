@@ -3,6 +3,10 @@ const { Schema, model } = mongoose;
 
 // Define the Order Schema
 const OrderSchema = new Schema({
+  orderId: {
+    type: Number,
+    required: false,
+  },
   total: {
     type: Number,
     required: true,

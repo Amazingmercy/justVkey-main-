@@ -35,22 +35,42 @@ const getNumberOfProductsInCart = async (userId) => {
 // Route Handlers
 const getAboutUsPage = async (req, res) => {
   const trendingProducts = await getTrendingProducts();
-  res.render('about', { trendingProducts, message: "" });
+  let cartCount = 0;
+
+    if (req.user) {
+      cartCount = await getNumberOfProductsInCart(req.user.id);
+    }
+  res.render('about', { trendingProducts, message: "",  cartCount });
 };
 
 const getContactUsPage = async (req, res) => {
-  res.render('contact', {message: "" });
+  let cartCount = 0;
+
+    if (req.user) {
+      cartCount = await getNumberOfProductsInCart(req.user.id);
+    }
+  res.render('contact', {message: "", cartCount });
 };
 
 const getServicesPage = async (req, res) => {
   const trendingProducts = await getTrendingProducts();
-  res.render('services', { trendingProducts, message: "" });
+  let cartCount = 0;
+
+    if (req.user) {
+      cartCount = await getNumberOfProductsInCart(req.user.id);
+    }
+  res.render('services', { trendingProducts, message: "", cartCount });
 };
 
 const getAllProducts = async (req, res) => {
   try {
+    let cartCount = 0;
+
+    if (req.user) {
+      cartCount = await getNumberOfProductsInCart(req.user.id);
+    }
     const products = await Product.find();
-    res.render('shop', { products , message: ""});
+    res.render('shop', { products , message: "", cartCount});
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).send('Error fetching products');
@@ -59,8 +79,13 @@ const getAllProducts = async (req, res) => {
 
 const getBagsCategory = async (req, res) => {
   try {
+    let cartCount = 0;
+
+    if (req.user) {
+      cartCount = await getNumberOfProductsInCart(req.user.id);
+    }
     const bagsCollection = await Product.find({ category: 'bags' });
-    res.render('bag', { bagsCollection, message: "" });
+    res.render('bag', { bagsCollection, message: "", cartCount });
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).send('Error fetching products');
@@ -69,8 +94,13 @@ const getBagsCategory = async (req, res) => {
 
 const getAccessoriesCategory = async (req, res) => {
   try {
+    let cartCount = 0;
+
+    if (req.user) {
+      cartCount = await getNumberOfProductsInCart(req.user.id);
+    }
     const accessoriesCollection = await Product.find({ category: 'accessories' });
-    res.render('accessories', { accessoriesCollection, message: "" });
+    res.render('accessories', { accessoriesCollection, message: "" , cartCount});
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).send('Error fetching products');
@@ -79,8 +109,13 @@ const getAccessoriesCategory = async (req, res) => {
 
 const getFunctionalArtsCategory = async (req, res) => {
   try {
+    let cartCount = 0;
+
+    if (req.user) {
+      cartCount = await getNumberOfProductsInCart(req.user.id);
+    }
     const functionalArtCollection = await Product.find({ category: 'functionalArts' });
-    res.render('functionalArt', { functionalArtCollection , message: ""});
+    res.render('functionalArt', { functionalArtCollection , message: "", cartCount});
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).send('Error fetching products');
@@ -95,6 +130,7 @@ const getHomePage = async (req, res) => {
     if (req.user) {
       cartCount = await getNumberOfProductsInCart(req.user.id);
     }
+
 
     const trendingProducts = await getTrendingProducts();
     const latestProducts = await getLatestProducts();
@@ -160,5 +196,6 @@ module.exports = {
   getFunctionalArtsCategory,
   handleProductSearch,
   subscribeToNews,
-  getTrendingProducts
+  getTrendingProducts,
+  getNumberOfProductsInCart
 };

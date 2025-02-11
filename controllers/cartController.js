@@ -1,5 +1,5 @@
 const {Cart, Product, DeliveryPrice} = require('../models/index');
-const {getTrendingProducts} = require('../controllers/productController')
+const {getTrendingProducts, getNumberOfProductsInCart} = require('../controllers/productController')
 
 
 // Add product to cart
@@ -30,20 +30,33 @@ const addToCart = async (req, res) => {
 // View cart
 const viewCart = async (req, res) => {
   try {
-    const cartItems = await Cart.find({ userId: req.user.id }).populate({
-      path: 'productId', // Populate the product details
-      select: 'name imageUrl NGNprice USDprice outOfStock',
-    });
+    let cartCount = 0;
+    let cartItems = [];
+    let message = '';
 
-    const trendingProducts = await getTrendingProducts()
+    if (req.user) {
+      cartCount = await getNumberOfProductsInCart(req.user.id);
+      
+      // Fetch cart items only if the user has items in the cart
+      cartItems = await Cart.find({ userId: req.user.id }).populate({
+        path: 'productId',
+        select: 'name imageUrl NGNprice USDprice outOfStock',
+      });
 
+      if (!cartItems.productId == null) {
+        message = 'Your cart is empty.';
+      }
+    }
 
-    res.render('cart', { cartItems, message: '', trendingProducts });
+    const trendingProducts = await getTrendingProducts();
+
+    res.render('cart', { cartItems, message, trendingProducts, cartCount });
   } catch (error) {
     console.error('Error fetching cart:', error);
-    res.render('index', { message: 'Error fetching cart' });
+    res.render('cart', { cartItems: [], message: 'Error fetching cart', trendingProducts: [], cartCount: 0 });
   }
 };
+
 
 // Update cart quantity
 const updateCartQuantity = async (req, res) => {
@@ -74,6 +87,11 @@ const updateCartQuantity = async (req, res) => {
 // Checkout
 const checkout = async (req, res) => {
   try {
+    let cartCount = 0;
+
+    if (req.user) {
+      cartCount = await getNumberOfProductsInCart(req.user.id);
+    }
     const cartItems = await Cart.find({ userId: req.user.id }).populate({
       path: 'productId', // Populate product details
       select: 'name NGNprice USDprice',
@@ -91,6 +109,8 @@ const checkout = async (req, res) => {
       total += price * item.quantity;
     });
 
+    
+
     // Fetch delivery prices from the database
     const deliveryPrices = await DeliveryPrice.find(); 
     res.render('checkout', {
@@ -98,6 +118,7 @@ const checkout = async (req, res) => {
       currency,
       deliveryPrices, 
       message: '',
+      cartCount
     });
   } catch (error) {
     console.error('Error fetching checkout details:', error);

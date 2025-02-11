@@ -12,6 +12,7 @@ require('./models/index')
 //middlewares
 const currency = require('./middlewares/currency')
 const authMiddleware = require('./middlewares/authMiddleware');
+const homeAuthMiddleware = require('./middlewares/homeAuthMiddleware');
 
 
 //routes
@@ -39,7 +40,7 @@ app.use(cookieParser());
 app.use('/admin', adminProductRoutes, adminOrderRoutes)
 app.use(currency)
 app.use(userAuthRoutes)
-app.use(userProductRoutes)
+app.use(homeAuthMiddleware,userProductRoutes)
 app.use(authMiddleware, cartRoutes)
 app.use(authMiddleware, orderRoutes)
  
