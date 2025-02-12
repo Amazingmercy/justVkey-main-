@@ -7,8 +7,7 @@ const homeAuthMiddleware = async (req, res, next) => {
         const token = req.cookies?.token;
 
         if (!token || token === 'undefined') {
-            await getHomePage(req, res);
-            return;
+            return next()
         }
 
         // Verify token

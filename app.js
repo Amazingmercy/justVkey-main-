@@ -37,11 +37,11 @@ app.use(cookieParser());
 
 
 app.use(currency)
+app.use(userAuthRoutes)
 app.use(userProductRoutes)
 
 app.use(authMiddleware)
-app.use('/admin', adminMiddleware, adminProductRoutes, adminOrderRoutes)
-app.use(userAuthRoutes)
+app.use('/admin', adminProductRoutes, adminOrderRoutes)
 app.use(cartRoutes)
 app.use(orderRoutes)
 
