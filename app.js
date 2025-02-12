@@ -11,8 +11,8 @@ require('./models/index')
 
 //middlewares
 const currency = require('./middlewares/currency')
-const authMiddleware = require('./middlewares/authMiddleware');
-const homeAuthMiddleware = require('./middlewares/homeAuthMiddleware');
+const {authMiddleware, adminMiddleware} = require('./middlewares/authMiddleware');
+
 
 
 //routes
@@ -36,13 +36,14 @@ app.use(express.static('public'))
 app.use(cookieParser());
 
 
-
-app.use('/admin', adminProductRoutes, adminOrderRoutes)
+app.use(authMiddleware)
+app.use('/admin', adminMiddleware, adminProductRoutes, adminOrderRoutes)
 app.use(currency)
 app.use(userAuthRoutes)
-app.use(homeAuthMiddleware,userProductRoutes)
-app.use(authMiddleware, cartRoutes)
-app.use(authMiddleware, orderRoutes)
+app.use(userProductRoutes)
+app.use(cartRoutes)
+app.use(orderRoutes)
+
  
 
 

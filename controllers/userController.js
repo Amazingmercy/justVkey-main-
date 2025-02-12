@@ -6,7 +6,8 @@ require('dotenv').config()
 // Render the login page
 const getLoginPage = (req, res) => {
     const redirectUrl = req.query.redirect || '/'; 
-    res.render('login', { redirectUrl, message: ""});
+    const message = req.query.message
+    res.render('login', { redirectUrl, message});
 };
 
 // Render the registration page
