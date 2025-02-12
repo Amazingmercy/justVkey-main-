@@ -3,7 +3,7 @@ const NodeCache = require('node-cache')
 const cache = new NodeCache()
 
 
-const duration = (req, res, next) => {
+module.exports = duration =>  (req, res, next) => {
 
     if (req.method !== 'GET') {
         console.log('Only caching GET methods')
@@ -31,6 +31,6 @@ const duration = (req, res, next) => {
 
 }
 
-module.exports = {
-    duration
-}
+// module.exports = {
+//     duration
+// }

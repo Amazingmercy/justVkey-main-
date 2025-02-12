@@ -5,14 +5,14 @@ const router = express.Router();
 
 const {getHomePage, getAboutUsPage, getContactUsPage, getAccessoriesCategory, getBagsCategory, getFunctionalArtsCategory, getAllProducts, handleProductSearch, getServicesPage, subscribeToNews} = require('../controllers/productController');
 const homeAuthMiddleware = require('../middlewares/homeAuthMiddleware');
-const {duration} = require('../routeCache')
+const duration = require('../routeCache')
 
 
 router.use(homeAuthMiddleware)
 
 router.post('/subscribe', subscribeToNews)
 
-router.use((req, res, next) => duration(req, res, next, 3000))
+router.use(duration(3000)); 
 router.get('/', getHomePage)
 router.get('/about', getAboutUsPage)
 router.get('/contact', getContactUsPage)
