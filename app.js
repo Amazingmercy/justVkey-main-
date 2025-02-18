@@ -11,7 +11,7 @@ require('./models/index')
 
 //middlewares
 const currency = require('./middlewares/currency')
-const {authMiddleware, adminMiddleware} = require('./middlewares/authMiddleware');
+const {authMiddleware} = require('./middlewares/authMiddleware');
 
 
 
@@ -41,9 +41,10 @@ app.use(userAuthRoutes)
 app.use(userProductRoutes)
 
 app.use(authMiddleware)
-app.use('/admin', adminProductRoutes, adminOrderRoutes)
 app.use(cartRoutes)
 app.use(orderRoutes)
+app.use('/admin', adminProductRoutes, adminOrderRoutes)
+
 
  
 

@@ -12,7 +12,7 @@ router.use(homeAuthMiddleware)
 
 router.post('/subscribe', subscribeToNews)
 
-router.use(duration(3000)); 
+//router.use(duration(3000)); 
 router.get('/', getHomePage)
 router.get('/about', getAboutUsPage)
 router.get('/contact', getContactUsPage)

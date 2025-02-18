@@ -2,35 +2,31 @@ const NodeCache = require('node-cache')
 
 const cache = new NodeCache()
 
-
-module.exports = duration =>  (req, res, next) => {
-
+module.exports = duration => (req, res, next) => {
     if (req.method !== 'GET') {
+        console.log(req.method, req.url)
         console.log('Only caching GET methods')
         return next()
     }
 
-
-    //check if key exists in cache
+    // Check if key exists in cache
     const key = req.originalUrl
     const cachedResponse = cache.get(key)
 
-    //send cache result to client
+    // Send cached result to client
     if (cachedResponse) {
         console.log(`Cache hit for ${key}`)
-        res.send(cachedResponse)
+        return res.send(cachedResponse) // Return to prevent further execution
     } else {
         console.log(`Cache miss for ${key}`)
-        res.originalSend = res.send
-        res.send = body => {
-            res.originalSend(body)
-            cache.set(key, body, duration)
+        
+        // Temporarily store res.send to prevent recursive calls
+        const originalSend = res.send
+        res.send = (body) => {
+            cache.set(key, body, duration)  // Cache the response before sending
+            originalSend.call(res, body)    // Call the original res.send
         }
-        next()
+
+        next() // Continue with the next middleware or route handler
     }
-
 }
-
-// module.exports = {
-//     duration
-// }
