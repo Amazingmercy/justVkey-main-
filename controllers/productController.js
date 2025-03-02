@@ -124,7 +124,7 @@ const getFunctionalArtsCategory = async (req, res) => {
 
 const getHomePage = async (req, res) => {
   try {
-    const { currency } = req.query;
+    const { currency } = req.cookies;
     let cartCount = 0;
 
     if (req.user) {

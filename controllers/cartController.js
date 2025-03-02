@@ -1,4 +1,4 @@
-const {Cart, Product, DeliveryPrice} = require('../models/index');
+const {Cart, Product, DeliveryPrice, Order} = require('../models/index');
 const {getTrendingProducts, getNumberOfProductsInCart} = require('../controllers/productController')
 
 
@@ -88,6 +88,7 @@ const updateCartQuantity = async (req, res) => {
 const checkout = async (req, res) => {
   try {
     let cartCount = 0;
+    const currency = req.cookies.currency || 'NGN';
 
     if (req.user) {
       cartCount = await getNumberOfProductsInCart(req.user.id);
@@ -98,12 +99,11 @@ const checkout = async (req, res) => {
     });
 
     if (!cartItems || cartItems.length === 0) {
-      return res.render('checkout', { total: 0, currency: 'NGN', deliveryPrices: [], message: 'Your cart is empty.' });
+      return res.render('checkout', { total: 0, currency, deliveryPrices: [], message: 'Your cart is empty.' });
     }
 
     // Calculate the cart total
     let total = 0;
-    const currency = req.query.currency || 'NGN';
     cartItems.forEach((item) => {
       const price = currency === 'NGN' ? item.productId.NGNprice : item.productId.USDprice;
       total += price * item.quantity;
@@ -113,12 +113,15 @@ const checkout = async (req, res) => {
 
     // Fetch delivery prices from the database
     const deliveryPrices = await DeliveryPrice.find(); 
+    const previousOrder = await Order.find({userId: req.user.id}).sort({createdAt: -1}).limit(1);
+    const userDetails = previousOrder[0]
     res.render('checkout', {
       total: total.toFixed(2),
       currency,
       deliveryPrices, 
       message: '',
-      cartCount
+      cartCount,
+      userDetails,
     });
   } catch (error) {
     console.error('Error fetching checkout details:', error);
