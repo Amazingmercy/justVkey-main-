@@ -1,13 +1,19 @@
 
 
 
-  <%- include('partials/head') %> 
+<head>
+    <%- include('partials/head') %> 
+  </head>
+  
 
 
 <!-- Accessories Category -->
 <section class="products-section py-5">
     <div class="container">
-        <h2 class="text-center mb-4">Accessories Collection</h2>
+        <div class="d-flex justify-content-center align-items-center ">
+            <i class="fas fa-gem fa-2x"></i>
+            <h2 class="text-center m-2">Accessories</h2>
+        </div>
         <div class="row g-4">
             <% if (accessoriesCollection.length === 0) { %>
                 <div class="col-12 text-center">
