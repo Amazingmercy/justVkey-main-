@@ -10,7 +10,7 @@
   </head>
   <body>
     <div class="container py-3">
-      <h2 class="mb-3 text-center">Checkout</h2>
+      <h2 class="mb-3 text-center">CHECKOUT</h2>
       <% if (total > 0) { %>
       <form action="/order/create" method="POST" id="checkoutForm" class="shadow p-4 rounded bg-light">
         <input type="hidden" id="totalAmount" value="<%= total %>" />
@@ -62,7 +62,7 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-dark mt-4 w-100">Pay Now</button>
+        <button type="submit" class="btn btn-dark mt-4 w-100">PAY NOW</button>
       </form>
       <% } else { %>
       <div class="text-center">
