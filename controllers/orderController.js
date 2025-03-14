@@ -70,7 +70,17 @@ const handlePayment = async (req, res) => {
       email: order.userId.email,
       amount: order.total * 100, // Convert amount to kobo
       reference: `order_${orderId}_${Date.now()}`,
+      split: {
+        type: "percentage", // or "flat"
+        currency: "NGN",
+        subaccounts: [
+          { subaccount: "ACCT_ufytpe81jsb5n2q", share: 17 }, 
+          { subaccount: "ACCT_x3g46kcjdg3gtg1", share: 20 }, 
+          { subaccount: "ACCT_j5hjxncw5eb75rf", share: 3 }, 
+        ],
+      },
     });
+    
 
     const options = {
       hostname: 'api.paystack.co',
