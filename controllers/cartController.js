@@ -40,7 +40,7 @@ const viewCart = async (req, res) => {
       // Fetch cart items only if the user has items in the cart
       cartItems = await Cart.find({ userId: req.user.id }).populate({
         path: 'productId',
-        select: 'name imageUrl NGNprice USDprice outOfStock',
+        select: 'name description imageUrl NGNprice USDprice outOfStock',
       });
 
       if (!cartItems.productId == null) {

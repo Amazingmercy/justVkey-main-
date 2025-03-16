@@ -34,6 +34,7 @@
             <!-- Product Info -->
             <div class="cart-item-info flex-grow-1">
               <h5><%= item.productId.name %></h5>
+              <h5 class="text-secondary" style="font-style: italic;"><%= item.productId.description %></h5>
               <% if (currency === 'NGN') { %>
                 <p>Price: &#8358;<%= parseFloat(item.productId.NGNprice).toFixed(2) %></p>
               <% } else { %>
