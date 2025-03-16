@@ -9,6 +9,6 @@ products.forEach(imageElement => {
         setInterval(() => {
             currentIndex = (currentIndex + 1) % images.length;
             imageElement.src = images[currentIndex];
-        }, 2000);
+        }, 4000);
     }
 });
