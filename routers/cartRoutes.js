@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const {viewCart, updateCart, checkout, deleteCartItem} = require('../controllers/cartController')
+const {viewCart, updateCart, checkout, deleteCartItem, } = require('../controllers/cartController')
 const duration = require('../routeCache')
 
-router.post('/cart/update/:id', updateCart);
+
+
+router.get('/cart/update/:id', updateCart);
 router.post('/cart/delete/:id', deleteCartItem)
 
 

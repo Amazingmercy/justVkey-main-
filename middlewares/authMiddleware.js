@@ -28,12 +28,8 @@ const authMiddleware = (req, res, next) => {
         
         next(); // Proceed to the next middleware or route handler
     } catch (error) {
-        console.log('Auth Error:', error.message);
-        if (error.message === 'jwt expired') {
-            return res.redirect(`/login?redirect=${encodeURIComponent(req.originalUrl)}`);
-        } else {
-            return res.redirect(`/login?redirect=${encodeURIComponent(req.originalUrl)}&message=${encodeURIComponent(error.message)}`);
-        }
+        const message = error.message === 'jwt expired' ? '' : `&message=${encodeURIComponent(error.message)}`;
+        return res.redirect(`/login?redirect=${encodeURIComponent(req.originalUrl)}${message}`);
     }
 };
 
