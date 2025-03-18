@@ -1,31 +1,42 @@
 const jwt = require('jsonwebtoken');
 
-
 const authMiddleware = (req, res, next) => {
+    // Check if the route is for password reset or forgot password
+    const passwordResetRoutes = [
+        '/forgot-password',
+        '/reset-password',
+        '/login'
+    ];
+    
+    // If it's a password reset route or starts with /reset-password/, bypass auth check
+    if (passwordResetRoutes.includes(req.path) || req.path.startsWith('/reset-password/')) {
+        return next();
+    }
+    
     try {
-        // Check for token in cookies, headers, or session
-
-        const token = (req.cookies.token);
-
-        if (!token || token == 'undefined') {
+        // Check for token in cookies
+        const token = req.cookies.token;
+        
+        if (!token || token === 'undefined') {
             // Redirect to login with the current URL as redirectUrl
-            return res.redirect(`/login?redirect=${encodeURIComponent(req.originalUrl)}`)
+            return res.redirect(`/login?redirect=${encodeURIComponent(req.originalUrl)}`);
         }
-
+        
         // Verify token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded; 
+        req.user = decoded;
         
         next(); // Proceed to the next middleware or route handler
     } catch (error) {
         console.log('Auth Error:', error.message);
-        if(error.message == 'jwt expired') {
-            return res.redirect(`/login?redirect=${encodeURIComponent(req.originalUrl)}`)
+        if (error.message === 'jwt expired') {
+            return res.redirect(`/login?redirect=${encodeURIComponent(req.originalUrl)}`);
         } else {
-            return res.redirect(`/login?redirect=${encodeURIComponent(req.originalUrl)}`, {message: error.message});
+            return res.redirect(`/login?redirect=${encodeURIComponent(req.originalUrl)}&message=${encodeURIComponent(error.message)}`);
         }
     }
 };
+
 
 
 const adminMiddleware = (req, res, next) => {
@@ -35,7 +46,8 @@ const adminMiddleware = (req, res, next) => {
     next();
 };
 
+
 module.exports = {
     authMiddleware,
-    adminMiddleware
+    adminMiddleware,
 }

@@ -32,7 +32,26 @@ const getNumberOfProductsInCart = async (userId) => {
   }
 };
 
+
+
+
+
 // Route Handlers
+const getSingleProduct = async (req, res) => {
+  try {
+    let cartCount = 0;
+
+    if (req.user) {
+      cartCount = await getNumberOfProductsInCart(req.user.id);
+    }
+    const product = await Product.findById(req.params.id);
+    res.render('product', { product , message: "", cartCount});
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).send('Error fetching products');
+  }
+};
+
 const getAboutUsPage = async (req, res) => {
   const trendingProducts = await getTrendingProducts();
   let cartCount = 0;
@@ -64,8 +83,7 @@ const getServicesPage = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
   try {
-    let cartCount = 0;
-
+    let cartCount = 0; 
     if (req.user) {
       cartCount = await getNumberOfProductsInCart(req.user.id);
     }
@@ -191,6 +209,7 @@ module.exports = {
   getContactUsPage,
   getServicesPage,
   getAllProducts,
+  getSingleProduct,
   getAccessoriesCategory,
   getBagsCategory,
   getFunctionalArtsCategory,

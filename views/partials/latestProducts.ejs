@@ -7,6 +7,7 @@
                 <div class="col-md-3 col-6">
                     <div class="card shadow-sm">
                         <div class="product-image-container" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                            <a href="/product/<%= product._id %>">
                             <% if (Array.isArray(product.imageUrl)) { %>
                                 <!-- Use the first image as default -->
                                 <img class="card-img-top product-image img-fluid" 
@@ -21,6 +22,7 @@
                                     data-images='<%= JSON.stringify([product.imageUrl]) %>'>
                             <% } %>
 
+                            </a>
                             <% if (product.outOfStock === true) { %>
                                 <span class="out-of-stock-label">Out of stock</span>
                             <% } %>
@@ -34,11 +36,7 @@
                                 <p class="text-muted">$<%= parseFloat(product.USDprice).toFixed(2) %></p>
                             <% } %>
 
-                            <% if (!product.outOfStock) { %>
-                                <a class="btn btn-dark" href="/cart/add/<%= product.id %>">Add to Cart</a>
-                            <% } else { %>
-                                <a class="btn btn-dark disabled">Out of Stock</a>
-                            <% } %>
+    
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 
-const {getHomePage, getAboutUsPage, getContactUsPage, getAccessoriesCategory, getBagsCategory, getFunctionalArtsCategory, getAllProducts, handleProductSearch, getServicesPage, subscribeToNews} = require('../controllers/productController');
+const {getHomePage, getAboutUsPage, getContactUsPage, getAccessoriesCategory, getBagsCategory, getFunctionalArtsCategory, getAllProducts, handleProductSearch, getServicesPage, subscribeToNews, getSingleProduct} = require('../controllers/productController');
 const homeAuthMiddleware = require('../middlewares/homeAuthMiddleware');
 const duration = require('../routeCache')
 
@@ -22,6 +22,7 @@ router.get('/categories/accessories', getAccessoriesCategory)
 router.get('/categories/functional_arts', getFunctionalArtsCategory)
 router.get('/shop', getAllProducts)
 router.get('/search', handleProductSearch)
+router.get('/product/:id', getSingleProduct)
 
 
 

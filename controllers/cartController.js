@@ -3,9 +3,14 @@ const {getTrendingProducts, getNumberOfProductsInCart} = require('../controllers
 
 
 // Add product to cart
-const addToCart = async (req, res) => {
+const updateCart = async (req, res) => {
   try {
     const productId = req.params.id;
+    const quantity = parseInt(req.body.quantity) || 1;
+
+    if (quantity <= 0) {
+      return res.status(400).json({ message: 'Invalid quantity.' });
+    }
 
     // Find product
     const product = await Product.findById(productId);
@@ -13,17 +18,30 @@ const addToCart = async (req, res) => {
       return res.render('cart', { message: 'Product not found' });
     }
 
-    // Add product to cart for the logged-in user
-    const cartItem = new Cart({
-      userId: req.user.id, // Retrieved from decoded JWT
-      productId: product._id,
+    // Check if the product is already in the user's cart
+    const existingCartItem = await Cart.findOne({ 
+      userId: req.user.id,
+      productId: productId
     });
 
-    await cartItem.save(); // Save cart item to the database
-    res.redirect('/cart'); // Redirect to the cart page
+    if (existingCartItem) {
+      // Update quantity of existing cart item
+      existingCartItem.quantity = quantity;
+      await existingCartItem.save();
+    } else {
+      // Add new product to cart
+      const cartItem = new Cart({
+        userId: req.user.id,
+        productId: product._id,
+        quantity: quantity
+      });
+      await cartItem.save();
+    }
+
+    res.redirect('/cart');
   } catch (error) {
-    console.error('Error adding to cart:', error);
-    res.render('cart', { message: 'Error adding product to cart' });
+    console.error('Error updating cart:', error);
+    res.render('cart', { message: 'Error updating cart' });
   }
 };
 
@@ -59,30 +77,30 @@ const viewCart = async (req, res) => {
 
 
 // Update cart quantity
-const updateCartQuantity = async (req, res) => {
-  try {
-    const cartItemId = req.params.id; // Get the cart item ID from the URL
-    const newQuantity = req.body.quantity; // Get the new quantity from the form
+// const updateCartQuantity = async (req, res) => {
+//   try {
+//     const cartItemId = req.params.id; // Get the cart item ID from the URL
+//     const newQuantity = req.body.quantity; // Get the new quantity from the form
 
-    if (!newQuantity || newQuantity <= 0) {
-      return res.status(400).json({ message: 'Invalid quantity.' });
-    }
+//     if (!newQuantity || newQuantity <= 0) {
+//       return res.status(400).json({ message: 'Invalid quantity.' });
+//     }
 
-    // Find the cart item by ID and update its quantity
-    const cartItem = await Cart.findOne({ _id: cartItemId, userId: req.user.id });
-    if (!cartItem) {
-      return res.render('cart', { message: 'Cart item not found.' });
-    }
+//     // Find the cart item by ID and update its quantity
+//     const cartItem = await Cart.findOne({ _id: cartItemId, userId: req.user.id });
+//     if (!cartItem) {
+//       return res.render('cart', { message: 'Cart item not found.' });
+//     }
 
-    cartItem.quantity = newQuantity; // Update the quantity
-    await cartItem.save(); // Save the updated cart item
+//     cartItem.quantity = newQuantity; // Update the quantity
+//     await cartItem.save(); // Save the updated cart item
 
-    res.redirect('/cart'); // Redirect back to the cart page
-  } catch (error) {
-    console.error('Error updating cart quantity:', error);
-    res.render('cart', { message: 'Error updating cart quantity.' });
-  }
-};
+//     res.redirect('/cart'); // Redirect back to the cart page
+//   } catch (error) {
+//     console.error('Error updating cart quantity:', error);
+//     res.render('cart', { message: 'Error updating cart quantity.' });
+//   }
+// };
 
 // Checkout
 const checkout = async (req, res) => {
@@ -148,4 +166,4 @@ const deleteCartItem = async (req, res) => {
   }
 };
 
-module.exports = { addToCart, viewCart, updateCartQuantity, checkout, deleteCartItem };
+module.exports = { viewCart, updateCart, checkout, deleteCartItem };

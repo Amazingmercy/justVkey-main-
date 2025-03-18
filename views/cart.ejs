@@ -33,20 +33,14 @@
 
             <!-- Product Info -->
             <div class="cart-item-info flex-grow-1">
-              <h5><%= item.productId.name %></h5>
+              <h5 class="fw-bold"><%= item.productId.name %></h5>
               <h5 class="text-secondary" style="font-style: italic;"><%= item.productId.description %></h5>
               <% if (currency === 'NGN') { %>
                 <p>Price: &#8358;<%= parseFloat(item.productId.NGNprice).toFixed(2) %></p>
               <% } else { %>
                 <p>Price: $<%= parseFloat(item.productId.USDprice).toFixed(2) %></p>
               <% } %>
-              <form action="/cart/update/<%= item._id %>" method="POST" class="quantity-form">
-                <div class="input-group input-group-sm">
-                  <input type="number" value="<%= item.quantity %>" name="quantity" min="1" id="quantity_<%= item._id %>"
-                    class="quantity-input form-control form-control-sm" placeholder="Enter quantity">
-                  <button type="submit" class="btn btn-dark btn-sm">Update</button>
-                </div>
-              </form>
+              <p class="fw-bold">Quanity: <%= item.quantity %></p>
             </div>
 
             <!-- Remove Button -->
