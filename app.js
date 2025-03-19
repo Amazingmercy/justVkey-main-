@@ -43,21 +43,29 @@ app.use(cookieParser());
 
 //security middlewares
 app.use(cors());
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      imgSrc: ["'self'", "data:", "*.cloudinary.com", "res.cloudinary.com"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "*.bootstrapcdn.com", "*.fontawesome.com", "cdnjs.cloudflare.com", "cdn.jsdelivr.net"],
-      scriptSrcAttr: ["'unsafe-inline'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "*.bootstrapcdn.com", "*.fontawesome.com", "cdnjs.cloudflare.com", "cdn.jsdelivr.net", "fonts.googleapis.com"],
-      fontSrc: ["'self'", "*.fontawesome.com", "fonts.gstatic.com", "cdnjs.cloudflare.com"],
-      connectSrc: ["'self'", "*.cloudinary.com", "api.paystack.com", "https://api.paystack.com"], // Allow Paystack API
-      mediaSrc: ["'self'", "res.cloudinary.com"],
-      formAction: ["'self'", "https://justvkeyluxuries.com.ng", "https://api.paystack.com"] 
-    }
-  }
-}));
+// app.use(helmet({
+//   contentSecurityPolicy: {
+//     directives: {
+//       defaultSrc: ["'self'"],
+//       imgSrc: ["'self'", "data:", "*.cloudinary.com", "res.cloudinary.com"],
+//       scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "*.bootstrapcdn.com", "*.fontawesome.com", "cdnjs.cloudflare.com", "cdn.jsdelivr.net"],
+//       scriptSrcAttr: ["'unsafe-inline'"],
+//       styleSrc: ["'self'", "'unsafe-inline'", "*.bootstrapcdn.com", "*.fontawesome.com", "cdnjs.cloudflare.com", "cdn.jsdelivr.net", "fonts.googleapis.com"],
+//       fontSrc: ["'self'", "*.fontawesome.com", "fonts.gstatic.com", "cdnjs.cloudflare.com"],
+//       connectSrc: ["'self'", "*.cloudinary.com", "api.paystack.com", "https://api.paystack.com"], // Allow Paystack API
+//       mediaSrc: ["'self'", "res.cloudinary.com"],
+//       formAction: ["'self'", "https://justvkeyluxuries.com.ng", "https://api.paystack.com"] 
+//     }
+//   }
+// }));
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'no-referrer');
+  next();
+});
 
 app.use(compression());
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 });
