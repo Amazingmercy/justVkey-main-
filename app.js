@@ -43,21 +43,21 @@ app.use(cookieParser());
 
 //security middlewares
 app.use(cors());
-// app.use(helmet({
-//   contentSecurityPolicy: {
-//     directives: {
-//       defaultSrc: ["'self'"],
-//       imgSrc: ["'self'", "data:", "*.cloudinary.com", "res.cloudinary.com"],
-//       scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "*.bootstrapcdn.com", "*.fontawesome.com", "cdnjs.cloudflare.com", "cdn.jsdelivr.net"],
-//       scriptSrcAttr: ["'unsafe-inline'"],
-//       styleSrc: ["'self'", "'unsafe-inline'", "*.bootstrapcdn.com", "*.fontawesome.com", "cdnjs.cloudflare.com", "cdn.jsdelivr.net", "fonts.googleapis.com"],
-//       fontSrc: ["'self'", "*.fontawesome.com", "fonts.gstatic.com", "cdnjs.cloudflare.com"],
-//       connectSrc: ["'self'", "*.cloudinary.com"],
-//       mediaSrc: ["'self'", "res.cloudinary.com"],
-//       formAction: ["'self'"],  // Add this line
-//     }
-//   }
-// }));
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "*.cloudinary.com", "res.cloudinary.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "*.bootstrapcdn.com", "*.fontawesome.com", "cdnjs.cloudflare.com", "cdn.jsdelivr.net"],
+      scriptSrcAttr: ["'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "*.bootstrapcdn.com", "*.fontawesome.com", "cdnjs.cloudflare.com", "cdn.jsdelivr.net", "fonts.googleapis.com"],
+      fontSrc: ["'self'", "*.fontawesome.com", "fonts.gstatic.com", "cdnjs.cloudflare.com"],
+      connectSrc: ["'self'", "*.cloudinary.com"],
+      mediaSrc: ["'self'", "res.cloudinary.com"],
+      formAction: ["'self'"],  // Add this line
+    }
+  }
+}));
 app.use(compression());
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 });
 app.use(limiter);
