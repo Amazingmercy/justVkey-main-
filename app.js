@@ -52,10 +52,9 @@ app.use(helmet({
       scriptSrcAttr: ["'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'", "*.bootstrapcdn.com", "*.fontawesome.com", "cdnjs.cloudflare.com", "cdn.jsdelivr.net", "fonts.googleapis.com"],
       fontSrc: ["'self'", "*.fontawesome.com", "fonts.gstatic.com", "cdnjs.cloudflare.com"],
-      connectSrc: ["'self'", "*.cloudinary.com", "api.paystack.co"], // Allow Paystack API
+      connectSrc: ["'self'", "*.cloudinary.com", "api.paystack.com", "https://api.paystack.com"], // Allow Paystack API
       mediaSrc: ["'self'", "res.cloudinary.com"],
-      formAction: ["'self'", "https://justvkeyluxuries.com.ng", "https://api.paystack.com"], // Allow form submissions
-      frameAncestors: ["'self'", "https://paystack.com"], // Allow Paystack iframe if needed
+      formAction: ["'self'", "https://justvkeyluxuries.com.ng", "https://api.paystack.com"] 
     }
   }
 }));

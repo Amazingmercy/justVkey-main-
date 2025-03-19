@@ -42,13 +42,11 @@ const createOrder = async (req, res) => {
       phoneNumber
     });
 
-    await order.save(); // Save the order to the database
-    const savedOrder = await Order.findById(order._id);
-    //const orderId = order._id.toString();
-    console.log(savedOrder)
-
+    await order.save(); 
+    const orderId = order._id.toString();
+   
     // Redirect to Paystack payment gateway
-    res.redirect(`/order/pay/${savedOrder._id}`);
+    res.redirect(`/order/pay/${orderId}`);
   } catch (error) {
     console.error('Error creating order:', error);
     res.status(500).json({ message: 'Error creating order' });
