@@ -49,6 +49,7 @@ app.use(helmet({
       defaultSrc: ["'self'"],
       imgSrc: ["'self'", "data:", "*.cloudinary.com", "res.cloudinary.com"],
       scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "*.bootstrapcdn.com", "*.fontawesome.com", "cdnjs.cloudflare.com", "cdn.jsdelivr.net"],
+      scriptSrcAttr: ["'unsafe-inline'"],  // Add this line to allow inline event handlers
       styleSrc: ["'self'", "'unsafe-inline'", "*.bootstrapcdn.com", "*.fontawesome.com", "cdnjs.cloudflare.com", "cdn.jsdelivr.net", "fonts.googleapis.com"],
       fontSrc: ["'self'", "*.fontawesome.com", "fonts.gstatic.com", "cdnjs.cloudflare.com"],
       connectSrc: ["'self'", "*.cloudinary.com"],
