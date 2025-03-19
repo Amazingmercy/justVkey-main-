@@ -13,7 +13,7 @@ const getLatestProducts =  async () => {
 
 const getTrendingProducts = async () => {
   try {
-    let products = await Product.find({ trending: true }).limit(4);
+    let products = await Product.find({ trending: true });
 
     return products;
   } catch (error) {
