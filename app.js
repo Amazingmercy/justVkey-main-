@@ -52,12 +52,14 @@ app.use(helmet({
       scriptSrcAttr: ["'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'", "*.bootstrapcdn.com", "*.fontawesome.com", "cdnjs.cloudflare.com", "cdn.jsdelivr.net", "fonts.googleapis.com"],
       fontSrc: ["'self'", "*.fontawesome.com", "fonts.gstatic.com", "cdnjs.cloudflare.com"],
-      connectSrc: ["'self'", "*.cloudinary.com"],
+      connectSrc: ["'self'", "*.cloudinary.com", "api.paystack.co"], // Allow Paystack API
       mediaSrc: ["'self'", "res.cloudinary.com"],
-      formAction: ["'self'"],  // Add this line
+      formAction: ["'self'", "justvkeyluxuries.com.ng", "https://justvkeyluxuries.com.ng", "https://api.paystack.co"], // Allow form submissions
+      frameAncestors: ["'self'", "https://paystack.com"], // Allow Paystack iframe if needed
     }
   }
 }));
+
 app.use(compression());
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 });
 app.use(limiter);
