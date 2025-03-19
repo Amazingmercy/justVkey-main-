@@ -196,7 +196,12 @@ const handleProductSearch = async (req, res) => {
       return res.render('index', { message: 'No product found', products });
     }  
 
-    res.render('shop', { products , message: ''});
+    let cartCount = 0;
+
+    if (req.user) {
+      cartCount = await getNumberOfProductsInCart(req.user.id);
+    }
+    res.render('shop', { products , message: '', cartCount});
   } catch (error) {
     console.error('Error searching for product:', error);
     res.status(500).json({ message: 'An error occurred while searching for the product' });
