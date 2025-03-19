@@ -54,7 +54,7 @@ app.use(helmet({
       fontSrc: ["'self'", "*.fontawesome.com", "fonts.gstatic.com", "cdnjs.cloudflare.com"],
       connectSrc: ["'self'", "*.cloudinary.com", "api.paystack.co"], // Allow Paystack API
       mediaSrc: ["'self'", "res.cloudinary.com"],
-      formAction: ["'self'", "justvkeyluxuries.com.ng", "https://justvkeyluxuries.com.ng", "https://api.paystack.co"], // Allow form submissions
+      formAction: ["'self'", "https://justvkeyluxuries.com.ng", "https://api.paystack.com"], // Allow form submissions
       frameAncestors: ["'self'", "https://paystack.com"], // Allow Paystack iframe if needed
     }
   }
