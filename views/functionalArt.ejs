@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+
 
 <head>
   <%- include('partials/head') %> 
@@ -8,14 +7,29 @@
 <!-- Accessories Category -->
 <section class="products-section py-5">
     <div class="container">
-        <div class="d-flex justify-content-center align-items-center ">
+        <div class="d-flex mt-3">
+             <!-- Search (Hidden on mobile) -->
+            <div class="nav-item d-none d-lg-block me-5">
+              <form class="d-flex" action="/search">
+                <div class="input-group">
+                  <input class="form-control form-control" type="search" name="search" placeholder="Search"
+                    aria-label="Search"/>
+                  <button class="btn btn-outline-dark" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div class="d-flex justify-content-center align-items-center ">
             <i class="fas fa-palette fa-2x"></i>
             <h2 class="text-center m-2">FUNCTIONAL ARTS</h2>
         </div>
+        </div>
+        
         <div class="row g-4">
             <% if (functionalArtCollection.length === 0) { %>
                 <div class="col-12 text-center">
-                    <div class="alert alert-secondary" role="alert">
+                    <div class="alert alert-secondary mt-5" role="alert">
                         No products available in this collection. 
                     </div>
                     <a href="/categories/bags" class="btn btn-dark mt-3">TAKE A LOOK AT OUR BAGS</a>

@@ -5,87 +5,108 @@
 </head>
 
 <!-- Hero Section -->
-<section class="position-relative p-0 m-0">
-  <!-- Full-width video container with custom height -->
-  <div class="w-100 m-0 p-0">
-    <div style="height: 550px;" class="overflow-hidden">
-      <video autoplay loop muted playsinline class="w-100 h-100" style="object-fit: cover; object-position: center bottom;">
-        <source src="https://res.cloudinary.com/dvmfubqhp/video/upload/v1742322598/justVkey%20product%20Images/logo/video2_fvqvoc.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      
-    </div>
-    
-    <!-- Text Overlay centered on the video -->
-    <div class="position-absolute top-50 start-50 translate-middle text-white text-center p-2 p-sm-3 w-75">
-      <h1 class="fw-bolder fs-3 fs-sm-2 fs-md-1 fs-lg-1" style="font-family: Playfair Display;">Discover Handcrafted Elegance</h1>
-      <p class="lead fs-6 fs-md-5">Unique and timeless bead designs for every occasion.</p>
-      <a href="/shop" class="btn btn-outline-light btn-sm btn-md-lg m-1 m-md-2">Discover More</a>
-    </div>
-  </div>
-</section>
-
-  <section>
-    <%- include('./partials/latestProducts') %>
-  </section>
-
-
-  <section class="services-section mt-5 mb-5 fade-in">
-      <h4 class="fw-bold text-dark text-center">WHAT WE OFFER...</h4>
-      <div class="row g-5 m-0">
-        <div class="col-md-3">
-          <div class="card h-70 shadow-lg">
-            <div class="card-body text-center">
-              <i class="fas fa-shipping-fast fa-2x text-dark mb-3"></i>
-              <h5 class="card-title fw-bold fs-6">FAST DELIVERY</h5>
-              <p class="card-text fs-9">
-                Enjoy swift delivery on all purchases, We ensure all items arrive on time.
-              </p>
-            </div>
-          </div>
+<section class="hero-section">
+        <video class="hero-video" autoplay loop muted playsinline>
+            <source src="https://res.cloudinary.com/dvmfubqhp/video/upload/v1742322598/justVkey%20product%20Images/logo/video2_fvqvoc.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Discover Handcrafted Elegance</h1>
+            <p class="hero-subtitle">Unique and timeless bead designs for every occasion, crafted with passion and precision.</p>
+            <a href="/shop" class="hero-btn">
+                <span>Explore Collection</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
         </div>
-        <div class="col-md-3">
-          <div class="card h-70 shadow-lg">
-            <div class="card-body text-center p-3">
-              <i class="fas fa-hand-holding-heart fa-2x text-dark mb-3"></i>
-              <h5 class="card-title fw-bold fs-6">CUSTOMER SUPPORT</h5>
-              <p class="card-text fs-9">
-                Our dedicated support team is available 24/7 to address your questions.
-              </p>
+    </section>
+
+
+    <!-- Latest Products Section Placeholder -->
+    <section class="product-section">
+        <div class="container">
+            <div class="section-placeholder fade-in">
+                 <%- include('./partials/latestProducts') %>
             </div>
-          </div>
         </div>
-        <div class="col-md-3">
-            <div class="card h-70 shadow-lg">
-              <div class="card-body text-center p-3">
-                <i class="fas fa-credit-card fa-2x text-dark mb-3"></i>
-                <h5 class="card-title fw-bold fs-6">SECURED PAYMENTS</h5>
-                <p class="card-text fs-9 ">
-                Shop with confidence knowing your payments are always 100% secured.
-                </p>
-              </div>
+    </section>
+
+  <!-- Services Section -->
+    <section class="services-section fade-in">
+        <div class="container">
+            <div class="services-header">
+                <h2 class="services-title">What We Offer</h2>
+                <p class="services-subtitle">Experience excellence in every aspect of your jewelry journey</p>
             </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card h-70 shadow-lg">
-              <div class="card-body text-center p-3">
-                <i class="fas fa-tools fa-2x text-dark mb-3"></i>
-                <h5 class="card-title fw-bold fs-6">DURABLE MATERIALS</h5>
-                <p class="card-text fs-9">
-                  We use quality materials to create durable, elegant and sophisticated Products.
-                </p>
-              </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <h3 class="service-title">Fast Delivery</h3>
+                        <p class="service-description">Enjoy swift delivery on all purchases. We ensure all items arrive on time, every time.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h3 class="service-title">Customer Support</h3>
+                        <p class="service-description">Our dedicated support team is available 24/7 to address your questions and concerns.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <h3 class="service-title">Secured Payments</h3>
+                        <p class="service-description">Shop with confidence knowing your payments are always 100% secured and protected.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h3 class="service-title">Premium Materials</h3>
+                        <p class="service-description">We use only the finest materials to create durable, elegant and sophisticated products.</p>
+                    </div>
+                </div>
             </div>
-          </div>
-      </div>
-  </section>
+        </div>
+    </section>
 
 
 
 
-  <section>
-    <%- include('./partials/trendingProducts') %>
-  </section>
+  <section class="product-section">
+        <div class="container">
+            <div class="section-placeholder fade-in">
+                <%- include('./partials/trendingProducts') %>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section fade-in">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Find Your Perfect Piece?</h2>
+                <p class="cta-text">Join thousands of satisfied customers who have discovered the beauty of handcrafted jewelry. Start your journey today.</p>
+                <div class="cta-buttons">
+                    <a href="/shop" class="cta-btn-primary">Shop Now</a>
+                    <a href="/about" class="cta-btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
   
 
   <footer>

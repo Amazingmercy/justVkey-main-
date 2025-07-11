@@ -1,42 +1,159 @@
-<!-- Product Showcase -->
-<section class="products-section py-5 bg-light shadow-lg fade-in">
+<head>
+
+    <style>
+        .product-showcase-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--off-white) 0%, var(--pure-white) 100%);
+        }
+
+        .product-card {
+            background: var(--pure-white);
+            border: 1px solid var(--medium-gray);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            background-color: var(--light-gray);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 280px; /* Consistent height for images */
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .out-of-stock-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: var(--primary-black);
+            color: var(--pure-white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 25px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 3;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .product-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-black);
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .product-hover-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            padding: 1.5rem;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            opacity: 0;
+        }
+
+        .product-card:hover .product-hover-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .view-details-btn {
+            background: var(--primary-black);
+            color: var(--pure-white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .view-details-btn:hover {
+            background: var(--accent-sage);
+            color: var(--primary-black);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<section class="product-showcase-section fade-in">
     <div class="container">
-        <h3 class="text-center mb-4" style="font-weight: 700;">WHAT'S NEW??</h3>
+        <div class="services-header fade-in">
+            <h2 class="services-title">WHAT'S NEW?</h2>
+            <p class="services-subtitle">Explore our latest handcrafted luxury beaded handbags and accessories.</p>
+        </div>
         <div class="row g-4">
             <% latestProducts.forEach(product => { %>
-                <div class="col-md-3 col-6">
-                    <div class="card shadow-sm">
-                        <div class="product-image-container" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                <div class="col-md-4 col-lg-3 col-6">
+                    <div class="product-card fade-in">
+                        <div class="product-image-wrapper">
                             <a href="/product/<%= product._id %>">
-                            <% if (Array.isArray(product.imageUrl)) { %>
-                                <!-- Use the first image as default -->
-                                <img class="card-img-top product-image img-fluid" 
-                                    src="<%= product.imageUrl[0] %>" 
-                                    alt="<%= product.name %>"
-                                    data-images='<%= JSON.stringify(product.imageUrl) %>'>
-                            <% } else { %>
-                                <!-- Single image case (Out of stock or single image product) -->
-                                <img class="card-img-top product-image img-fluid"
-                                    src="<%= product.imageUrl[0] %>" 
-                                    alt="<%= product.name %>"
-                                    data-images='<%= JSON.stringify([product.imageUrl]) %>'>
-                            <% } %>
-
+                                <% if (product.imageUrl && product.imageUrl.length > 0) { %>
+                                    <img class="product-image"
+                                         src="<%= product.imageUrl[0] %>"
+                                         alt="<%= product.name %>"
+                                         data-images='<%- JSON.stringify(product.imageUrl) %>'>
+                                <% } else { %>
+                                     <img class="product-image" src="/path/to/placeholder.jpg" alt="No image available">
+                                <% } %>
                             </a>
-                            <% if (product.outOfStock === true) { %>
-                                <span class="out-of-stock-label">Out of stock</span>
+                            <% if (product.outOfStock) { %>
+                                <span class="out-of-stock-badge">Out of stock</span>
                             <% } %>
                         </div>
 
-                        <div class="card-body text-center">
-                            <h5 class="card-title"><%= product.name %></h5>
-                            <% if (currency === 'NGN') { %>
-                                <p class="text-muted">&#8358;<%= parseFloat(product.NGNprice).toFixed(2) %></p>
-                            <% } else { %>
-                                <p class="text-muted">$<%= parseFloat(product.USDprice).toFixed(2) %></p>
-                            <% } %>
-
-    
+                        <div class="product-info">
+                            <h3 class="product-title" title="<%= product.name %>"><%= product.name %></h3>
+                            <p class="product-price">
+                                <% if (currency === 'NGN') { %>
+                                    &#8358;<%= parseFloat(product.NGNprice).toFixed(2) %>
+                                <% } else { %>
+                                    $<%= parseFloat(product.USDprice).toFixed(2) %>
+                                <% } %>
+                            </p>
+                        </div>
+                        
+                        <div class="product-hover-content">
+                             <a href="/product/<%= product._id %>" class="view-details-btn">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -45,28 +162,48 @@
     </div>
 </section>
 
-
-
 <script src="/scripts/script.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-  const elements = document.querySelectorAll(".fade-in");
+        // Your existing Intersection Observer for fade-in animations
+        const elements = document.querySelectorAll(".fade-in");
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 }); // Adjusted threshold for better feel
 
-  const observer = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-          observer.unobserve(entry.target); // Stop observing once visible
-        }
-      });
-    },
-    { threshold: 0.2 } // Trigger when 20% of the element is visible
-  );
+        elements.forEach(element => {
+            observer.observe(element);
+        });
 
-  elements.forEach(element => {
-    observer.observe(element);
-  });
-});
+        // Optional: Advanced image hover effect (cycles through images)
+        document.querySelectorAll('.product-image-wrapper').forEach(wrapper => {
+            const image = wrapper.querySelector('.product-image');
+            const imageData = image.dataset.images;
+            if (!imageData) return;
 
+            const images = JSON.parse(imageData);
+            if (images.length > 1) {
+                let interval;
+                wrapper.addEventListener('mouseenter', () => {
+                    let currentIndex = 1;
+                    interval = setInterval(() => {
+                        image.src = images[currentIndex];
+                        currentIndex = (currentIndex + 1) % images.length;
+                    }, 1200); // Change image every 1.2 seconds
+                });
+
+                wrapper.addEventListener('mouseleave', () => {
+                    clearInterval(interval);
+                    image.src = images[0]; // Reset to the first image
+                });
+            }
+        });
+    });
 </script>
+
+</body>

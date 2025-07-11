@@ -1,42 +1,42 @@
-<!-- Product Showcase -->
-<section class="products-section py-5 bg-light shadow-lg fade-in">
+<section class="product-showcase-section fade-in">
     <div class="container">
-        <h3 class="text-center mb-4" style="font-weight: 700;">IN THE SPOTLIGHT</h3>
+        <div class="services-header fade-in">
+            <h2 class="services-title">IN THE SPOTLIGHT</h2>
+            <p class="services-subtitle">Discover our most loved and popular handcrafted designs.</p>
+        </div>
         <div class="row g-4">
             <% trendingProducts.forEach(product => { %>
-                <div class="col-md-3 col-6">
-                    <div class="card shadow-sm">
-                        <div class="product-image-container" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                <div class="col-md-4 col-lg-3 col-6">
+                    <div class="product-card fade-in">
+                        <div class="product-image-wrapper">
                             <a href="/product/<%= product._id %>">
-                            <% if (Array.isArray(product.imageUrl)) { %>
-                                <!-- Use the first image as default -->
-                                <img class="card-img-top product-image img-fluid" 
-                                    src="<%= product.imageUrl[0] %>" 
-                                    alt="<%= product.name %>"
-                                    data-images='<%= JSON.stringify(product.imageUrl) %>'>
-                            <% } else { %>
-                                <!-- Single image case (Out of stock or single image product) -->
-                                <img class="card-img-top product-image img-fluid"
-                                    src="<%= product.imageUrl[0] %>" 
-                                    alt="<%= product.name %>"
-                                    data-images='<%= JSON.stringify([product.imageUrl]) %>'>
-                            <% } %>
-
+                                <% if (product.imageUrl && product.imageUrl.length > 0) { %>
+                                    <img class="product-image"
+                                         src="<%= product.imageUrl[0] %>"
+                                         alt="<%= product.name %>"
+                                         data-images='<%- JSON.stringify(product.imageUrl) %>'>
+                                <% } else { %>
+                                     <img class="product-image" src="/images/placeholder.jpg" alt="Image coming soon">
+                                <% } %>
                             </a>
-                            <% if (product.outOfStock === true) { %>
-                                <span class="out-of-stock-label">Out of stock</span>
+                            <% if (product.outOfStock) { %>
+                                <span class="out-of-stock-badge">Out of stock</span>
                             <% } %>
                         </div>
 
-                        <div class="card-body text-center">
-                            <h5 class="card-title"><%= product.name %></h5>
-                            <% if (currency === 'NGN') { %>
-                                <p class="text-muted">&#8358;<%= parseFloat(product.NGNprice).toFixed(2) %></p>
-                            <% } else { %>
-                                <p class="text-muted">$<%= parseFloat(product.USDprice).toFixed(2) %></p>
-                            <% } %>
-
-                            
+                        <div class="product-info">
+                            <h3 class="product-title" title="<%= product.name %>"><%= product.name %></h3>
+                            <p class="product-price">
+                                <% if (currency === 'NGN') { %>
+                                    &#8358;<%= parseFloat(product.NGNprice).toFixed(2) %>
+                                <% } else { %>
+                                    $<%= parseFloat(product.USDprice).toFixed(2) %>
+                                <% } %>
+                            </p>
+                        </div>
+                        
+                        <div class="product-hover-content">
+                             <a href="/product/<%= product._id %>" class="view-details-btn">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -45,28 +45,48 @@
     </div>
 </section>
 
-
-
 <script src="/scripts/script.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-  const elements = document.querySelectorAll(".fade-in");
+        // Fade-in animation observer
+        const fadeElements = document.querySelectorAll(".fade-in");
+        const fadeObserver = new IntersectionObserver(
+            (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+        fadeElements.forEach(element => fadeObserver.observe(element));
 
-  const observer = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-          observer.unobserve(entry.target); // Stop observing once visible
-        }
-      });
-    },
-    { threshold: 0.2 } // Trigger when 20% of the element is visible
-  );
+        // Image cycling effect on hover
+        document.querySelectorAll('.product-image-wrapper').forEach(wrapper => {
+            const image = wrapper.querySelector('.product-image');
+            const imageData = image.dataset.images;
+            if (!imageData) return;
 
-  elements.forEach(element => {
-    observer.observe(element);
-  });
-});
+            const images = JSON.parse(imageData);
+            if (images.length > 1) {
+                let interval;
+                const originalImage = images[0];
 
+                wrapper.addEventListener('mouseenter', () => {
+                    let currentIndex = 1;
+                    interval = setInterval(() => {
+                        image.src = images[currentIndex];
+                        currentIndex = (currentIndex + 1) % images.length;
+                    }, 1200);
+                });
+
+                wrapper.addEventListener('mouseleave', () => {
+                    clearInterval(interval);
+                    image.src = originalImage; // Reset to the default image
+                });
+            }
+        });
+    });
 </script>

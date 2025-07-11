@@ -1,82 +1,138 @@
 <head>
-  <%- include('partials/head') %>
+    <%- include('partials/head') %>
+  
 </head>
-<body>
-  <section class="hero-section text-center">
-    <div class="container hero-content">
-      <h3 class="animated-text">OUR STORY</h3>
-    </div>
-  </section>
 
-  <section class="about-section mb-5">
-    <div class="container">
-      <div class="row text-center">
-        <div class="col-md-6 shadow-lg bg-white p-5 fade-in">
-          <h1 class="text-secondary fw-bold">WELCOME TO</h1>
-          <h2 class="text-dark mb-4 fw-bold">JUSTVKEY LUXURIES</h2>
-          <p class="fs-5">Our journey began with a simple passion and love for fashion,  and a desire to create something beautiful, which led to the discovery of the world of beadwork. Inspired by the tradition of handcrafted beadwork, I set out to design luxury beaded handbags and accessories, that blends elegance and personal expression</p>
-          <p class="fs-5">I saw a gap in the market, many luxury handbags and accessories were mass produced lacking the personal touch of craftsmanship and individuality, I wanted to create a line that not only eluded luxury but told a story via intricate bead work and precision. </p>
-        </div>
-        <div class="col-md-6 fade-in text-center" style="margin-top: 15%;">
-          <video autoplay loop muted playsinline class="img-fluid" width="100%">
+<body>
+
+
+    <section class="hero-section">
+        <video class="hero-video" autoplay loop muted playsinline>
             <source src="https://res.cloudinary.com/dvmfubqhp/video/upload/v1742322598/justVkey%20product%20Images/logo/video2_fvqvoc.mp4" type="video/mp4">
             Your browser does not support the video tag.
-          </video>
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">OUR STORY</h1>
+            <p class="hero-subtitle">Discover the passion, craftsmanship, and artistry woven into every JustVkey creation.</p>
+            <a href="/shop" class="hero-btn">
+                Explore Collections
+                <i class="fas fa-arrow-right"></i>
+            </a>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="about-section mb-5 fade-in text-center">
-    <div class="container shadow-lg bg-white p-4">
-      <p class="fs-5">What started as a hobby learnt from junior school, beading for family and friends soon blossomed into a brand. I horned my craft, learnt from different artisans around the world and built a collection that combines timeless designs with expert beadwork.</p>
-      <p class="fs-5">At the heart of our brand is the commitment to quality craftsmanship we source beads from ethical suppliers, using only materials that reflect luxury and the care that goes into each piece</p>
-      <p class="fs-5">Today our pieces are cherished as works of art finely crafted to empower women express their unique style. As we move forward, we are committed to growing a collection, introducing other accessories collaborating with other creative, continually offering to our customers accessories that celebrates artistry, elegance and individuality.</p>
-      <p class="fw-bold">We are more than just a brand we are a celebration of diverse unique styles empowered by the artistry of our designs!</p>
-    </div>
-  </section>
+    <section class="about-us-section">
+        <div class="container">
+            <div class="about-us-content fade-in">
+                <div class="row g-0">
+                    <div class="col-lg-6 about-us-text-column">
+                        <h2 class="services-title text-start" style="font-size: 2.2rem;">Welcome to JustVkey Luxuries</h2>
+                        <p class="fs-5">Our journey began with a simple passion for fashion and a desire to create something beautiful. This led to the discovery of the world of beadwork. Inspired by the tradition of handcrafted artistry, we set out to design luxury beaded handbags and accessories that blend timeless elegance with personal expression.</p>
+                        <p class="fs-5">We saw a gap in the market for luxury that felt personal. So many accessories were mass-produced, lacking the soul of true craftsmanship. We wanted to create a line that not only exuded luxury but also told a story through intricate beadwork and meticulous precision.</p>
+                    </div>
+                    <div class="col-lg-6 about-us-video-column">
+                        <video autoplay loop muted playsinline class="about-us-video">
+                            <source src="https://res.cloudinary.com/dvmfubqhp/video/upload/v1742322598/justVkey%20product%20Images/logo/video2_fvqvoc.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section class="mission-section bg-light py-5 fade-in">
-    <div class="container text-center">
-      <div class="card-body p-4">
-        <i class="fas fa-chalkboard-teacher fa-3x text-dark mb-3"></i>
-        <h5 class="fw-bold">TRAININGS</h5>
-        <p class="fs-6">JustVkey Luxuries is passionate about adding value to our customers' lives. We don't just offer luxury products; we also provide expert knowledge and practical skills through our training programs, empowering you to create quality beaded bags, accessories, and home and office decorations.</p>
-        <p><a href="https://wa.me/2348137994827" target="_blank" class="text-dark">
-          <i class="fab fa-whatsapp me-2"></i>Book a class session Now</a></p>
-      </div>
-    </div>
-  </section>
+    <section class="services-section" style="padding-top: 0;">
+        <div class="container">
+            <div class="services-header fade-in">
+                <h2 class="services-title">Our Commitment</h2>
+                <p class="services-subtitle">From a hobby learned in junior school to a celebrated brand, our core values remain unchanged.</p>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4 fade-in">
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-gem"></i></div>
+                        <h3 class="service-title">Quality Craftsmanship</h3>
+                        <p class="service-description">We source beads from ethical suppliers, using only materials that reflect the luxury and care that goes into each finely crafted piece.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 fade-in" style="transition-delay: 0.2s;">
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-hand-sparkles"></i></div>
+                        <h3 class="service-title">Empowering Style</h3>
+                        <p class="service-description">Our pieces are cherished as works of art, designed to empower women to express their unique style and confidence.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 fade-in" style="transition-delay: 0.4s;">
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-rocket"></i></div>
+                        <h3 class="service-title">Continuous Growth</h3>
+                        <p class="service-description">We are committed to growing our collection, collaborating with creatives, and celebrating artistry, elegance, and individuality.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section class="mission-section py-5 fade-in">
-    <div class="container text-center">
-      <h2 class="text-secondary">WHAT WE STAND FOR</h2>
-      <p class="fw-bold">We celebrate individuality and craftsmanship, Our precisely handcrafted accessories combines artistic craftsmanship, luxury design, offering a unique statement of grace, artistry and personal expression be it in a timeless accessory or a bold statement piece</p>
-      <a href="/shop" class="btn btn-outline-dark p-3">Discover More</a>
-    </div>
-  </section>
+    <section class="mission-vision-section fade-in">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-center text-lg-start mb-4 mb-lg-0">
+                    <i class="fas fa-chalkboard-teacher fa-4x text-dark mb-4"></i>
+                    <h2 class="services-title text-start" style="font-size: 2rem;">Empower Your Creativity</h2>
+                    <p class="fs-5 text-dark">JustVkey Luxuries is passionate about adding value. We don't just offer luxury products; we provide expert knowledge and practical skills through our training programs, empowering you to create your own quality beaded masterpieces.</p>
+                    <a href="https://wa.me/2348137994827" target="_blank" class="hero-btn mt-3" style="background: linear-gradient(135deg, var(--accent-sage), #b8941f); display: inline-flex;">
+                        Book a Class Session
+                        <i class="fab fa-whatsapp ms-2"></i>
+                    </a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="statement-card">
+                        <h5 class="fw-bold">WHAT WE STAND FOR</h5>
+                        <p>We are more than just a brand; we are a celebration of diverse, unique styles empowered by the artistry of our designs. We celebrate individuality through accessories that combine artistic craftsmanship and luxury design, offering a unique statement of grace and personal expression.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section>
-    <%- include('./partials/trendingProducts') %>
-  </section>
+    <section class="cta-section fade-in">
+        <div class="cta-content">
+            <h2 class="cta-title">Find Your Signature Piece</h2>
+            <p class="cta-text">Whether a timeless classic or a bold statement, discover an accessory that tells your story.</p>
+            <div class="cta-buttons">
+                <a href="/shop" class="cta-btn-primary">Discover More</a>
+                <a href="/contact" class="cta-btn-secondary">Contact Us</a>
+            </div>
+        </div>
+    </section>
 
-  <%- include('partials/footer') %>
+    <section class="product-section">
+        <div class="container">
+             <%- include('./partials/trendingProducts') %>
+        </div>
+    </section>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const elements = document.querySelectorAll(".fade-in");
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-            observer.unobserve(entry.target);
-          }
+
+    <%- include('partials/footer') %>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const elements = document.querySelectorAll(".fade-in");
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            elements.forEach(element => observer.observe(element));
         });
-      }, { threshold: 0.2 });
-
-      elements.forEach(element => observer.observe(element));
-    });
-  </script>
+    </script>
 </body>
-</html>
 
+</html>

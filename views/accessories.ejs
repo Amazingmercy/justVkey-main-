@@ -10,10 +10,25 @@
 <!-- Accessories Category -->
 <section class="products-section py-5">
     <div class="container">
-        <div class="d-flex justify-content-center align-items-center ">
+        <div class="d-flex mt-3">
+             <!-- Search (Hidden on mobile) -->
+            <div class="nav-item d-none d-lg-block me-5">
+              <form class="d-flex" action="/search">
+                <div class="input-group">
+                  <input class="form-control form-control" type="search" name="search" placeholder="Search"
+                    aria-label="Search"/>
+                  <button class="btn btn-outline-dark" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div class="d-flex justify-content-center align-items-center ">
             <i class="fas fa-gem fa-2x"></i>
             <h2 class="text-center m-2">ACCESSOIRES</h2>
         </div>
+        </div>
+        
         <div class="row g-4">
             <% if (accessoriesCollection.length === 0) { %>
                 <div class="col-12 text-center">
