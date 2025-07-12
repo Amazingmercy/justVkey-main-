@@ -1,4 +1,4 @@
-const {Order} = require('../models/index');
+const {Order, User} = require('../models/index');
 
 // Get all orders
 const getOrders = async (req, res) => {
@@ -9,6 +9,19 @@ const getOrders = async (req, res) => {
       .select('id total payment_status order_status deliveryMethod orderId deliveryAddress phoneNumber createdAt currency').sort({ createdAt: -1 });
 
     res.render('adminPages/allOrders', { orders });
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).send('Error fetching orders');
+  }
+};
+
+
+const getUsers = async (req, res) => {
+  try {
+    // Populate user name in the order (similar to Sequelize's include)
+    const users = await User.find()
+      
+    res.render('adminPages/allUsers', { users });
   } catch (error) {
     console.error('Error fetching orders:', error);
     res.status(500).send('Error fetching orders');
@@ -65,6 +78,7 @@ module.exports = {
   addOrder,
   getOrders,
   getOrderPage,
-  changeOrderStatus
+  changeOrderStatus,
+  getUsers
 
 }

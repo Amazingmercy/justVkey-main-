@@ -1,135 +1,144 @@
 <!DOCTYPE html>
 
 <head>
-  <%- include('partials/head') %>
+    <%- include('partials/head') %>
 </head>
 
 <!-- Hero Section -->
 <section class="hero-section">
-        <video class="hero-video" autoplay loop muted playsinline>
-            <source src="https://res.cloudinary.com/dvmfubqhp/video/upload/v1742322598/justVkey%20product%20Images/logo/video2_fvqvoc.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">Discover Handcrafted Elegance</h1>
-            <p class="hero-subtitle">Unique and timeless bead designs for every occasion, crafted with passion and precision.</p>
-            <a href="/shop" class="hero-btn">
-                <span>Explore Collection</span>
-                <i class="fas fa-arrow-right"></i>
-            </a>
+    <video class="hero-video" autoplay loop muted playsinline>
+        <source
+            src="https://res.cloudinary.com/dvmfubqhp/video/upload/v1742322598/justVkey%20product%20Images/logo/video2_fvqvoc.mp4"
+            type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1 class="hero-title">Discover <span>Handcrafted</span> Elegance</h1>
+        <p class="hero-subtitle">Unique and timeless bead designs for every occasion, crafted with passion and
+            precision.</p>
+        <a href="/shop" class="hero-btn">
+            <span>Explore Collection</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+</section>
+
+
+<!-- Latest Products Section Placeholder -->
+<section class="product-section">
+    <div class="">
+        <div class="section-placeholder fade-in">
+            <%- include('./partials/latestProducts') %>
         </div>
-    </section>
+    </div>
+</section>
 
-
-    <!-- Latest Products Section Placeholder -->
-    <section class="product-section">
-        <div class="container">
-            <div class="section-placeholder fade-in">
-                 <%- include('./partials/latestProducts') %>
-            </div>
+<!-- Services Section -->
+<section class="services-section fade-in">
+    <div class="container">
+        <div class="services-header">
+            <h2 class="services-title">What We Offer</h2>
+            <p class="services-subtitle">Experience excellence in every aspect of your jewelry journey</p>
         </div>
-    </section>
 
-  <!-- Services Section -->
-    <section class="services-section fade-in">
-        <div class="container">
-            <div class="services-header">
-                <h2 class="services-title">What We Offer</h2>
-                <p class="services-subtitle">Experience excellence in every aspect of your jewelry journey</p>
-            </div>
-            
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-shipping-fast"></i>
-                        </div>
-                        <h3 class="service-title">Fast Delivery</h3>
-                        <p class="service-description">Enjoy swift delivery on all purchases. We ensure all items arrive on time, every time.</p>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shipping-fast"></i>
                     </div>
+                    <h3 class="service-title">Fast Delivery</h3>
+                    <p class="service-description">Enjoy swift delivery on all purchases. We ensure all items arrive on
+                        time, every time.</p>
                 </div>
-                
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-hand-holding-heart"></i>
-                        </div>
-                        <h3 class="service-title">Customer Support</h3>
-                        <p class="service-description">Our dedicated support team is available 24/7 to address your questions and concerns.</p>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
                     </div>
+                    <h3 class="service-title">Customer Support</h3>
+                    <p class="service-description">Our dedicated support team is available 24/7 to address your
+                        questions and concerns.</p>
                 </div>
-                
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-credit-card"></i>
-                        </div>
-                        <h3 class="service-title">Secured Payments</h3>
-                        <p class="service-description">Shop with confidence knowing your payments are always 100% secured and protected.</p>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-credit-card"></i>
                     </div>
+                    <h3 class="service-title">Secured Payments</h3>
+                    <p class="service-description">Shop with confidence knowing your payments are always 100% secured
+                        and protected.</p>
                 </div>
-                
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-gem"></i>
-                        </div>
-                        <h3 class="service-title">Premium Materials</h3>
-                        <p class="service-description">We use only the finest materials to create durable, elegant and sophisticated products.</p>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-gem"></i>
                     </div>
+                    <h3 class="service-title">Premium Materials</h3>
+                    <p class="service-description">We use only the finest materials to create durable, elegant and
+                        sophisticated products.</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
 
 
 
-  <section class="product-section">
-        <div class="container">
-            <div class="section-placeholder fade-in">
-                <%- include('./partials/trendingProducts') %>
+<section class="product-section">
+    <div class="">
+        <div class="section-placeholder fade-in">
+            <%- include('./partials/trendingProducts') %>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section fade-in">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Ready to Find Your Perfect Piece?</h2>
+            <p class="cta-text">Join thousands of satisfied customers who have discovered the beauty of handcrafted
+                jewelry. Start your journey today.</p>
+            <div class="cta-buttons">
+                <a href="/shop" class="cta-btn-primary">Shop Now</a>
+                <a href="/about" class="cta-btn-secondary">Learn More</a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Call to Action Section -->
-    <section class="cta-section fade-in">
-        <div class="container">
-            <div class="cta-content">
-                <h2 class="cta-title">Ready to Find Your Perfect Piece?</h2>
-                <p class="cta-text">Join thousands of satisfied customers who have discovered the beauty of handcrafted jewelry. Start your journey today.</p>
-                <div class="cta-buttons">
-                    <a href="/shop" class="cta-btn-primary">Shop Now</a>
-                    <a href="/about" class="cta-btn-secondary">Learn More</a>
-                </div>
-            </div>
-        </div>
-    </section>
 
-  
 
-  <footer>
+<footer>
     <%- include('partials/footer') %>
-  </footer>
-  </html>
-  <script>
+</footer>
+
+</html>
+<script>
     document.addEventListener("DOMContentLoaded", function () {
-  const elements = document.querySelectorAll(".fade-in");
+        const elements = document.querySelectorAll(".fade-in");
 
-  const observer = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-          observer.unobserve(entry.target); // Stop observing once visible
-        }
-      });
-    },
-    { threshold: 0.2 } // Trigger when 20% of the element is visible
-  );
+        const observer = new IntersectionObserver(
+            (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                        observer.unobserve(entry.target); // Stop observing once visible
+                    }
+                });
+            },
+            { threshold: 0.2 } // Trigger when 20% of the element is visible
+        );
 
-  elements.forEach(element => {
-    observer.observe(element);
-  });
-});
+        elements.forEach(element => {
+            observer.observe(element);
+        });
+    });

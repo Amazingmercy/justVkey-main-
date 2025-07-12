@@ -2,105 +2,105 @@
 <html lang="en">
 
 <head>
-  <%- include('partials/head') %> 
+  <%- include('partials/head') %>
 </head>
 
 <!-- Accessories Category -->
 <section class="products-section py-2">
-    <div class="container">
+  <div class="container">
 
-        <div class="d-flex mt-3">
-             <!-- Search (Hidden on mobile) -->
-            <div class="nav-item d-none d-lg-block me-5">
-              <form class="d-flex" action="/search">
-                <div class="input-group">
-                  <input class="form-control form-control" type="search" name="search" placeholder="Search"
-                    aria-label="Search"/>
-                  <button class="btn btn-outline-dark" type="submit">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div class="d-flex justify-content-center align-items-center">
-            <i class="fas fa-shopping-bag fa-2x"></i>
-            <h2 class="text-center m-2">BAGS</h2>
-        </div>
-        </div>
-        <div class="row g-4">
-            <% if (bagsCollection.length === 0) { %>
-                <div class="col-12 text-center">
-                    <div class="alert alert-secondary" role="alert">
-                        Bags are unavailable 
-                    </div>
-                    <a href="/categories/accessories" class="btn btn-dark mt-3">TAKE A LOOK AT OUR ACCESSOIRES</a>
-                </div>
-            <% } else { %>
-                <div class="row g-4">
-                    <% bagsCollection.forEach(product => { %>
-                        <div class="col-md-3 col-6">
-                            <div class="card shadow-sm">
-                                <div class="product-image-container" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                                    <a href="/product/<%= product._id %>">
-                                    <% if (Array.isArray(product.imageUrl)) { %>
-                                        <!-- Use the first image as default -->
-                                        <img class="card-img-top product-image img-fluid" 
-                                            src="<%= product.imageUrl[0] %>" 
-                                            alt="<%= product.name %>"
-                                            data-images='<%= JSON.stringify(product.imageUrl) %>'>
-                                    <% } else { %>
-                                        <!-- Single image case (Out of stock or single image product) -->
-                                        <img class="card-img-top product-image img-fluid"
-                                            src="<%= product.imageUrl[0] %>" 
-                                            alt="<%= product.name %>"
-                                            data-images='<%= JSON.stringify([product.imageUrl]) %>'>
-                                    <% } %>
-                                    </a>
-                                    <% if (product.outOfStock === true) { %>
-                                        <span class="out-of-stock-label">Out of stock</span>
-                                    <% } %>
-                                </div>
-        
-                                <div class="card-body text-center">
-                                    <h5 class="card-title"><%= product.name %></h5>
-                                    <% if (currency === 'NGN') { %>
-                                        <p class="text-muted">&#8358;<%= parseFloat(product.NGNprice).toFixed(2) %></p>
-                                    <% } else { %>
-                                        <p class="text-muted">$<%= parseFloat(product.USDprice).toFixed(2) %></p>
-                                    <% } %>
-        
-                                </div>
-                            </div>
-                        </div>
-                    <% }); %>
-                </div>
-            <% } %>
-        </div>
+    <div class="d-flex mt-3">
+      <!-- Search (Hidden on mobile) -->
+      <div class="nav-item d-none d-lg-block me-5">
+        <form class="d-flex" action="/search">
+          <div class="input-group">
+            <input class="form-control form-control" type="search" name="search" placeholder="Search"
+              aria-label="Search" />
+            <button class="btn btn-outline-dark" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="d-flex justify-content-center align-items-center">
+        <i class="fas fa-shopping-bag fa-2x"></i>
+        <h2 class="text-center m-2">BAGS</h2>
+      </div>
     </div>
+    <div class="row g-4">
+      <% if (bagsCollection.length===0) { %>
+        <div class="col-12 text-center">
+          <div class="alert alert-secondary" role="alert">
+            Bags are unavailable
+          </div>
+          <a href="/categories/accessories" class="btn btn-dark mt-3">TAKE A LOOK AT OUR ACCESSOIRES</a>
+        </div>
+        <% } else { %>
+          <div class="row g-4">
+            <% bagsCollection.forEach(product=> { %>
+              <div class="col-md-3 col-6">
+                <div class="card shadow-sm">
+                  <div class="product-image-container"
+                    style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                    <a href="/product/<%= product._id %>">
+                      <% if (Array.isArray(product.imageUrl)) { %>
+                        <!-- Use the first image as default -->
+                        <img class="card-img-top product-image img-fluid" src="<%= product.imageUrl[0] %>"
+                          alt="<%= product.name %>" data-images='<%= JSON.stringify(product.imageUrl) %>'>
+                        <% } else { %>
+                          <!-- Single image case (Out of stock or single image product) -->
+                          <img class="card-img-top product-image img-fluid" src="<%= product.imageUrl[0] %>"
+                            alt="<%= product.name %>" data-images='<%= JSON.stringify([product.imageUrl]) %>'>
+                          <% } %>
+                    </a>
+                    <% if (product.outOfStock===true) { %>
+                      <span class="out-of-stock-label">Out of stock</span>
+                      <% } %>
+                  </div>
+
+                  <div class="card-body text-center">
+                    <h5 class="card-title">
+                      <%= product.name %>
+                    </h5>
+                    <% if (currency==='NGN' ) { %>
+                      <p class="text-muted">&#8358;<%= parseFloat(product.NGNprice).toFixed(2) %>
+                      </p>
+                      <% } else { %>
+                        <p class="text-muted">$<%= parseFloat(product.USDprice).toFixed(2) %>
+                        </p>
+                        <% } %>
+
+                  </div>
+                </div>
+              </div>
+              <% }); %>
+          </div>
+          <% } %>
+    </div>
+  </div>
 </section>
 
-<%- include('partials/footer') %> 
-<script src="/js/script.js"></script>
-<script>
+<%- include('partials/footer') %>
+  <script src="/js/script.js"></script>
+  <script>
     document.addEventListener("DOMContentLoaded", function () {
-  const elements = document.querySelectorAll(".fade-in");
+      const elements = document.querySelectorAll(".fade-in");
 
-  const observer = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-          observer.unobserve(entry.target); // Stop observing once visible
-        }
+      const observer = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("show");
+              observer.unobserve(entry.target); // Stop observing once visible
+            }
+          });
+        },
+        { threshold: 0.2 } // Trigger when 20% of the element is visible
+      );
+
+      elements.forEach(element => {
+        observer.observe(element);
       });
-    },
-    { threshold: 0.2 } // Trigger when 20% of the element is visible
-  );
+    });
 
-  elements.forEach(element => {
-    observer.observe(element);
-  });
-});
-
-</script>
-
+  </script>

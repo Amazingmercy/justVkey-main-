@@ -3,72 +3,86 @@
 
 <head>
   <%- include('partials/head') %>
-  <title>Cart</title>
+    <title>Cart</title>
 </head>
 
 <body>
   <% if (message) { %>
     <div class="alert alert-success alert-dismissable text-center">
       <%= message %>
-      <button class="btn-close" data-bs-dismiss="alert"></button>
+        <button class="btn-close" data-bs-dismiss="alert"></button>
     </div>
-  <% } %>
+    <% } %>
 
-  <section class="cart-section py-5 container">
-    <a href="/orders" class="btn btn-dark p-1 ms-5">ORDERS</a>
-    <div class="container">
-      <h2 class="text-center mb-4">CART</h2>
+      <% if (cartItems.length> 0) { %>
+        <section class="cart-section py-5 container">
+          <a href="/orders" class="btn btn-dark p-1 ms-5">ORDERS</a>
+          <div class="container">
+            <h2 class="text-center mb-4">CART</h2>
+            <% let subtotal=0; %>
+              <% cartItems.forEach(item=> { %>
+                <% if (currency==='NGN' ) { %>
+                  <% subtotal +=item.productId.NGNprice * item.quantity; %>
+                    <% } else { %>
+                      <% subtotal +=item.productId.USDprice * item.quantity; %>
+                        <% } %>
+                          <div class="cart-item d-flex align-items-center">
+                            <!-- Product Image -->
+                            <img src="<%= item.productId.imageUrl[0] %>" alt="<%= item.productId.name %>" class="me-4"
+                              style="width: 100px; height: 100px;">
 
-      <% if (cartItems.length > 0) { %>
-        <% let subtotal = 0; %>
-        <% cartItems.forEach(item => { %>
-          <% if (currency === 'NGN') { %>
-            <% subtotal += item.productId.NGNprice * item.quantity; %>
-          <% } else { %>
-            <% subtotal += item.productId.USDprice * item.quantity; %>
-          <% } %>
-          <div class="cart-item d-flex align-items-center">
-            <!-- Product Image -->
-            <img src="<%= item.productId.imageUrl[0] %>" alt="<%= item.productId.name %>" class="me-4" style="width: 100px; height: 100px;">
+                            <!-- Product Info -->
+                            <div class="cart-item-info flex-grow-1">
+                              <h5 class="fw-bold">
+                                <%= item.productId.name %>
+                              </h5>
+                              <h5 class="text-secondary" style="font-style: italic;">
+                                <%= item.productId.description %>
+                              </h5>
+                              <% if (currency==='NGN' ) { %>
+                                <p>Price: &#8358;<%= parseFloat(item.productId.NGNprice).toFixed(2) %>
+                                </p>
+                                <% } else { %>
+                                  <p>Price: $<%= parseFloat(item.productId.USDprice).toFixed(2) %>
+                                  </p>
+                                  <% } %>
+                                    <p class="fw-bold">Quantity: <%= item.quantity %>
+                                    </p>
+                            </div>
 
-            <!-- Product Info -->
-            <div class="cart-item-info flex-grow-1">
-              <h5 class="fw-bold"><%= item.productId.name %></h5>
-              <h5 class="text-secondary" style="font-style: italic;"><%= item.productId.description %></h5>
-              <% if (currency === 'NGN') { %>
-                <p>Price: &#8358;<%= parseFloat(item.productId.NGNprice).toFixed(2) %></p>
-              <% } else { %>
-                <p>Price: $<%= parseFloat(item.productId.USDprice).toFixed(2) %></p>
-              <% } %>
-              <p class="fw-bold">Quanity: <%= item.quantity %></p>
+                            <!-- Remove Button -->
+                            <form action="/cart/delete/<%= item._id %>" method="POST" class="ms-4">
+                              <button type="submit" class="btn-close" aria-label="Remove"></button>
+                            </form>
+                          </div>
+                          <hr>
+                          <% }); %>
+
+                            <!-- Display Subtotal -->
+                            <div class="text-end mt-4">
+                              <% if (currency==='NGN' ) { %>
+                                <h4>Total: &#8358;<%= subtotal.toFixed(2) %>
+                                </h4>
+                                <% } else { %>
+                                  <h4>Total: $<%= subtotal.toFixed(2) %>
+                                  </h4>
+                                  <% } %>
+                                    <a href="/shop" class="btn cta-btn-primary mt-3">Keep Exploring</a>
+                                    <a href="/checkout?currency=<%= currency %>"
+                                      class="btn cta-btn-secondary text-dark mt-3">Proceed to Checkout</a>
+                            </div>
+        </section>
+        <% } else { %>
+          <section class="cart-section py-5 d-flex align-items-center justify-content-center" style="min-height: 40vh;">
+            <div class="text-center">
+              <h4>Your cart is empty.</h4>
+              <a href="/shop" class="btn btn-dark mt-3">Shop Now</a>
             </div>
-
-            <!-- Remove Button -->
-            <form action="/cart/delete/<%= item._id %>" method="POST" class="ms-4">
-              <button type="submit" class="btn-close" aria-label="Remove"></button>
-            </form>
-          </div>
-          <hr>
-        <% }); %>
-
-        <!-- Display Subtotal -->
-        <div class="text-end mt-4">
-          <% if (currency === 'NGN') { %>
-            <h4>Total: &#8358;<%= subtotal.toFixed(2) %></h4>
-          <% } else { %>
-            <h4>Total: $<%= subtotal.toFixed(2) %></h4>
+          </section>
           <% } %>
-          <a href="/shop" class="btn btn-secondary mt-3">Keep Exploring</a>
-          <a href="/checkout?currency=<%= currency %>" class="btn btn-dark mt-3">Proceed to Checkout</a>
-        </div>
-      <% } else { %>
-        <p class="text-center">Your cart is empty. <a href="/shop">Shop now</a></p>
-      <% } %>
-    </div>
-  </section>
 
-  <%- include('partials/trendingProducts') %>
-  <%- include('partials/footer') %>
+            <%- include('partials/trendingProducts') %>
+              <%- include('partials/footer') %>
 </body>
 
 </html>

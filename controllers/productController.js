@@ -13,7 +13,7 @@ const getLatestProducts =  async () => {
 
 const getTrendingProducts = async () => {
   try {
-    let products = await Product.find({ trending: true });
+    let products = await Product.find({ trending: true }).sort({ createdAt: -1 }).limit(8);              
 
     return products;
   } catch (error) {
@@ -21,7 +21,6 @@ const getTrendingProducts = async () => {
     return [];
   }
 };
-
 const getNumberOfProductsInCart = async (userId) => {
   try {
     const productCount = await Cart.countDocuments({ userId });
