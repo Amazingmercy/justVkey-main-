@@ -3,7 +3,7 @@ const { Product, Cart, Subscriber } = require('../models/index');
 // Functions
 const getLatestProducts =  async () => {
   try {
-    const products = await Product.find().sort({ createdAt: -1 }).limit(4);
+    const products = await Product.find().sort({ createdAt: -1 }).limit(8);
     return products;
   } catch (error) {
     console.error('Error fetching latest products:', error);

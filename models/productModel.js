@@ -34,10 +34,16 @@ const ProductSchema = new Schema({
     type: Boolean,
     default: false, // Default value is false
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    immutable: true, // optional, ensures it doesn't change
+  }
+
 });
 
 // Create and export the Product model
 const Product = model('Product', ProductSchema);
 
 
-module.exports = {Product}
+module.exports = { Product }
